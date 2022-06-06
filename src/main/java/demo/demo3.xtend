@@ -9,25 +9,36 @@ import template.rtos.*
 import forsyde.io.java.drivers.ForSyDeModelHandler
 import template.datatype.DataTypeInc
 import template.datatype.DataTypeSrc
+import processingModule.InitProcessingModule
+import processingModule.SDFCombProcessingModule
+import processingModule.SDFChannelProcessingModule
+import processingModule.SubsystemUniprocessorModule
 
 /**
  * rtos
  */
 class demo3 {
 	def static void main(String[] args) {
-		val path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
-		val path2 = "forsyde-io/modified1/sobel-application.fiodl"
-		val root = "generateCode/c/rtos2"
-		 //val roottest="D:\\Users\\LEGION\\Desktop\\Master Thesis\\code\\stm32-nucleo\\freertos_test1\\Core\\mycode"
-		var loader = (new ForSyDeModelHandler)
-		var model = loader.loadModel(path)
-		model.mergeInPlace(loader.loadModel(path2))
+//		val path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
+//		val path2 = "forsyde-io/modified1/sobel-application.fiodl"
+//		val root = "generateCode/c/rtos2"
+//		 //val roottest="D:\\Users\\LEGION\\Desktop\\Master Thesis\\code\\stm32-nucleo\\freertos_test1\\Core\\mycode"
+//		var loader = (new ForSyDeModelHandler)
+//		var model = loader.loadModel(path)
+//		model.mergeInPlace(loader.loadModel(path2))
 		
+		
+		/* testing example1.fiodl*/
+		val path = "example1-2cores.fiodl"
+		val root = "generateCode/c/rtos2"
+		var loader = (new ForSyDeModelHandler)
+		var model = loader.loadModel(path)				
 		
 		var Generator gen = new Generator(model, root)
 		Generator.PC=0;
 		Generator.NUCLEO=1;
 		Generator.platform=3
+		Generator.fifoType=1
 		var initModule = new InitProcessingModule
 		var actorModule = new SDFCombProcessingModule
 		var sdfchannelModule = new SDFChannelProcessingModule
@@ -42,12 +53,7 @@ class demo3 {
 		
 		initModule.add(new DataTypeInc)
 		initModule.add(new DataTypeSrc)
-//		initModule.add(new DataType)
-//		initModule.add(new DataDefinitionSrc)
-//		initModule.add(new ExternalDataBlockInc)
-//		initModule.add(new ExternalDataBlockSrc)
-//		initModule.add(new FireAllInc)
-//		initModule.add(new FireAllSrc)
+
 		
 		
 		/* actor module */

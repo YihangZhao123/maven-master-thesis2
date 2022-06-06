@@ -1,12 +1,9 @@
 package template.rtos;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.Vertex;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.ActorTemplate;
 
-@FileTypeAnno(type = FileType.C_INCLUDE)
 @SuppressWarnings("all")
 public class SDFActorInc implements ActorTemplate {
   private Vertex actor;

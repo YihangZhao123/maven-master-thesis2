@@ -1,7 +1,5 @@
 package template.uniprocessor.actor;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.typed.viewers.impl.Executable;
@@ -24,7 +22,6 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import template.templateInterface.ActorTemplate;
 import utils.Query;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SDFActorSrc implements ActorTemplate {
   private Set<Vertex> implActorSet;
@@ -123,16 +120,18 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLine();
       _builder.append("*/\t");
       _builder.newLine();
-      _builder.append("/*  initialize memory*/");
       _builder.newLine();
-      _builder.append(ret1);
-      _builder.append("\t");
-      _builder.newLineIfNotEmpty();
       _builder.append("void actor_");
       _builder.append(name);
       _builder.append("(){");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
+      _builder.append("/*  initialize memory*/");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(ret1, "\t");
+      _builder.append("\t");
+      _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.append(ret2, "\t");
       _builder.newLineIfNotEmpty();
@@ -330,7 +329,6 @@ public class SDFActorSrc implements ActorTemplate {
                 boolean _tripleEquals = (_isSystemChannel == null);
                 if (_tripleEquals) {
                   StringConcatenation _builder_1 = new StringConcatenation();
-                  _builder_1.append("static\t");
                   _builder_1.append(datatype);
                   _builder_1.append(" ");
                   _builder_1.append(port);

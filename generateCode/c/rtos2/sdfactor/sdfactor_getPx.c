@@ -28,6 +28,12 @@
 	#endif
 	/*
 	==============================================
+			Extern Variables
+	==============================================
+	*/
+	
+	/*
+	==============================================
 		Define Soft Timer and Soft Timer Semaphore
 	==============================================
 	*/
@@ -57,9 +63,6 @@
 				#endif
 			}
 
-			#if defined(TESTING)
-HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,1);
-			#endif
 			
 	/*
 	==============================================
@@ -81,8 +84,6 @@ HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,1);
 			imgBlockY[4]=gray[4];
 			imgBlockY[5]=gray[5];
 			
-			HAL_Delay(1000);
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,0);					
 			
 			
 	/*

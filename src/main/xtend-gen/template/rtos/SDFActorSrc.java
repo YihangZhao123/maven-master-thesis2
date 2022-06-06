@@ -1,8 +1,5 @@
 package template.rtos;
 
-import com.google.common.base.Objects;
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexAcessor;
@@ -22,7 +19,6 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import template.templateInterface.ActorTemplate;
 import utils.Query;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SDFActorSrc implements ActorTemplate {
   private Set<Vertex> implActorSet;
@@ -51,8 +47,8 @@ public class SDFActorSrc implements ActorTemplate {
       String name = actor.getIdentifier();
       this.inputSDFChannelSet = Query.findInputSDFChannels(Generator.model, actor);
       this.outputSDFChannelSet = Query.findOutputSDFChannels(Generator.model, actor);
-      Set<Vertex> datablock = null;
-      datablock = Query.findAllExternalDataBlocks(model, SDFActor.safeCast(actor).get());
+      Set<Vertex> datablocks = null;
+      datablocks = Query.findAllExternalDataBlocks(model, SDFActor.safeCast(actor).get());
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("\t");
       _builder.append("#include \"../configRTOS.h\"");
@@ -188,6 +184,23 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.append("\t");
       _builder.append("==============================================");
       _builder.newLine();
+      _builder.append("\t\t\t");
+      _builder.append("Extern Variables");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("==============================================");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("*/");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("/*");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("==============================================");
+      _builder.newLine();
       _builder.append("\t\t");
       _builder.append("Define Soft Timer and Soft Timer Semaphore");
       _builder.newLine();
@@ -264,43 +277,6 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("\t\t\t");
-      _builder.append("#if defined(TESTING)");
-      _builder.newLine();
-      {
-        boolean _equals = Objects.equal(name, "GrayScale");
-        if (_equals) {
-          _builder.append("HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);");
-          _builder.newLine();
-        } else {
-          boolean _equals_1 = Objects.equal(name, "getPx");
-          if (_equals_1) {
-            _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,1);");
-            _builder.newLine();
-          } else {
-            boolean _equals_2 = Objects.equal(name, "Gx");
-            if (_equals_2) {
-              _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,1);");
-              _builder.newLine();
-            } else {
-              boolean _equals_3 = Objects.equal(name, "Gy");
-              if (_equals_3) {
-                _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,1);");
-                _builder.newLine();
-              } else {
-                boolean _equals_4 = Objects.equal(name, "Abs");
-                if (_equals_4) {
-                  _builder.append("HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);");
-                  _builder.newLine();
-                }
-              }
-            }
-          }
-        }
-      }
-      _builder.append("\t\t\t");
-      _builder.append("#endif");
-      _builder.newLine();
-      _builder.append("\t\t\t");
       _builder.newLine();
       _builder.append("\t");
       _builder.append("/*");
@@ -323,57 +299,6 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t\t");
       _builder.newLine();
-      {
-        boolean _equals_5 = Objects.equal(name, "GrayScale");
-        if (_equals_5) {
-          _builder.append("\t\t\t");
-          _builder.append("HAL_Delay(1000);");
-          _builder.newLine();
-          _builder.append("\t\t\t");
-          _builder.append("HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);");
-          _builder.newLine();
-        } else {
-          boolean _equals_6 = Objects.equal(name, "getPx");
-          if (_equals_6) {
-            _builder.append("\t\t\t");
-            _builder.append("HAL_Delay(1000);");
-            _builder.newLine();
-            _builder.append("\t\t\t");
-            _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,0);\t\t\t\t\t");
-            _builder.newLine();
-          } else {
-            boolean _equals_7 = Objects.equal(name, "Gx");
-            if (_equals_7) {
-              _builder.append("\t\t\t");
-              _builder.append("HAL_Delay(1000);");
-              _builder.newLine();
-              _builder.append("\t\t\t");
-              _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,0);\t");
-              _builder.newLine();
-            } else {
-              boolean _equals_8 = Objects.equal(name, "Gy");
-              if (_equals_8) {
-                _builder.append("\t\t\t");
-                _builder.append("HAL_Delay(1000);");
-                _builder.newLine();
-                _builder.append("\t\t\t");
-                _builder.append("HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,0);\t\t");
-                _builder.newLine();
-              } else {
-                boolean _equals_9 = Objects.equal(name, "Abs");
-                if (_equals_9) {
-                  _builder.append("\t\t\t");
-                  _builder.append("HAL_Delay(1000);");
-                  _builder.newLine();
-                  _builder.append("\t\t\t");
-                  _builder.append("HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);");
-                  _builder.newLine();
-                }
-              }
-            }
-          }
-        }
-      }
       _builder.append("\t\t\t");
       _builder.newLine();
       _builder.append("\t\t\t");

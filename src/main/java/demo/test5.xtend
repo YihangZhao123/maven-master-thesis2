@@ -1,11 +1,9 @@
 package demo
 import forsyde.io.java.drivers.ForSyDeModelHandler
 
+
 import generator.Generator
-import generator.InitProcessingModule
-import generator.SDFChannelProcessingModule
-import generator.SDFCombProcessingModule
-import generator.SubsystemUniprocessorModule
+
 import template.baremetal_single.*
 import utils.Query
 

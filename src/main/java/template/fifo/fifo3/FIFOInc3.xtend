@@ -1,10 +1,9 @@
 package template.fifo.fifo3
 
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
+
 import template.templateInterface.InitTemplate
 
-@FileTypeAnno(type=FileType.C_INCLUDE)
+
 class FIFOInc3 implements InitTemplate{
 	new() {		
 	}

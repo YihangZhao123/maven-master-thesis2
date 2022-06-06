@@ -1,7 +1,5 @@
 package template.uniprocessor.SDFChannel;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.Vertex;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.ChannelTemplate;
@@ -9,7 +7,6 @@ import template.templateInterface.ChannelTemplate;
 /**
  * without distinguish if the sdfchannel is a state variable
  */
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SDFChannelInc implements ChannelTemplate {
   private Vertex sdfchannel;

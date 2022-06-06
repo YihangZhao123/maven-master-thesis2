@@ -3,13 +3,12 @@ package template.rtos
 
 import template.templateInterface.InitTemplate
 
+
 import generator.Generator
-import fileAnnotation.FileTypeAnno
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
+
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class SDFChannelSrc implements InitTemplate{
 	
 	override create() {

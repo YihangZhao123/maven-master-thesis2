@@ -3,12 +3,12 @@ package demo;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.drivers.ForSyDeModelHandler;
 import generator.Generator;
-import generator.InitProcessingModule;
-import generator.SDFChannelProcessingModule;
-import generator.SDFCombProcessingModule;
-import generator.SubsystemUniprocessorModule;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import processingModule.InitProcessingModule;
+import processingModule.SDFChannelProcessingModule;
+import processingModule.SDFCombProcessingModule;
+import processingModule.SubsystemUniprocessorModule;
 import template.datatype.DataTypeInc;
 import template.datatype.DataTypeSrc;
 import template.fifo.SpinLockTemplateInc;
@@ -33,14 +33,12 @@ import template.uniprocessor.subsystem.SubsystemTemplateSrc;
 public class demo1 {
   public static void main(final String[] args) {
     try {
-      final String path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
-      final String path2 = "forsyde-io/modified1/sobel-application.fiodl";
+      final String path = "example1-2cores.fiodl";
       final String root = "generateCode/c/single/single";
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
-      model.mergeInPlace(loader.loadModel(path2));
       Generator gen = new Generator(model, root);
-      Generator.fifoType = 2;
+      Generator.fifoType = 1;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
       SDFChannelTemplateSrc _sDFChannelTemplateSrc = new SDFChannelTemplateSrc();

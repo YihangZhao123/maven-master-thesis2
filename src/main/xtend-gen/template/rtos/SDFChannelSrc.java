@@ -1,7 +1,5 @@
 package template.rtos;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import generator.Generator;
@@ -9,7 +7,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 import utils.Query;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SDFChannelSrc implements InitTemplate {
   @Override

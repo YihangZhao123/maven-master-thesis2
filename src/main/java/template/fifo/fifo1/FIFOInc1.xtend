@@ -1,8 +1,6 @@
 package template.fifo.fifo1
 
-import fileAnnotation.FileType
 
-import fileAnnotation.FileTypeAnno
 import forsyde.io.java.core.Vertex
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel
 import generator.Generator
@@ -11,7 +9,7 @@ import java.util.stream.Collectors
 import template.templateInterface.InitTemplate
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_INCLUDE)
+
 class FIFOInc1 implements InitTemplate {
 
 	Set<Vertex> typeVertexSet

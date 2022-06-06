@@ -1,7 +1,6 @@
 package template.datatype
 
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
+
 import forsyde.io.java.core.ForSyDeSystemGraph
 import forsyde.io.java.core.Vertex
 import forsyde.io.java.core.VertexTrait
@@ -17,7 +16,7 @@ import java.util.Set
 import java.util.stream.Collectors
 import template.templateInterface.InitTemplate
 
-@FileTypeAnno(type=FileType.C_INCLUDE)
+
 class DataTypeInc implements InitTemplate {
 
 	Set<String> record = new HashSet

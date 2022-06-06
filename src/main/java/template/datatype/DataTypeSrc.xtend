@@ -1,13 +1,12 @@
 package template.datatype
 
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
+
 import forsyde.io.java.typed.viewers.values.IntegerValue
 import generator.Generator
 import java.util.stream.Collectors
 import template.templateInterface.InitTemplate
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class DataTypeSrc implements InitTemplate {
 	override savePath() {
 		return "/datatype/datatype_definition.c"

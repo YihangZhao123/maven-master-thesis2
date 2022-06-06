@@ -1,7 +1,5 @@
 package template.datatype;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.typed.viewers.values.IntegerValue;
@@ -13,7 +11,6 @@ import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class DataTypeSrc implements InitTemplate {
   @Override

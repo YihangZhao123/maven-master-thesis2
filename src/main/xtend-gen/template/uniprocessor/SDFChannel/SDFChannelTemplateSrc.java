@@ -1,7 +1,5 @@
 package template.uniprocessor.SDFChannel;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexProperty;
@@ -16,7 +14,6 @@ import utils.Query;
 /**
  * without distinguish if the sdfchannel is a state variable
  */
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SDFChannelTemplateSrc implements ChannelTemplate {
   private Vertex sdfchannel;

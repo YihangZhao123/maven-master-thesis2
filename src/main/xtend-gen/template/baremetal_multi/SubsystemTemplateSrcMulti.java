@@ -1,13 +1,10 @@
 package template.baremetal_multi;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel;
 import forsyde.io.java.typed.viewers.values.IntegerValue;
 import generator.Generator;
-import generator.Schedule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -15,11 +12,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import processingModule.Schedule;
 import template.templateInterface.SubsystemTemplate;
 import utils.Name;
 import utils.Query;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
   private Schedule s;

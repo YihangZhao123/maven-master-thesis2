@@ -1,7 +1,5 @@
 package template.baremetal_multi;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.Vertex;
 import generator.Generator;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -11,7 +9,6 @@ import utils.Query;
 /**
  * without distinguish if the sdfchannel is a state variable
  */
-@FileTypeAnno(type = FileType.C_INCLUDE)
 @SuppressWarnings("all")
 public class SDFChannelInc implements ChannelTemplate {
   private Vertex sdfchannel;

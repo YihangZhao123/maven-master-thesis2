@@ -1,18 +1,7 @@
 package template.fifo.fifo2
+
 import template.templateInterface.InitTemplate
 
-import generator.Generator
-import forsyde.io.java.core.VertexTrait
-import java.util.stream.Collectors
-import fileAnnotation.FileTypeAnno
-import fileAnnotation.FileType
-import java.util.Set
-import java.util.HashSet
-import utils.Query
-import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel
-import forsyde.io.java.core.Vertex
-
-@FileTypeAnno(type=FileType.C_SOURCE)
 class FIFOSrc2  implements InitTemplate {
 
 	new() {

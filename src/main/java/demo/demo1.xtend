@@ -7,10 +7,7 @@ import forsyde.io.java.drivers.ForSyDeModelHandler
 
 
 import generator.Generator
-import generator.InitProcessingModule
-import generator.SDFChannelProcessingModule
-import generator.SDFCombProcessingModule
-import generator.SubsystemUniprocessorModule
+
 import template.uniprocessor.SDFChannel.SDFChannelTemplateSrc
 import template.uniprocessor.actor.SDFActorSrc
 import template.uniprocessor.actor.SDFActorInc
@@ -28,20 +25,28 @@ import template.fifo.fifo3.FIFOInc3
 import template.fifo.fifo3.FIFOSrc3
 import template.fifo.SpinLockTemplateInc
 import template.fifo.SpinLockTemplateSrc
+import processingModule.SDFChannelProcessingModule
+import processingModule.SDFCombProcessingModule
+import processingModule.SubsystemUniprocessorModule
+import processingModule.InitProcessingModule
 
 /**
  * one core
  */
 class demo1 {
 	def static void main(String[] args) {
-		val path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
-		val path2 = "forsyde-io/modified1/sobel-application.fiodl"
+//		val path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
+//		val path2 = "forsyde-io/modified1/sobel-application.fiodl"
+//		val root = "generateCode/c/single/single"
+//
+//		var loader = (new ForSyDeModelHandler)
+//		var model = loader.loadModel(path)
+//		model.mergeInPlace(loader.loadModel(path2))
+		/* testing example1.fiodl*/
+		val path = "example1-2cores.fiodl"
 		val root = "generateCode/c/single/single"
-
 		var loader = (new ForSyDeModelHandler)
-		var model = loader.loadModel(path)
-		model.mergeInPlace(loader.loadModel(path2))
-		
+		var model = loader.loadModel(path)				
 		
 //		val path = "test2.fiodl"
 //		val root = "generateCode/c/single2"
@@ -50,7 +55,7 @@ class demo1 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=2
+		Generator.fifoType=1
 		Generator.platform=1
 		 
 		var sdfchannelModule = new SDFChannelProcessingModule

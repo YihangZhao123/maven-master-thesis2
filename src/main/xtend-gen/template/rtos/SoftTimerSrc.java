@@ -1,13 +1,10 @@
 package template.rtos;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.Vertex;
 import generator.Generator;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class SoftTimerSrc implements InitTemplate {
   @Override

@@ -1,8 +1,6 @@
 package template.baremetal_multi
 
-import fileAnnotation.FileType
 
-import fileAnnotation.FileTypeAnno
 import forsyde.io.java.core.ForSyDeSystemGraph
 import forsyde.io.java.core.Vertex
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor
@@ -18,7 +16,7 @@ import java.util.stream.Collectors
 import template.templateInterface.ActorTemplate
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class SDFActorSrc implements ActorTemplate {
 	Set<Vertex> implActorSet
 	Set<Vertex> inputSDFChannelSet

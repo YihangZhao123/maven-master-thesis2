@@ -1,8 +1,6 @@
 package template.rtos
 
-import fileAnnotation.FileType
 
-import fileAnnotation.FileTypeAnno
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor
 import forsyde.io.java.typed.viewers.values.IntegerValue
@@ -12,7 +10,7 @@ import java.util.stream.Collectors
 import template.templateInterface.InitTemplate
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class StartTaskSrc implements InitTemplate {
 	override savePath() {
 		return "/start_task.c"

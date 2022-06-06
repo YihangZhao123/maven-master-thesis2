@@ -1,8 +1,6 @@
 package template.uniprocessor.actor
 
-import fileAnnotation.FileType
 
-import fileAnnotation.FileTypeAnno
 import forsyde.io.java.core.ForSyDeSystemGraph
 import forsyde.io.java.core.Vertex
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor
@@ -18,7 +16,7 @@ import java.util.stream.Collectors
 import template.templateInterface.ActorTemplate
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class SDFActorSrc implements ActorTemplate {
 	Set<Vertex> implActorSet
 	Set<Vertex> inputSDFChannelSet
@@ -68,13 +66,13 @@ class SDFActorSrc implements ActorTemplate {
 				Actor Function
 			========================================
 			*/	
-			/*  initialize memory*/
-«««						«initMemory(model,actor)»	
-			«ret1»	
+«««			/*  initialize memory*/
+			
 			void actor_«name»(){
 			
-«««			/*  initialize memory*/
+			/*  initialize memory*/
 «««			«initMemory(model,actor)»
+				«ret1»	
 				«ret2»
 				/* Read From Input Port  */
 				int ret=0;
@@ -157,7 +155,7 @@ class SDFActorSrc implements ActorTemplate {
 					if (!variableNameRecord.contains(port)) {
 						if (Query.isSystemChannel(model, actorimpl, port) === null) {
 							ret1.append( '''
-							static	«datatype» «port»; 
+							«datatype» «port»; 
 							''')
 							
 						} else {

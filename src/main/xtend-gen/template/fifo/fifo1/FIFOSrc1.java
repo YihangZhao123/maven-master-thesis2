@@ -1,7 +1,5 @@
 package template.fifo.fifo1;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexTrait;
@@ -15,7 +13,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 import utils.Query;
 
-@FileTypeAnno(type = FileType.C_SOURCE)
 @SuppressWarnings("all")
 public class FIFOSrc1 implements InitTemplate {
   private Set<Vertex> typeVertexSet;

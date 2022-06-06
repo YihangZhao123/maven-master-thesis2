@@ -1,11 +1,8 @@
 package template.rtos;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 
-@FileTypeAnno(type = FileType.C_INCLUDE)
 @SuppressWarnings("all")
 public class StartTaskInc implements InitTemplate {
   @Override

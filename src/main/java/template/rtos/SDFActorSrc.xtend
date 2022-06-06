@@ -1,7 +1,5 @@
 package template.rtos
 
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
 import forsyde.io.java.core.ForSyDeSystemGraph
 import forsyde.io.java.core.Vertex
 import forsyde.io.java.core.VertexAcessor
@@ -16,25 +14,33 @@ import java.util.stream.Collectors
 import template.templateInterface.ActorTemplate
 import utils.Query
 
-@FileTypeAnno(type=FileType.C_SOURCE)
 class SDFActorSrc implements ActorTemplate {
 	Set<Vertex> implActorSet
 	Set<Vertex> inputSDFChannelSet
 	Set<Vertex> outputSDFChannelSet
 	Vertex actor
+
 	override savePath() {
-		return "/sdfactor/sdfactor_"+actor.getIdentifier()+".c"
+		return "/sdfactor/sdfactor_" + actor.getIdentifier() + ".c"
 	}
+
 	override create(Vertex actor) {
 		var model = Generator.model
-		this.actor=actor
+		
+		this.actor = actor
+		
 		implActorSet = VertexAcessor.getMultipleNamedPort(Generator.model, actor, "combFunctions",
 			VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexPortDirection.OUTGOING)
+		
 		var name = actor.getIdentifier()
+		
 		this.inputSDFChannelSet = Query.findInputSDFChannels(Generator.model, actor)
+		
 		this.outputSDFChannelSet = Query.findOutputSDFChannels(Generator.model, actor)
-		var Set<Vertex> datablock
-		datablock = Query.findAllExternalDataBlocks(model, SDFActor.safeCast(actor).get())
+		
+		var Set<Vertex> datablocks
+		datablocks = Query.findAllExternalDataBlocks(model, SDFActor.safeCast(actor).get())
+		
 
 		'''
 				#include "../configRTOS.h"
@@ -72,6 +78,15 @@ class SDFActorSrc implements ActorTemplate {
 				#endif
 				/*
 				==============================================
+						Extern Variables
+				==============================================
+				*/
+«««				«FOR  datablock:datablocks »
+«««				extern 
+«««				«ENDFOR»
+				
+				/*
+				==============================================
 					Define Soft Timer and Soft Timer Semaphore
 				==============================================
 				*/
@@ -95,19 +110,19 @@ class SDFActorSrc implements ActorTemplate {
 				*/
 						«read(model,actor)»
 			
-						#if defined(TESTING)
-						«IF name=="GrayScale"»
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
-						«ELSEIF name=="getPx"»
-				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,1);
-						«ELSEIF name=="Gx"»
-				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,1);
-						«ELSEIF name=="Gy"»
-				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,1);
-						«ELSEIF name=="Abs"»
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
-						«ENDIF»
-						#endif
+«««						#if defined(TESTING)
+«««						«IF name=="GrayScale"»
+«««				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
+«««						«ELSEIF name=="getPx"»
+«««				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,1);
+«««						«ELSEIF name=="Gx"»
+«««				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,1);
+«««						«ELSEIF name=="Gy"»
+«««				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,1);
+«««						«ELSEIF name=="Abs"»
+«««				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
+«««						«ENDIF»
+«««						#endif
 						
 				/*
 				==============================================
@@ -116,22 +131,22 @@ class SDFActorSrc implements ActorTemplate {
 				*/
 						«getInlineCode()»
 						
-						«IF name=="GrayScale"»
-							HAL_Delay(1000);
-							HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
-						«ELSEIF name=="getPx"»
-							HAL_Delay(1000);
-							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,0);					
-						«ELSEIF name=="Gx"»
-							HAL_Delay(1000);
-							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,0);	
-						«ELSEIF name=="Gy"»
-							HAL_Delay(1000);
-							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,0);		
-						«ELSEIF name=="Abs"»	
-							HAL_Delay(1000);
-							HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
-						«ENDIF»					
+«««						«IF name=="GrayScale"»
+«««							HAL_Delay(1000);
+«««							HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+«««						«ELSEIF name=="getPx"»
+«««							HAL_Delay(1000);
+«««							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_9,0);					
+«««						«ELSEIF name=="Gx"»
+«««							HAL_Delay(1000);
+«««							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_8,0);	
+«««						«ELSEIF name=="Gy"»
+«««							HAL_Delay(1000);
+«««							HAL_GPIO_WritePin(GPIOC,GPIO_PIN_6,0);		
+«««						«ELSEIF name=="Abs"»	
+«««							HAL_Delay(1000);
+«««							HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+«««						«ENDIF»					
 						
 						
 				/*

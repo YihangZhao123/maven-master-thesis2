@@ -29,6 +29,12 @@
 	#endif
 	/*
 	==============================================
+			Extern Variables
+	==============================================
+	*/
+	
+	/*
+	==============================================
 		Define Soft Timer and Soft Timer Semaphore
 	==============================================
 	*/
@@ -63,9 +69,6 @@
 			xQueueReceive(msg_queue_GrayScaleY,&offsetY,portMAX_DELAY);
 			#endif
 
-			#if defined(TESTING)
-HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
-			#endif
 			
 	/*
 	==============================================
@@ -89,8 +92,6 @@ HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
 			dimsOut[0]=dimX;
 			dimsOut[1]=dimY;
 			
-			HAL_Delay(1000);
-			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
 			
 			
 	/*

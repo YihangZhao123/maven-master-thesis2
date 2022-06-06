@@ -2,10 +2,7 @@ package demo
 
 import forsyde.io.java.drivers.ForSyDeModelHandler
 import generator.Generator
-import generator.InitProcessingModule
-import generator.SDFChannelProcessingModule
-import generator.SDFCombProcessingModule
-import generator.SubsystemMultiprocessorModule
+
 //import template.baremetal_multi.DataTypeInc
 //import template.baremetal_multi.DataTypeSrc
 import template.baremetal_multi.SDFActorInc
@@ -28,6 +25,10 @@ import template.fifo.SpinLockTemplateInc
 import template.fifo.SpinLockTemplateSrc
 import template.datatype.DataTypeInc
 import template.datatype.DataTypeSrc
+import processingModule.SDFChannelProcessingModule
+import processingModule.SDFCombProcessingModule
+import processingModule.SubsystemMultiprocessorModule
+import processingModule.InitProcessingModule
 
 /**
  * multi cores

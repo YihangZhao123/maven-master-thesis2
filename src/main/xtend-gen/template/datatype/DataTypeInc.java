@@ -1,7 +1,5 @@
 package template.datatype;
 
-import fileAnnotation.FileType;
-import fileAnnotation.FileTypeAnno;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexProperty;
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 
-@FileTypeAnno(type = FileType.C_INCLUDE)
 @SuppressWarnings("all")
 public class DataTypeInc implements InitTemplate {
   private Set<String> record = new HashSet<String>();

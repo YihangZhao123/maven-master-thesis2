@@ -4,7 +4,7 @@ import template.templateInterface.InitTemplate
 import generator.Generator
 import fileAnnotation.*
 
-@FileTypeAnno(type=FileType.C_SOURCE)
+
 class SoftTimerSrc implements InitTemplate {
 	
 	override create() {

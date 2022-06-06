@@ -1,11 +1,9 @@
 package template.fifo
 
-import fileAnnotation.FileType
 
-import fileAnnotation.FileTypeAnno
 import template.templateInterface.InitTemplate
 
-@FileTypeAnno(type=FileType.C_INCLUDE)
+
 class SpinLockTemplateInc implements InitTemplate{
 	
 	override create() {

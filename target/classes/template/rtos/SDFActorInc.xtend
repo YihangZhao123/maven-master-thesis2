@@ -1,11 +1,10 @@
 package template.rtos
 
-import fileAnnotation.FileType
-import fileAnnotation.FileTypeAnno
+
 import forsyde.io.java.core.Vertex
 import template.templateInterface.ActorTemplate
 
-@FileTypeAnno(type=FileType.C_INCLUDE)
+
 class SDFActorInc implements ActorTemplate{
 	Vertex actor
 	override savePath() {
