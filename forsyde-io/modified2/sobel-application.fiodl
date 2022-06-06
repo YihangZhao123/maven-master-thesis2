@@ -1,0 +1,19 @@
+systemgraph {
+
+     vertex A [moc::sdf::SDFComb] (combFunctions, a) {
+
+        "production": {
+            "a": 1_i
+
+        }
+    }
+     vertex B [moc::sdf::SDFComb] (combFunctions, b) {
+
+        "consumption": {
+            "b": 1_i
+
+        }
+    }
+   
+
+}
