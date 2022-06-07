@@ -10,12 +10,12 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo fifo_GrayScaleX;
-extern circular_fifo fifo_GrayScaleY;
+extern circular_fifo_UInt16 fifo_GrayScaleX;
+extern circular_fifo_UInt16 fifo_GrayScaleY;
 
 /* Output FIFO */
-extern circular_fifo fifo_GrayScaleToAbs;
-extern circular_fifo fifo_GrayScaleToGetPx;
+extern circular_fifo_UInt16 fifo_GrayScaleToAbs;
+extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
 /*
 ========================================
 	Declare Extern Global Variables
@@ -44,8 +44,8 @@ void actor_GrayScale(){
 	UInt16 dimX = dimX_global; 
 	/* Read From Input Port  */
 	int ret=0;
-	read_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
-	read_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
+	read_fifo_UInt16(&fifo_GrayScaleX, &offsetX,1);
+	read_fifo_UInt16(&fifo_GrayScaleY, &offsetY,1);
 	
 		
 	/* Inline Code           */
@@ -67,13 +67,13 @@ void actor_GrayScale(){
 	dimsOut[1]=dimY;
 		
 	/* Write To Output Ports */
-	write_fifo(&fifo_GrayScaleToGetPx,gray,6);
+	write_fifo_DoubleType(&fifo_GrayScaleToGetPx,gray,6);
 		
+	write_fifo_UInt16(&fifo_GrayScaleX,&offsetX,1);
 	 
-	write_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
+	write_fifo_UInt16(&fifo_GrayScaleY,&offsetY,1);
 	 
-	write_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
-	write_fifo(&fifo_GrayScaleToAbs,dimsOut,2);
+	write_fifo_UInt16(&fifo_GrayScaleToAbs,dimsOut,2);
 		
 	
 }

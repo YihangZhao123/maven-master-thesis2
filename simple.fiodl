@@ -1,13 +1,37 @@
 systemgraph {
+  vertex p3
+  [moc::sdf::SDFActor]
+  (combFunctions, s3_port, s5_port, s6_port)
+  {
+    "production": {
+      "s6_port": 2_i
+    },
+    "consumption": {
+      "s5_port": 2_i,
+      "s3_port": 2_i
+    }
+  }
+  vertex p4
+  [moc::sdf::SDFActor]
+  (combFunctions, s2_port, s4_port, s5_port, s_out_port)
+  {
+    "production": {
+      "s5_port": 1_i
+    },
+    "consumption": {
+      "s4_port": 1_i
+    }
+  }
   vertex p1
   [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
-  (combFunctions, s1_port, s_in_port)
+  (combFunctions, s1_port, s6_port, s_in_port)
   {
     "production": {
       "s1_port": 1_i
     },
     "consumption": {
-      "s_in_port": 1_i
+      "s6_port": 1_i,
+      "s_in_port": 2_i
     },
     "firingSlots": [
       0_i
@@ -15,10 +39,11 @@ systemgraph {
   }
   vertex p2
   [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
-  (combFunctions, s1_port)
+  (combFunctions, s1_port, s2_port, s3_port)
   {
     "production": {
-
+      "s3_port": 1_i,
+      "s2_port": 1_i
     },
     "consumption": {
       "s1_port": 1_i
@@ -29,6 +54,38 @@ systemgraph {
   }
   vertex s1
   [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s2
+  [moc::sdf::SDFChannel]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i
+  }
+  vertex s3
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s4
+  [moc::sdf::SDFChannel]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i
+  }
+  vertex s5
+  [moc::sdf::SDFChannel]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i
+  }
+  vertex s6
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
@@ -82,6 +139,16 @@ systemgraph {
   edge [moc::sdf::SDFDataEdge] from s_in port consumer to p1 port s_in_port
   edge [moc::sdf::SDFDataEdge] from p1 port s1_port to s1 port producer
   edge [moc::sdf::SDFDataEdge] from s1 port consumer to p2 port s1_port
+  edge [moc::sdf::SDFDataEdge] from p2 port s3_port to s3 port producer
+  edge [moc::sdf::SDFDataEdge] from s3 port consumer to p3 port s3_port
+  edge [moc::sdf::SDFDataEdge] from p3 port s6_port to s6 port producer
+  edge [moc::sdf::SDFDataEdge] from s6 port consumer to p1 port s6_port
+  edge [moc::sdf::SDFDataEdge] from p2 port s2_port to s2 port producer
+  edge [moc::sdf::SDFDataEdge] from s2 port consumer to p4 port s2_port
+  edge [moc::sdf::SDFDataEdge] from p4 port s4_port to s4 port producer
+  edge [moc::sdf::SDFDataEdge] from s4 port consumer to p4 port s4_port
+  edge [moc::sdf::SDFDataEdge] from p4 port s5_port to s5 port producer
+  edge [moc::sdf::SDFDataEdge] from s5 port consumer to p3 port s5_port
   edge [typing::datatypes::DataDefinition] from p1Body port outputPortTypes to UInt32 
   edge [moc::AbstractionEdge] from p1 port combFunctions to p1Body 
   edge [moc::AbstractionEdge] from p1Body port s1 to p1 port s1_port

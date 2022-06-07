@@ -1,105 +1,182 @@
-systemgraph {  vertex p1
-  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor]
-  (combFunctions, s1, s6, s_in)
+systemgraph {
+  vertex p1
+  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
+  (combFunctions, s1_port, s_in_port,s6_port)
   {
     "production": {
-      "s1": 1_i
+      "s1_port": 1_i
+    },
+    "consumption": {
+      "s_in_port": 2_i,
+      "s6_port" : 1_i
     },
     "firingSlots": [
-      0_i,
-      4_i
-    ],
-    "consumption": {
-      "s6": 1_i,
-      "s_in": 2_i
-    }
+      0_i
+    ]
   }
+
   vertex p2
-  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor]
-  (combFunctions, s1, s2, s3)
+  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
+  (combFunctions, s1_port, s2_port,s3_port)
   {
     "production": {
-      "s3": 1_i,
-      "s2": 1_i
+      "s2_port": 1_i
+    },
+    "consumption": {
+      "s1_port": 1_i,
+      "s2_port" : 1_i
     },
     "firingSlots": [
-      1_i,
-      5_i
-    ],
-    "consumption": {
-      "s1": 1_i
-    }
+      0_i
+    ]
   }
+
   vertex p3
-  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor]
-  (combFunctions, s3, s5, s6)
+  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
+  (combFunctions, s3_port, s6_port,s5_port)
   {
     "production": {
-      "s6": 2_i
+      "s6_port": 2_i
+    },
+    "consumption": {
+      "s3_port": 2_i,
+      "s5_port" : 2_i
     },
     "firingSlots": [
-      8_i
-    ],
-    "consumption": {
-      "s3": 2_i,
-      "s5": 2_i
-    }
+      0_i
+    ]
   }
+
   vertex p4
-  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor]
-  (combFunctions, s2, s4, s_out)
+  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
+  (combFunctions, s2_port, s4_port,s_out_port)
   {
     "production": {
-      "s4": 1_i,
-      "s_out": 3_i
+      "s_out_port": 3_i,
+      "s4_port": 1_i
+    },
+    "consumption": {
+      "s2_port" : 1_i
     },
     "firingSlots": [
-      2_i,
-      6_i
-    ],
-    "consumption": {
-      "s2": 1_i
-    }
+      0_i
+    ]
   }
+
   vertex p5
-  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor]
-  (combFunctions, s4, s5)
+  [decision::sdf::PASSedSDFActor, moc::sdf::SDFActor, visualization::Visualizable]
+  (combFunctions, s4_port,s5_port)
   {
     "production": {
-      "s5": 1_i
+      "s5_port": 1_i
+    },
+    "consumption": {
+      "s4_port" : 1_i
     },
     "firingSlots": [
-      3_i,
-      7_i
-    ],
-    "consumption": {
-      "s4": 1_i
-    }
+      0_i
+    ]
   }
-  vertex uint32
+
+
+  vertex s1
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s2
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s3
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s4
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s5
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+  vertex s6
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maximumTokens": 1_i
+  }
+
+  vertex s_in
+  [decision::sdf::BoundedSDFChannel, impl::TokenizableDataBlock, moc::sdf::SDFChannel, visualization::Visualizable]
+  (consumer, initialTokenValues, producer)
+  {
+    "numOfInitialTokens": 0_i,
+    "maxSizeInBits": 32_l,
+    "maximumTokens": 1_i,
+    "tokenSizeInBits": 32_l
+  }
+  vertex UInt32
   [typing::datatypes::Integer]
   ()
   {
     "numberOfBits": 32_i
   }
-  vertex p1impl
-  [impl::ANSICBlackBoxExecutable, impl::InstrumentedExecutable, typing::TypedOperation]
-  (portTypes, s1, s6, s_in)
+  vertex p1Body
+  [impl::ANSICBlackBoxExecutable, typing::TypedOperation]
+  (inputPortTypes, outputPortTypes, s1)
   {
-    "inputPorts": [
-      "s_in",
-      "s6"
-    ],
-    "inlinedCode": "s1=s6;",
+    "inlinedCode": "s1 = 5;",
     "outputPorts": [
+      "s1"
+    ],
+    "__outputPortTypes_ordering__": {
+      "UInt32": 0_i
+    },
+    "inputPorts": [
+
+    ]
+  }
+  vertex p2Body
+  [impl::ANSICBlackBoxExecutable, typing::TypedOperation]
+  (inputPortTypes, outputPortTypes, s1)
+  {
+    "__inputPortTypes_ordering__": {
+      "UInt32": 0_i
+    },
+    "inlinedCode": "int c = s1;",
+    "outputPorts": [
+
+    ],
+    "inputPorts": [
       "s1"
     ]
   }
-edge [] from p1 port combFunctions to p1impl 
-edge [] from p1 port s_in to p1impl port s_in
-edge [] from p1 port s6 to p1impl port s6
-edge [] from p1impl port s1 to p1 port s1
-edge [typing::datatypes::DataDefinition] from p1impl port s_in to p1impl 
-edge [typing::datatypes::DataDefinition] from p1impl port s1 to p1impl 
-edge [typing::datatypes::DataDefinition] from p1impl port s6 to p1impl 
+  edge [moc::sdf::SDFDataEdge] from s_in port consumer to p1 port s_in_port
+  edge [moc::sdf::SDFDataEdge] from p1 port s1_port to s1 port producer
+  edge [moc::sdf::SDFDataEdge] from s1 port consumer to p2 port s1_port
+  edge [typing::datatypes::DataDefinition] from p1Body port outputPortTypes to UInt32 
+  edge [moc::AbstractionEdge] from p1 port combFunctions to p1Body 
+  edge [moc::AbstractionEdge] from p1Body port s1 to p1 port s1_port
+  edge [typing::datatypes::DataDefinition] from p2Body port inputPortTypes to UInt32 
+  edge [moc::AbstractionEdge] from p2 port combFunctions to p2Body 
+  edge [moc::AbstractionEdge] from p1 port s1_port to p1Body port s1
+  edge [visualization::VisualConnection] from s_in to p1 
+  edge [visualization::VisualConnection] from p1 to s1 
+  edge [visualization::VisualConnection] from s1 to p2 
 }

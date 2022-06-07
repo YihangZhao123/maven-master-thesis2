@@ -10,11 +10,11 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo fifo_GrayScaleToGetPx;
+extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
 
 /* Output FIFO */
-extern circular_fifo fifo_gysig;
-extern circular_fifo fifo_gxsig;
+extern circular_fifo_DoubleType fifo_gysig;
+extern circular_fifo_DoubleType fifo_gxsig;
 /*
 ========================================
 	Declare Extern Global Variables
@@ -37,7 +37,7 @@ void actor_getPx(){
 	Array6OfDoubleType imgBlockX; 
 	/* Read From Input Port  */
 	int ret=0;
-	read_fifo(&fifo_GrayScaleToGetPx,(void*)gray,6);
+	read_fifo_DoubleType(&fifo_GrayScaleToGetPx, gray,6);
 	
 		
 	/* Inline Code           */
@@ -57,9 +57,9 @@ void actor_getPx(){
 	imgBlockY[5]=gray[5];
 		
 	/* Write To Output Ports */
-	write_fifo(&fifo_gysig,imgBlockY,6);
+	write_fifo_DoubleType(&fifo_gysig,imgBlockY,6);
 		
-	write_fifo(&fifo_gxsig,imgBlockX,6);
+	write_fifo_DoubleType(&fifo_gxsig,imgBlockX,6);
 		
 	
 }

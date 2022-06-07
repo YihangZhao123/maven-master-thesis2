@@ -1,27 +1,59 @@
 #ifndef CIRCULAR_FIFO_LIB_H_
 #define CIRCULAR_FIFO_LIB_H_
 
-	#include "../datatype/datatype_definition.h"
-	#include "../circular_fifo_lib/spinlock.h"	
-	#include <string.h>
-	/*
-	*******************************************************
-				copy by value
-	*******************************************************
-	*/
-	typedef struct{
-		void* buffer;
-		size_t front;
-		size_t rear;
-		size_t capacity; // the max number of token
-		size_t token_size; // size of one token
-		size_t count;
-		
-	}circular_fifo;
-	
-	void init(circular_fifo* fifo_ptr, void* buf, size_t token_number, size_t token_size);
-	void read_fifo(circular_fifo* channel, void* dst, size_t number);
-	void write_fifo(circular_fifo* channel,void* src, size_t number);	
-	void PRINT(circular_fifo * fifo);			
-			
-	#endif
+
+/*
+************************************************************
+This header file defines all the prototype of token types in
+SDFChannels
+************************************************************
+*/
+
+
+#include "../datatype/datatype_definition.h"
+
+#include "spinlock.h"	
+
+/*
+=============================================================
+			If Token type is DoubleType 
+=============================================================
+*/
+typedef struct 
+{
+    DoubleType* buffer;
+    size_t front;
+    size_t rear;
+	size_t size;
+	size_t count;	    
+}circular_fifo_DoubleType;
+
+void init_channel_DoubleType(circular_fifo_DoubleType *channel ,DoubleType* buffer, size_t size);
+
+void read_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* dst, size_t number);
+void write_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* src, size_t number);
+void PRINT_DoubleType(circular_fifo_DoubleType * fifo);
+
+/*
+=============================================================
+			If Token type is UInt16 
+=============================================================
+*/
+typedef struct 
+{
+    UInt16* buffer;
+    size_t front;
+    size_t rear;
+	size_t size;
+	size_t count;	    
+}circular_fifo_UInt16;
+
+void init_channel_UInt16(circular_fifo_UInt16 *channel ,UInt16* buffer, size_t size);
+
+void read_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* dst, size_t number);
+void write_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* src, size_t number);
+void PRINT_UInt16(circular_fifo_UInt16 * fifo);
+
+
+
+#endif

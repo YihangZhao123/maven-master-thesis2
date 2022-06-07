@@ -10,10 +10,10 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo fifo_gysig;
+extern circular_fifo_DoubleType fifo_gysig;
 
 /* Output FIFO */
-extern circular_fifo fifo_absysig;
+extern circular_fifo_DoubleType fifo_absysig;
 /*
 ========================================
 	Declare Extern Global Variables
@@ -34,7 +34,7 @@ void actor_Gy(){
 	Array6OfDoubleType imgBlockY; 
 	/* Read From Input Port  */
 	int ret=0;
-	read_fifo(&fifo_gysig,(void*)imgBlockY,6);
+	read_fifo_DoubleType(&fifo_gysig, imgBlockY,6);
 	
 		
 	/* Inline Code           */
@@ -48,7 +48,7 @@ void actor_Gy(){
 	gy=gy-imgBlockY[5];
 		
 	/* Write To Output Ports */
+	write_fifo_DoubleType(&fifo_absysig,&gy,1);
 	 
-	write_fifo(&fifo_absysig,(void*)&gy,1);
 	
 }

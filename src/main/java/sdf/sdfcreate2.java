@@ -51,15 +51,15 @@ public class sdfcreate2 {
         p1.setProduction(Map.of("s6_port", 2));
         p1.setConsumption(Map.of("s3_port", 2, "s5_port",2));  
         
-        final SDFActor p4 = SDFActor.enforce(model.newVertex("p4"));
-        p1.getPorts().addAll(Set.of("s2_port", "s4_port","s_out_port"));
-        p1.setProduction(Map.of("s4_port", 1,"s_out_port",3));
-        p1.setConsumption(Map.of("s2_port", 1));  
-        
-        final SDFActor p5 = SDFActor.enforce(model.newVertex("p5"));
-        p1.getPorts().addAll(Set.of("s5_port", "s4_port"));
-        p1.setProduction(Map.of("s5_port", 1));
-        p1.setConsumption(Map.of("s4_port", 1));  
+//        final SDFActor p4 = SDFActor.enforce(model.newVertex("p4"));
+//        p1.getPorts().addAll(Set.of("s2_port", "s4_port","s_out_port"));
+//        p1.setProduction(Map.of("s4_port", 1,"s_out_port",3));
+//        p1.setConsumption(Map.of("s2_port", 1));  
+//        
+//        final SDFActor p5 = SDFActor.enforce(model.newVertex("p5"));
+//        p1.getPorts().addAll(Set.of("s5_port", "s4_port"));
+//        p1.setProduction(Map.of("s5_port", 1));
+//        p1.setConsumption(Map.of("s4_port", 1));  
         
  
         
@@ -68,18 +68,16 @@ public class sdfcreate2 {
         sIn.setConsumerPort(model, p1, "s_in_port");
         
         
-//        final SDFChannel s1 = SDFChannel.enforce(model.newVertex("s1"));
-//        model.connect(p1, s1, "s1_port", "producer", EdgeTrait.MOC_SDF_SDFDATAEDGE);    
-//        s1.setConsumerPort(model, p2, "s1_port");
+
         mysdfedgeconnect(model,"s1",p1,"s1_port",p2,"s1_port");
-        mysdfedgeconnect(model,"s2",p2,"s2_port",p4,"s2_port");
+//       mysdfedgeconnect(model,"s2",p2,"s2_port",p4,"s2_port");
         mysdfedgeconnect(model,"s3",p2,"s3_port",p3,"s3_port");
-        mysdfedgeconnect(model,"s4",p4,"s4_port",p5,"s4_port");
-        mysdfedgeconnect(model,"s5",p5,"s5_port",p3,"s5_port");
+//        mysdfedgeconnect(model,"s4",p4,"s4_port",p5,"s4_port");
+//        mysdfedgeconnect(model,"s5",p5,"s5_port",p3,"s5_port");
         mysdfedgeconnect(model,"s6",p3,"s6_port",p1,"s6_port");
  
-        final SDFChannel sOut = SDFChannel.enforce(model.newVertex("s_out"));
-        model.connect(p4, sOut, "s_out_port", "producer", EdgeTrait.MOC_SDF_SDFDATAEDGE);    
+        //final SDFChannel sOut = SDFChannel.enforce(model.newVertex("s_out"));
+       // model.connect(p4, sOut, "s_out_port", "producer", EdgeTrait.MOC_SDF_SDFDATAEDGE);    
         try {
 			(new ForSyDeModelHandler()).writeModel(model,"simple2.fiodl");
 		} catch (Exception e) {

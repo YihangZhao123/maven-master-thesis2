@@ -58,7 +58,7 @@ class demo1 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=2
+		Generator.fifoType=1
 		Generator.platform=1 //1 is uniprocessor, 2 is multi, 3 is rtos
 		 
 		var sdfchannelModule = new SDFChannelProcessingModule

@@ -1,51 +1,94 @@
-/*
-*******************************************************
-			copy by value
-*******************************************************
-*/
 
-#include "../datatype/datatype_definition.h"
-#include "../circular_fifo_lib/circular_fifo_lib.h"
-#include <string.h>
-#include <stdio.h>
-
-void init(circular_fifo* fifo_ptr, void* buf, size_t capacity, size_t token_size){
-	fifo_ptr->buffer=buf;
-	
-	fifo_ptr->front=0;
-	fifo_ptr->rear=0;
-	fifo_ptr->capacity=capacity;
-	fifo_ptr->token_size=token_size;
-	fifo_ptr->count=0;
-}
-
-void read_fifo(circular_fifo* channel, void* dst, size_t number){
-	while(channel->count< number);
-	
-	char* memcpy_dst,*memcpy_src;
-	for(int i=0; i<number;++i){
-		memcpy_dst=(char*)dst+i*channel->token_size;
-		memcpy_src=((char*)channel->buffer+channel->front*channel->token_size);
 		
-		memcpy(memcpy_dst, memcpy_src ,channel->token_size);
-		channel->front= (channel->front+1)%channel->capacity;					
-		--(channel->count);
-	}
-}
-void write_fifo(circular_fifo* channel,void* src, size_t number){
-	char* memcpy_dst,*memcpy_src;
-	for(int i=0; i<number;++i){
+		/*
+		*******************************************************
+			This file contains the function definition for 
+			token types: DoubleType, UInt16
+			For each token type, there are five functions:
+			init_channel_typeName(...)
+			read_non_blocking_typeName(...)
+			read_blocking_typeName(...)
+			write_non_blocking_typeName(...)
+			write_blocking_typeName(...)
+		*******************************************************
+		*/
+		#include "../datatype/datatype_definition.h"
+		#include "circular_fifo_lib.h"
+		#include <string.h>
 		
-		memcpy_dst=(channel->rear*channel->token_size+ (char*)channel->buffer);
-		memcpy_src = (char*)src+i*channel->token_size;
-		memcpy(memcpy_dst, memcpy_src, channel->token_size);
-		
-		channel->rear= (channel->rear+1)%channel->capacity;
-		++(channel->count);
-	}				
-}
-void PRINT(circular_fifo * fifo){
-	printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
-}				
 
+		
+		/*
+		=============================================================
+			DoubleType Channel Definition 
+		=============================================================
+		*/				
+		void init_channel_DoubleType(circular_fifo_DoubleType *channel ,DoubleType* buffer, size_t size){
+		    channel->buffer = buffer;
+		    channel->size=size;
+		    channel->front = 0;
+		    channel->rear = 0;	
+		    channel->count=0;		
+		}
+		void read_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* dst, size_t number){
 			
+			while( channel->count < number );
+			
+			for(int i=0; i<number;++i){
+				dst[i] = channel->buffer[channel->front];
+				channel->front= (channel->front+1)%channel->size;
+				--(channel->count);			
+			}
+		}
+		
+		void write_fifo_DoubleType(circular_fifo_DoubleType* channel,DoubleType* src, size_t number){
+			
+			for(int i=0; i<number; ++i){
+		        channel->buffer[channel->rear] = src[i];
+		     	channel->rear= (channel->rear+1)%channel->size;
+		     	++(channel->count);	
+		    }
+			
+		}
+		void PRINT_DoubleType(circular_fifo_DoubleType * fifo){
+			printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
+		}				
+		
+		
+		/*
+		=============================================================
+			UInt16 Channel Definition 
+		=============================================================
+		*/				
+		void init_channel_UInt16(circular_fifo_UInt16 *channel ,UInt16* buffer, size_t size){
+		    channel->buffer = buffer;
+		    channel->size=size;
+		    channel->front = 0;
+		    channel->rear = 0;	
+		    channel->count=0;		
+		}
+		void read_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* dst, size_t number){
+			
+			while( channel->count < number );
+			
+			for(int i=0; i<number;++i){
+				dst[i] = channel->buffer[channel->front];
+				channel->front= (channel->front+1)%channel->size;
+				--(channel->count);			
+			}
+		}
+		
+		void write_fifo_UInt16(circular_fifo_UInt16* channel,UInt16* src, size_t number){
+			
+			for(int i=0; i<number; ++i){
+		        channel->buffer[channel->rear] = src[i];
+		     	channel->rear= (channel->rear+1)%channel->size;
+		     	++(channel->count);	
+		    }
+			
+		}
+		void PRINT_UInt16(circular_fifo_UInt16 * fifo){
+			printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
+		}				
+		
+		

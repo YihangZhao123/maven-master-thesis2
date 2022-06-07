@@ -34,7 +34,7 @@ public class demo1 {
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
       Generator gen = new Generator(model, root);
-      Generator.fifoType = 2;
+      Generator.fifoType = 1;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
       SDFChannelSrc _sDFChannelSrc = new SDFChannelSrc();
