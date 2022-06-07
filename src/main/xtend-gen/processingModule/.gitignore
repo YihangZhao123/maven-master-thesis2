@@ -5,3 +5,17 @@
 /.Schedule.java._trace
 /.SubsystemMultiprocessorModule.java._trace
 /.SubsystemUniprocessorModule.java._trace
+/.InitProcessingModule.xtendbin
+/.ModuleInterface.xtendbin
+/.SDFChannelProcessingModule.xtendbin
+/.SDFCombProcessingModule.xtendbin
+/.Schedule.xtendbin
+/.SubsystemMultiprocessorModule.xtendbin
+/.SubsystemUniprocessorModule.xtendbin
+/InitProcessingModule.java
+/ModuleInterface.java
+/SDFChannelProcessingModule.java
+/SDFCombProcessingModule.java
+/Schedule.java
+/SubsystemMultiprocessorModule.java
+/SubsystemUniprocessorModule.java
