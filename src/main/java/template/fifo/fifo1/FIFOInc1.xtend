@@ -77,6 +77,10 @@ class FIFOInc1 implements InitTemplate {
 		}circular_fifo_«type»;
 		
 		void init_channel_«type»(circular_fifo_«type» *channel ,«type»* buffer, size_t size);
+		
+«««		void read_fifo_«type»(circular_fifo_«type»* src,«type»* dst, size_t number);
+«««		void write_fifo_«type»(circular_fifo_«type»* dst,«type»* src, size_t number);
+		
 		int read_non_blocking_«type»(circular_fifo_«type»* src,«type»* dst );
 		int read_blocking_«type»(circular_fifo_«type»* src,«type»* dst,spinlock *lock);
 		int write_non_blocking_«type»(circular_fifo_«type»* dst,«type» src );

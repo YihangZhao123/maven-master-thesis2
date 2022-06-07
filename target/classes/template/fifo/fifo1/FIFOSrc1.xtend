@@ -75,6 +75,24 @@ class FIFOSrc1 implements InitTemplate {
 				    channel->front = 0;
 				    channel->rear = 0;			
 				}
+				void read_fifo_«type»(circular_fifo_«type»* src,«type»* dst, size_t number){
+					
+					while(  avaible token number < number );
+					
+					for(int i=0; i<number;++i){
+						*data = channel->buffer[channel->front];
+						channel->front= (channel->front+1)%channel->size;			
+					}
+				}
+				
+				void write_fifo_«type»(circular_fifo_«type»* dst,«type»* src, size_t number){
+					
+					for(int i=0; i<number; ++i){
+				        channel->buffer[channel->rear] = src[i];
+				     	channel->rear= (channel->rear+1)%channel->size;
+				    }
+					
+				}
 				
 						int read_non_blocking_«type»(circular_fifo_«type» *channel, «type» *data){
 							if(channel->front==channel->rear){

@@ -145,6 +145,8 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append(type);
     _builder.append("* buffer, size_t size);");
     _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    _builder.newLine();
     _builder.append("int read_non_blocking_");
     _builder.append(type);
     _builder.append("(circular_fifo_");

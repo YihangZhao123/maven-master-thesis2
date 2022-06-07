@@ -193,11 +193,16 @@ class SDFActorSrc implements ActorTemplate {
 			// var inputPorts = Query.findImplInputPorts(impl)	
 			if (inputPorts !== null) {
 				for (String port : inputPorts) {
-					// println("port-->"+ port)
+					println("port-->"+ port)
 					if (!variableNameRecord.contains(port) && Query.isSystemChannel(model, impl, port) === null) {
-
+						println(actor.getIdentifier())
+						println(impl.getIdentifier()+" "+port)
+						
 						var actorPortName = Query.findActorPortConnectedToImplInputPort(model, actor, impl, port)
 						var sdfchannelName = Query.findInputSDFChannelConnectedToActorPort(model, actor, actorPortName)
+						println(actorPortName)
+						println(sdfchannelName)
+						
 						var datatype = Query.findSDFChannelDataType(model, model.queryVertex(sdfchannelName).get())
 
 						var consumption = SDFActor.safeCast(actor).get().getConsumption().get(actorPortName)

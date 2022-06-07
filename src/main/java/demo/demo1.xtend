@@ -6,6 +6,7 @@ import forsyde.io.java.drivers.ForSyDeModelHandler
 
 
 
+
 import generator.Generator
 
 import template.uniprocessor.SDFChannel.SDFChannelTemplateSrc
@@ -44,6 +45,7 @@ class demo1 {
 //		model.mergeInPlace(loader.loadModel(path2))
 		/* testing example1.fiodl*/
 		val path = "example1-2cores.fiodl"
+		//val path = "simple.fiodl"
 		val root = "generateCode/c/single/single"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)				
