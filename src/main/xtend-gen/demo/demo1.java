@@ -11,14 +11,12 @@ import processingModule.SDFCombProcessingModule;
 import processingModule.SubsystemUniprocessorModule;
 import template.datatype.DataTypeInc;
 import template.datatype.DataTypeSrc;
-import template.fifo.SpinLockTemplateInc;
-import template.fifo.SpinLockTemplateSrc;
 import template.fifo.fifo1.FIFOInc1;
 import template.fifo.fifo1.FIFOSrc1;
-import template.fifo.fifo3.FIFOInc3;
-import template.fifo.fifo3.FIFOSrc3;
+import template.fifo.fifo2.FIFOInc2;
+import template.fifo.fifo2.FIFOSrc2;
 import template.uniprocessor.SDFChannel.SDFChannelInc;
-import template.uniprocessor.SDFChannel.SDFChannelTemplateSrc;
+import template.uniprocessor.SDFChannel.SDFChannelSrc;
 import template.uniprocessor.actor.SDFActorInc;
 import template.uniprocessor.actor.SDFActorSrc;
 import template.uniprocessor.subsystem.SubsystemTemplateInc;
@@ -39,8 +37,8 @@ public class demo1 {
       Generator.fifoType = 2;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
-      SDFChannelTemplateSrc _sDFChannelTemplateSrc = new SDFChannelTemplateSrc();
-      sdfchannelModule.add(_sDFChannelTemplateSrc);
+      SDFChannelSrc _sDFChannelSrc = new SDFChannelSrc();
+      sdfchannelModule.add(_sDFChannelSrc);
       SDFChannelInc _sDFChannelInc = new SDFChannelInc();
       sdfchannelModule.add(_sDFChannelInc);
       gen.add(sdfchannelModule);
@@ -68,21 +66,11 @@ public class demo1 {
         initModule.add(_fIFOSrc1);
       }
       if ((Generator.fifoType == 2)) {
-        FIFOInc3 _fIFOInc3 = new FIFOInc3();
-        initModule.add(_fIFOInc3);
-        FIFOSrc3 _fIFOSrc3 = new FIFOSrc3();
-        initModule.add(_fIFOSrc3);
+        FIFOInc2 _fIFOInc2 = new FIFOInc2();
+        initModule.add(_fIFOInc2);
+        FIFOSrc2 _fIFOSrc2 = new FIFOSrc2();
+        initModule.add(_fIFOSrc2);
       }
-      if ((Generator.fifoType == 3)) {
-        FIFOInc3 _fIFOInc3_1 = new FIFOInc3();
-        initModule.add(_fIFOInc3_1);
-        FIFOSrc3 _fIFOSrc3_1 = new FIFOSrc3();
-        initModule.add(_fIFOSrc3_1);
-      }
-      SpinLockTemplateInc _spinLockTemplateInc = new SpinLockTemplateInc();
-      initModule.add(_spinLockTemplateInc);
-      SpinLockTemplateSrc _spinLockTemplateSrc = new SpinLockTemplateSrc();
-      initModule.add(_spinLockTemplateSrc);
       gen.add(initModule);
       gen.create();
       InputOutput.<String>println("end!");

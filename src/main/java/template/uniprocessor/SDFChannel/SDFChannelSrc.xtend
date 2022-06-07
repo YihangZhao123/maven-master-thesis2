@@ -13,7 +13,7 @@ import utils.Query
  * 
  */
 
-class SDFChannelTemplateSrc implements ChannelTemplate {
+class SDFChannelSrc implements ChannelTemplate {
 	Vertex sdfchannel
 	override savePath() {
 		return "/sdfchannel/sdfchannel_"+this.sdfchannel.getIdentifier()+".c"
@@ -39,10 +39,6 @@ class SDFChannelTemplateSrc implements ChannelTemplate {
 					circular_fifo_«type» fifo_«sdfname»;
 						«ENDIF»
 						«IF Generator.fifoType==2»
-«««					void* buffer_«sdfname»[«maximumTokens+1»];
-«««					size_t buffer_«sdfname»_size = «maximumTokens+1»;
-«««					circular_fifo  fifo_«sdfname»;
-«««					spinlock spinlock_«sdfname»={.flag=0};
 					circular_fifo fifo_«sdfname»;
 					volatile «type» buffer_«sdfname»[«maximumTokens+1»];
 					int channel_«sdfname»_size=«maximumTokens»;

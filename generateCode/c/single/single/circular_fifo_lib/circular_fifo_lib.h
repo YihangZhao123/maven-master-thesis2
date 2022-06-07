@@ -23,5 +23,5 @@
 	void read_fifo(circular_fifo* channel, void* dst, size_t number);
 	void write_fifo(circular_fifo* channel,void* src, size_t number);	
 	void PRINT(circular_fifo * fifo);			
-
-		#endif
+			
+	#endif

@@ -28,7 +28,7 @@ public class SDFChannelInc implements ChannelTemplate {
       _builder.append("_h_ ");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
-      _builder.append("#define ");
+      _builder.append("//#define ");
       String _upperCase_2 = vertex.getIdentifier().toUpperCase();
       _builder.append(_upperCase_2);
       _builder.append("_BLOCKING 0");

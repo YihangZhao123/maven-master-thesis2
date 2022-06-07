@@ -145,9 +145,9 @@ public class FIFOSrc1 implements InitTemplate {
         _builder.newLine();
         _builder.append("=============================================================");
         _builder.newLine();
-        _builder.append("\t\t\t\t");
-        _builder.append(type, "\t\t\t\t");
-        _builder.append(" Channel Definition");
+        _builder.append("\t");
+        _builder.append(type, "\t");
+        _builder.append(" Channel Definition ");
         _builder.newLineIfNotEmpty();
         _builder.append("=============================================================");
         _builder.newLine();

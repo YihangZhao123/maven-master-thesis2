@@ -66,7 +66,7 @@ class FIFOSrc1 implements InitTemplate {
 			«IF ! typeVertex.hasTrait(VertexTrait.TYPING_DATATYPES_ARRAY)»
 				/*
 				=============================================================
-								«type» Channel Definition
+					«type» Channel Definition 
 				=============================================================
 				*/				
 				void init_channel_«type»(circular_fifo_«type» *channel ,«type»* buffer, size_t size){

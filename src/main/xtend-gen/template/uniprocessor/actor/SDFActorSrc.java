@@ -94,35 +94,29 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLine();
       {
         for(final Vertex d : datablock) {
-          _builder.append("\t");
           _builder.append("extern ");
           String _findType = this.findType(model, d);
-          _builder.append(_findType, "\t");
+          _builder.append(_findType);
           _builder.append(" ");
           String _identifier = d.getIdentifier();
-          _builder.append(_identifier, "\t");
+          _builder.append(_identifier);
           _builder.append(";");
           _builder.newLineIfNotEmpty();
         }
       }
       _builder.append("\t");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("/*");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("========================================");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.append("Actor Function");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("========================================");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("*/\t");
       _builder.newLine();
-      _builder.append("\t\t\t");
       _builder.newLine();
       _builder.append("void actor_");
       _builder.append(name);
@@ -133,46 +127,46 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.append("\t");
       _builder.append("/*  initialize memory*/");
       _builder.newLine();
-      _builder.append("\t\t\t\t");
-      _builder.append(ret1, "\t\t\t\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(ret1, "\t");
       _builder.append("\t");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t\t");
-      _builder.append(ret2, "\t\t");
+      _builder.append("\t");
+      _builder.append(ret2, "\t");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t\t");
+      _builder.append("\t");
       _builder.append("/* Read From Input Port  */");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       _builder.append("int ret=0;");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       String _read = this.read(model, actor);
-      _builder.append(_read, "\t\t");
+      _builder.append(_read, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t\t");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       _builder.append("/* Inline Code           */");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       String _inlineCode = this.getInlineCode();
-      _builder.append(_inlineCode, "\t\t");
+      _builder.append(_inlineCode, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       _builder.append("/* Write To Output Ports */");
       _builder.newLine();
-      _builder.append("\t\t");
+      _builder.append("\t");
       String _write = this.write(actor);
-      _builder.append(_write, "\t\t");
+      _builder.append(_write, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();
-      _builder.append("\t");
       _builder.append("}");
       _builder.newLine();
       _xblockexpression = _builder.toString();
@@ -209,30 +203,19 @@ public class SDFActorSrc implements ActorTemplate {
                   _builder.append(_identifier);
                   _builder.append(";");
                   _builder.newLineIfNotEmpty();
-                  _builder.append("extern spinlock spinlock_");
-                  String _identifier_1 = sdf.getIdentifier();
-                  _builder.append(_identifier_1);
-                  _builder.append(";\t");
-                  _builder.newLineIfNotEmpty();
                 }
               }
               {
                 if ((Generator.fifoType == 2)) {
                   _builder.append("extern circular_fifo fifo_");
-                  String _identifier_2 = sdf.getIdentifier();
-                  _builder.append(_identifier_2);
+                  String _identifier_1 = sdf.getIdentifier();
+                  _builder.append(_identifier_1);
                   _builder.append(";");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("extern spinlock spinlock_");
-                  String _identifier_3 = sdf.getIdentifier();
-                  _builder.append(_identifier_3);
-                  _builder.append(";\t");
                   _builder.newLineIfNotEmpty();
                 }
               }
               boolean tmp = record.add(sdf);
               _builder.newLineIfNotEmpty();
-              _builder.newLine();
             }
           }
         }
@@ -240,6 +223,7 @@ public class SDFActorSrc implements ActorTemplate {
           _builder.append("");
         }
       }
+      _builder.newLine();
       _builder.append("/* Output FIFO */");
       _builder.newLine();
       {
@@ -260,13 +244,8 @@ public class SDFActorSrc implements ActorTemplate {
                   String _findSDFChannelDataType_1 = Query.findSDFChannelDataType(Generator.model, sdf_1);
                   _builder.append(_findSDFChannelDataType_1);
                   _builder.append(" fifo_");
-                  String _identifier_4 = sdf_1.getIdentifier();
-                  _builder.append(_identifier_4);
-                  _builder.append(";");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("extern spinlock spinlock_");
-                  String _identifier_5 = sdf_1.getIdentifier();
-                  _builder.append(_identifier_5);
+                  String _identifier_2 = sdf_1.getIdentifier();
+                  _builder.append(_identifier_2);
                   _builder.append(";");
                   _builder.newLineIfNotEmpty();
                 }
@@ -274,13 +253,8 @@ public class SDFActorSrc implements ActorTemplate {
               {
                 if ((Generator.fifoType == 2)) {
                   _builder.append("extern circular_fifo fifo_");
-                  String _identifier_6 = sdf_1.getIdentifier();
-                  _builder.append(_identifier_6);
-                  _builder.append(";");
-                  _builder.newLineIfNotEmpty();
-                  _builder.append("extern spinlock spinlock_");
-                  String _identifier_7 = sdf_1.getIdentifier();
-                  _builder.append(_identifier_7);
+                  String _identifier_3 = sdf_1.getIdentifier();
+                  _builder.append(_identifier_3);
                   _builder.append(";");
                   _builder.newLineIfNotEmpty();
                 }
@@ -419,7 +393,6 @@ public class SDFActorSrc implements ActorTemplate {
                     }
                     {
                       if ((Generator.fifoType == 2)) {
-                        _builder_1.newLine();
                         _builder_1.append("read_fifo(&fifo_");
                         _builder_1.append(sdfchannelName);
                         _builder_1.append(",(void*)&");
@@ -428,10 +401,8 @@ public class SDFActorSrc implements ActorTemplate {
                         _builder_1.append(consumption);
                         _builder_1.append(");");
                         _builder_1.newLineIfNotEmpty();
-                        _builder_1.newLine();
                       }
                     }
-                    _builder_1.newLine();
                     ret = (_ret_1 + _builder_1);
                   } else {
                     String _ret_2 = ret;
@@ -462,8 +433,6 @@ public class SDFActorSrc implements ActorTemplate {
                         _builder_2.newLineIfNotEmpty();
                       }
                     }
-                    _builder_2.append("\t");
-                    _builder_2.newLine();
                     ret = (_ret_2 + _builder_2);
                   }
                 }

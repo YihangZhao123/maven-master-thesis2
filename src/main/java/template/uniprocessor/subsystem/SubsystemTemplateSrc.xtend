@@ -38,10 +38,9 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 			*/	
 			int subsystem(){
 					«FOR set : Generator.uniprocessorSchedule.entrySet() SEPARATOR "" AFTER ""»
-						//printf("%s\n","enter «set.getValue().getIdentifier()»");
-							«IF Generator.TESTING==1&&Generator.PC==1»
-								actor_«set.getValue().getIdentifier()»();
-							«ENDIF»
+						«IF Generator.TESTING==1&&Generator.PC==1»
+							actor_«set.getValue().getIdentifier()»();
+						«ENDIF»
 					«ENDFOR»	
 			}
 			
@@ -62,32 +61,30 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 				
 				/* initialize the channels*/
 					«FOR channel : Generator.sdfchannelSet»
-						«var sdfname=channel.getIdentifier()»
+				«var sdfname=channel.getIdentifier()»
 						«IF Generator.fifoType==1»	
-							init_channel_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size);
+					init_channel_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size);
 						«ENDIF»
 						«IF Generator.fifoType==2»
-							init(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size, sizeof(«Query.findSDFChannelDataType(Generator.model,channel)»));
+					init(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size, sizeof(«Query.findSDFChannelDataType(Generator.model,channel)»));
 						«ENDIF»
-			
 					«ENDFOR»		
 					
 					«FOR channel : Generator.sdfchannelSet»
-				«var sdfchannel=SDFChannel.safeCast(channel).get()»
-				«IF sdfchannel.getNumOfInitialTokens()!==null&&sdfchannel.getNumOfInitialTokens()>0»
+					«var sdfchannel=SDFChannel.safeCast(channel).get()»
+					«IF sdfchannel.getNumOfInitialTokens()!==null&&sdfchannel.getNumOfInitialTokens()>0»
 					«var b = (sdfchannel.getProperties().get("__initialTokenValues_ordering__").unwrap() as HashMap<String,Integer>) »
-					«FOR k:b.keySet()»
-						«IF Generator.fifoType==1»
-							write_fifo_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfchannel.getIdentifier()»,&«k»,1);
-						«ENDIF»
-						«IF Generator.fifoType==2»
-							write_fifo(&fifo_«sdfchannel.getIdentifier()»,(void*)&«k»,1);
-						«ENDIF»
-						
-					«ENDFOR»
-				«ENDIF»
-					«ENDFOR»
-					return 0;
+						«FOR k:b.keySet()»
+							«IF Generator.fifoType==1»
+					write_fifo_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfchannel.getIdentifier()»,&«k»,1);
+							«ENDIF»
+							«IF Generator.fifoType==2»
+					write_fifo(&fifo_«sdfchannel.getIdentifier()»,(void*)&«k»,1);
+							«ENDIF»	
+						«ENDFOR»
+					«ENDIF»
+				«ENDFOR»
+				return 0;
 				}		
 			
 			
@@ -107,15 +104,11 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 					extern circular_fifo_«type» fifo_«sdfname»;
 				«ENDIF»
 				«IF Generator.fifoType==2»	
-					extern void* buffer_«sdfname»[];
+					extern «type» buffer_«sdfname»[];
 					extern size_t buffer_«sdfname»_size;
 					extern circular_fifo fifo_«sdfname»;
 				«ENDIF»
-				«IF Generator.fifoType==3»	
-					extern void* buffer_«sdfname»[];
-					extern size_t buffer_«sdfname»_size;
-					extern circular_fifo fifo_«sdfname»;
-				«ENDIF»
+
 			«ENDFOR»
 		'''
 	}
