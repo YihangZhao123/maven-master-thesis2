@@ -5,6 +5,7 @@
 	#include "semphr.h"
 	#include "timers.h"	
 	#include "queue.h"
+
 	/*
 	==============================================
 	Define Task Stack
@@ -31,6 +32,7 @@
 			Extern Variables
 	==============================================
 	*/
+	extern Array1000OfArrayOfDouble inputImage;
 	
 	/*
 	==============================================
