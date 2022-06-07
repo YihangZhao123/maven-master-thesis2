@@ -5,10 +5,13 @@ import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexAcessor;
 import forsyde.io.java.core.VertexTrait;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
+import forsyde.io.java.typed.viewers.typing.TypedDataBlockViewer;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
+import forsyde.io.java.typed.viewers.typing.datatypes.DataType;
 import generator.Generator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -69,6 +72,7 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLine();
       _builder.append("\t");
       _builder.append("#include \"queue.h\"");
+      _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
       _builder.append("/*");
@@ -190,6 +194,19 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.append("\t");
       _builder.append("*/");
       _builder.newLine();
+      {
+        for(final Vertex datablock : datablocks) {
+          _builder.append("\t");
+          _builder.append("extern ");
+          String _findType = this.findType(model, datablock);
+          _builder.append(_findType, "\t");
+          _builder.append(" ");
+          String _identifier_2 = datablock.getIdentifier();
+          _builder.append(_identifier_2, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
@@ -616,5 +633,15 @@ public class SDFActorSrc implements ActorTemplate {
       }
     }
     return _builder.toString();
+  }
+  
+  public String findType(final ForSyDeSystemGraph model, final Vertex datablock) {
+    Optional<DataType> a = new TypedDataBlockViewer(datablock).getDataTypePort(model);
+    boolean _isPresent = a.isPresent();
+    boolean _not = (!_isPresent);
+    if (_not) {
+      return null;
+    }
+    return a.get().getIdentifier();
   }
 }

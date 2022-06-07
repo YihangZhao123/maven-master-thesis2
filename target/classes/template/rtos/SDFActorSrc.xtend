@@ -13,6 +13,7 @@ import java.util.Set
 import java.util.stream.Collectors
 import template.templateInterface.ActorTemplate
 import utils.Query
+import forsyde.io.java.typed.viewers.typing.TypedDataBlockViewer
 
 class SDFActorSrc implements ActorTemplate {
 	Set<Vertex> implActorSet
@@ -50,6 +51,7 @@ class SDFActorSrc implements ActorTemplate {
 				#include "semphr.h"
 				#include "timers.h"	
 				#include "queue.h"
+
 				/*
 				==============================================
 				Define Task Stack
@@ -81,9 +83,9 @@ class SDFActorSrc implements ActorTemplate {
 						Extern Variables
 				==============================================
 				*/
-«««				«FOR  datablock:datablocks »
-«««				extern 
-«««				«ENDFOR»
+				«FOR  datablock:datablocks »
+				extern «findType( model, datablock)» «datablock.getIdentifier()»;
+				«ENDFOR»
 				
 				/*
 				==============================================
@@ -323,5 +325,13 @@ class SDFActorSrc implements ActorTemplate {
 			«ENDFOR»		
 		'''
 
+	}
+	
+	def String findType(ForSyDeSystemGraph model,Vertex datablock) {
+	    var a =(new TypedDataBlockViewer(datablock)).getDataTypePort(model)
+	    if(!a.isPresent()){
+	    	return null
+	    }
+		return a.get().getIdentifier()
 	}
 }
