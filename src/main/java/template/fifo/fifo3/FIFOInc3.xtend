@@ -27,14 +27,18 @@ class FIFOInc3 implements InitTemplate{
 					void* buffer;
 					size_t front;
 					size_t rear;
-					size_t token_number; // the number of tokens in fifo
+					size_t capacity; // the max number of token
 					size_t token_size; // size of one token
+					size_t count;
 					
 				}circular_fifo;
 				
 				void init(circular_fifo* fifo_ptr, void* buf, size_t token_number, size_t token_size);
-				void read_non_blocking(circular_fifo* fifo_ptr,void* dst);
-				void write_non_blocking(circular_fifo* fifo_ptr,void* src);	
+				void read_fifo(circular_fifo* channel, void* dst, size_t number);
+				void write_fifo(circular_fifo* channel,void* src, size_t number);	
+				void PRINT(circular_fifo * fifo);			
+«««				void read_non_blocking(circular_fifo* fifo_ptr,void* dst);
+«««				void write_non_blocking(circular_fifo* fifo_ptr,void* src);	
 			
 					#endif
 		'''

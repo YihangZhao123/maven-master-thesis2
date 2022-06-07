@@ -39,18 +39,19 @@ class SDFChannelTemplateSrc implements ChannelTemplate {
 					circular_fifo_«type» fifo_«sdfname»;
 						«ENDIF»
 						«IF Generator.fifoType==2»
-					void* buffer_«sdfname»[«maximumTokens+1»];
-					size_t buffer_«sdfname»_size = «maximumTokens+1»;
-					circular_fifo  fifo_«sdfname»;
-					spinlock spinlock_«sdfname»={.flag=0};
+«««					void* buffer_«sdfname»[«maximumTokens+1»];
+«««					size_t buffer_«sdfname»_size = «maximumTokens+1»;
+«««					circular_fifo  fifo_«sdfname»;
+«««					spinlock spinlock_«sdfname»={.flag=0};
+					circular_fifo fifo_«sdfname»;
+					volatile «type» buffer_«sdfname»[«maximumTokens+1»];
+					int channel_«sdfname»_size=«maximumTokens»;
+					/*Because of circular fifo, the buffer_size=channel_size+1 */
+					int buffer_«sdfname»_size = «maximumTokens+1»;
+					//size_t tokenSizeInByte_«sdfname»=  ;
+					
 						«ENDIF»
-						«IF Generator.fifoType==3»
-					void* buffer_«sdfname»[«maximumTokens+1»];
-					size_t buffer_«sdfname»_size = «maximumTokens+1»;
-					//size_t token_size_«sdfname» = 
-					circular_fifo  fifo_«sdfname»;
-					spinlock spinlock_«sdfname»={.flag=0};
-						«ENDIF»
+
 				«ELSE»
 						«IF Generator.fifoType==1»	
 					volatile «type» buffer_«sdfname»[2];
@@ -60,10 +61,11 @@ class SDFChannelTemplateSrc implements ChannelTemplate {
 					circular_fifo_«type» fifo_«sdfname»;
 						«ENDIF»
 						«IF Generator.fifoType==2»
-					void* buffer_«sdfname»[2];
-					size_t buffer_«sdfname»_size = 2;
-					circular_fifo  fifo_«sdfname»;
-					spinlock spinlock_«sdfname»={.flag=0};
+					circular_fifo fifo_«sdfname»;
+					volatile «type» buffer_«sdfname»[2];
+					int channel_«sdfname»_size=1;
+					/*Because of circular fifo, the buffer_size=channel_size+1 */
+					int buffer_«sdfname»_size = 2;
 						«ENDIF»
 				«ENDIF»			
 		'''

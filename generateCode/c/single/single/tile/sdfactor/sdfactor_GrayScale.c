@@ -10,16 +10,16 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_UInt16 fifo_GrayScaleX;
+extern circular_fifo fifo_GrayScaleX;
 extern spinlock spinlock_GrayScaleX;	
 
-extern circular_fifo_UInt16 fifo_GrayScaleY;
+extern circular_fifo fifo_GrayScaleY;
 extern spinlock spinlock_GrayScaleY;	
 
 /* Output FIFO */
-extern circular_fifo_UInt16 fifo_GrayScaleToAbs;
+extern circular_fifo fifo_GrayScaleToAbs;
 extern spinlock spinlock_GrayScaleToAbs;
-extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+extern circular_fifo fifo_GrayScaleToGetPx;
 extern spinlock spinlock_GrayScaleToGetPx;
 /*
 ========================================
@@ -48,24 +48,14 @@ void actor_GrayScale(){
 		UInt16 dimX = dimX_global; 
 		/* Read From Input Port  */
 		int ret=0;
-		#if GRAYSCALEX_BLOCKING==0
-		ret=read_non_blocking_UInt16(&fifo_GrayScaleX,&offsetX);
-		if(ret==-1){
-			//printf("fifo_GrayScaleX read error\n");
-		}
 		
-		#else
-		read_blocking_UInt16(&fifo_GrayScaleX,&offsetX,&spinlock_GrayScaleX);
-		#endif
-		#if GRAYSCALEY_BLOCKING==0
-		ret=read_non_blocking_UInt16(&fifo_GrayScaleY,&offsetY);
-		if(ret==-1){
-			//printf("fifo_GrayScaleY read error\n");
-		}
+		read_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
 		
-		#else
-		read_blocking_UInt16(&fifo_GrayScaleY,&offsetY,&spinlock_GrayScaleY);
-		#endif
+		
+		
+		read_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
+		
+		
 	
 		
 		/* Inline Code           */
@@ -87,31 +77,13 @@ void actor_GrayScale(){
 		dimsOut[1]=dimY;
 		
 		/* Write To Output Ports */
-		for(int i=0;i<6;++i){
-			#if GRAYSCALETOGETPX_BLOCKING==0
-			write_non_blocking_DoubleType(&fifo_GrayScaleToGetPx,gray[i]);
-			#else
-			write_blocking_DoubleType(&fifo_GrayScaleToGetPx,gray[i],&spinlock_GrayScaleToGetPx);
-			#endif
-		}
-		
-		#if GRAYSCALEX_BLOCKING==0
-		write_non_blocking_UInt16(&fifo_GrayScaleX,offsetX);
-		#else
-		write_blocking_UInt16(&fifo_GrayScaleX,offsetX,&spinlock_GrayScaleX);
-		#endif
-		#if GRAYSCALEY_BLOCKING==0
-		write_non_blocking_UInt16(&fifo_GrayScaleY,offsetY);
-		#else
-		write_blocking_UInt16(&fifo_GrayScaleY,offsetY,&spinlock_GrayScaleY);
-		#endif
-		for(int i=0;i<2;++i){
-			#if GRAYSCALETOABS_BLOCKING==0
-			write_non_blocking_UInt16(&fifo_GrayScaleToAbs,dimsOut[i]);
-			#else
-			write_blocking_UInt16(&fifo_GrayScaleToAbs,dimsOut[i],&spinlock_GrayScaleToAbs);
-			#endif
-		}
-		
+		write_fifo(&fifo_GrayScaleToGetPx,gray,6);
+			
+		 
+		write_fifo(&fifo_GrayScaleX,(void*)&offsetX,1);
+		 
+		write_fifo(&fifo_GrayScaleY,(void*)&offsetY,1);
+		write_fifo(&fifo_GrayScaleToAbs,dimsOut,2);
+			
 	
 	}

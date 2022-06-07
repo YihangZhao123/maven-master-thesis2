@@ -10,19 +10,19 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_UInt16 fifo_GrayScaleToAbs;
+extern circular_fifo fifo_GrayScaleToAbs;
 extern spinlock spinlock_GrayScaleToAbs;	
 
-extern circular_fifo_UInt16 fifo_AbsY;
+extern circular_fifo fifo_AbsY;
 extern spinlock spinlock_AbsY;	
 
-extern circular_fifo_UInt16 fifo_AbsX;
+extern circular_fifo fifo_AbsX;
 extern spinlock spinlock_AbsX;	
 
-extern circular_fifo_DoubleType fifo_absysig;
+extern circular_fifo fifo_absysig;
 extern spinlock spinlock_absysig;	
 
-extern circular_fifo_DoubleType fifo_absxsig;
+extern circular_fifo fifo_absxsig;
 extern spinlock spinlock_absxsig;	
 
 /* Output FIFO */
@@ -51,53 +51,24 @@ void actor_Abs(){
 		ArrayXOfArrayXOfDoubleType system_img_sink_address = system_img_sink_global; 
 		/* Read From Input Port  */
 		int ret=0;
-		#if ABSXSIG_BLOCKING==0
-		ret=read_non_blocking_DoubleType(&fifo_absxsig,&resx);
-		if(ret==-1){
-			//printf("fifo_absxsig read error\n");
-		}
 		
-		#else
-		read_blocking_DoubleType(&fifo_absxsig,&resx,&spinlock_absxsig);
-		#endif
-		#if ABSYSIG_BLOCKING==0
-		ret=read_non_blocking_DoubleType(&fifo_absysig,&resy);
-		if(ret==-1){
-			//printf("fifo_absysig read error\n");
-		}
+		read_fifo(&fifo_absxsig,(void*)&resx,1);
 		
-		#else
-		read_blocking_DoubleType(&fifo_absysig,&resy,&spinlock_absysig);
-		#endif
-		for(int i=0;i<2;++i){
-			#if GRAYSCALETOABS_BLOCKING==0
-			ret=read_non_blocking_UInt16(&fifo_GrayScaleToAbs,&dims[i]);
-			if(ret==-1){
-				printf("fifo_GrayScaleToAbs read error\n");
-			}
-			#else
-			read_blocking_UInt16(&fifo_GrayScaleToAbs,&dims[i],&spinlock_GrayScaleToAbs);
-			#endif
-		}
 		
-		#if ABSX_BLOCKING==0
-		ret=read_non_blocking_UInt16(&fifo_AbsX,&offsetX);
-		if(ret==-1){
-			//printf("fifo_AbsX read error\n");
-		}
 		
-		#else
-		read_blocking_UInt16(&fifo_AbsX,&offsetX,&spinlock_AbsX);
-		#endif
-		#if ABSY_BLOCKING==0
-		ret=read_non_blocking_UInt16(&fifo_AbsY,&offsetY);
-		if(ret==-1){
-			//printf("fifo_AbsY read error\n");
-		}
+		read_fifo(&fifo_absysig,(void*)&resy,1);
 		
-		#else
-		read_blocking_UInt16(&fifo_AbsY,&offsetY,&spinlock_AbsY);
-		#endif
+		
+		read_fifo(&fifo_GrayScaleToAbs,(void*)dims,2);
+			
+		
+		read_fifo(&fifo_AbsX,(void*)&offsetX,1);
+		
+		
+		
+		read_fifo(&fifo_AbsY,(void*)&offsetY,1);
+		
+		
 	
 		
 		/* Inline Code           */
@@ -114,15 +85,9 @@ void actor_Abs(){
 		system_img_sink_address[offsetX][offsetY]=resx+resy;
 		
 		/* Write To Output Ports */
-		#if ABSX_BLOCKING==0
-		write_non_blocking_UInt16(&fifo_AbsX,offsetX);
-		#else
-		write_blocking_UInt16(&fifo_AbsX,offsetX,&spinlock_AbsX);
-		#endif
-		#if ABSY_BLOCKING==0
-		write_non_blocking_UInt16(&fifo_AbsY,offsetY);
-		#else
-		write_blocking_UInt16(&fifo_AbsY,offsetY,&spinlock_AbsY);
-		#endif
+		 
+		write_fifo(&fifo_AbsX,(void*)&offsetX,1);
+		 
+		write_fifo(&fifo_AbsY,(void*)&offsetY,1);
 	
 	}

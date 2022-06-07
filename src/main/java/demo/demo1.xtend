@@ -7,6 +7,7 @@ import forsyde.io.java.drivers.ForSyDeModelHandler
 
 
 
+
 import generator.Generator
 
 import template.uniprocessor.SDFChannel.SDFChannelTemplateSrc
@@ -20,8 +21,7 @@ import template.datatype.DataTypeInc
 import template.datatype.DataTypeSrc
 import template.fifo.fifo1.FIFOInc1
 import template.fifo.fifo1.FIFOSrc1
-import template.fifo.fifo2.FIFOInc2
-import template.fifo.fifo2.FIFOSrc2
+
 import template.fifo.fifo3.FIFOInc3
 import template.fifo.fifo3.FIFOSrc3
 import template.fifo.SpinLockTemplateInc
@@ -57,8 +57,8 @@ class demo1 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=1
-		Generator.platform=1
+		Generator.fifoType=2
+		Generator.platform=1 //1 is uniprocessor, 2 is multi, 3 is rtos
 		 
 		var sdfchannelModule = new SDFChannelProcessingModule
 		sdfchannelModule.add(new SDFChannelTemplateSrc)
@@ -88,8 +88,8 @@ class demo1 {
 		
 		
 		if(Generator.fifoType==2){
-			initModule.add(new FIFOInc2)
-			initModule.add(new FIFOSrc2)
+			initModule.add(new FIFOInc3)
+			initModule.add(new FIFOSrc3)
 		}
 		if(Generator.fifoType==3){
 			initModule.add(new FIFOInc3)

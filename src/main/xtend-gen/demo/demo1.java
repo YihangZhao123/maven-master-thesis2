@@ -15,8 +15,6 @@ import template.fifo.SpinLockTemplateInc;
 import template.fifo.SpinLockTemplateSrc;
 import template.fifo.fifo1.FIFOInc1;
 import template.fifo.fifo1.FIFOSrc1;
-import template.fifo.fifo2.FIFOInc2;
-import template.fifo.fifo2.FIFOSrc2;
 import template.fifo.fifo3.FIFOInc3;
 import template.fifo.fifo3.FIFOSrc3;
 import template.uniprocessor.SDFChannel.SDFChannelInc;
@@ -38,7 +36,7 @@ public class demo1 {
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
       Generator gen = new Generator(model, root);
-      Generator.fifoType = 1;
+      Generator.fifoType = 2;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
       SDFChannelTemplateSrc _sDFChannelTemplateSrc = new SDFChannelTemplateSrc();
@@ -70,16 +68,16 @@ public class demo1 {
         initModule.add(_fIFOSrc1);
       }
       if ((Generator.fifoType == 2)) {
-        FIFOInc2 _fIFOInc2 = new FIFOInc2();
-        initModule.add(_fIFOInc2);
-        FIFOSrc2 _fIFOSrc2 = new FIFOSrc2();
-        initModule.add(_fIFOSrc2);
-      }
-      if ((Generator.fifoType == 3)) {
         FIFOInc3 _fIFOInc3 = new FIFOInc3();
         initModule.add(_fIFOInc3);
         FIFOSrc3 _fIFOSrc3 = new FIFOSrc3();
         initModule.add(_fIFOSrc3);
+      }
+      if ((Generator.fifoType == 3)) {
+        FIFOInc3 _fIFOInc3_1 = new FIFOInc3();
+        initModule.add(_fIFOInc3_1);
+        FIFOSrc3 _fIFOSrc3_1 = new FIFOSrc3();
+        initModule.add(_fIFOSrc3_1);
       }
       SpinLockTemplateInc _spinLockTemplateInc = new SpinLockTemplateInc();
       initModule.add(_spinLockTemplateInc);

@@ -57,7 +57,7 @@ class demo2 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=1
+		Generator.fifoType=2
 		Generator.platform=2
 		var sdfchannelModule = new SDFChannelProcessingModule
 		sdfchannelModule.add(new SDFChannelTemplateSrc)
@@ -95,8 +95,8 @@ class demo2 {
 		
 		
 		if(Generator.fifoType==2){
-			initModule.add(new FIFOInc2)
-			initModule.add(new FIFOSrc2)
+			initModule.add(new FIFOInc3)
+			initModule.add(new FIFOSrc3)
 		}
 		if(Generator.fifoType==3){
 			initModule.add(new FIFOInc3)

@@ -10,11 +10,11 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_DoubleType fifo_gysig;
+extern circular_fifo fifo_gysig;
 extern spinlock spinlock_gysig;	
 
 /* Output FIFO */
-extern circular_fifo_DoubleType fifo_absysig;
+extern circular_fifo fifo_absysig;
 extern spinlock spinlock_absysig;
 /*
 ========================================
@@ -35,17 +35,8 @@ void actor_Gy(){
 				Array6OfDoubleType imgBlockY; 
 		/* Read From Input Port  */
 		int ret=0;
-		for(int i=0;i<6;++i){
-			#if GYSIG_BLOCKING==0
-			ret=read_non_blocking_DoubleType(&fifo_gysig,&imgBlockY[i]);
-			if(ret==-1){
-				printf("fifo_gysig read error\n");
-			}
-			#else
-			read_blocking_DoubleType(&fifo_gysig,&imgBlockY[i],&spinlock_gysig);
-			#endif
-		}
-		
+		read_fifo(&fifo_gysig,(void*)imgBlockY,6);
+			
 	
 		
 		/* Inline Code           */
@@ -59,10 +50,7 @@ void actor_Gy(){
 		gy=gy-imgBlockY[5];
 		
 		/* Write To Output Ports */
-		#if ABSYSIG_BLOCKING==0
-		write_non_blocking_DoubleType(&fifo_absysig,gy);
-		#else
-		write_blocking_DoubleType(&fifo_absysig,gy,&spinlock_absysig);
-		#endif
+		 
+		write_fifo(&fifo_absysig,(void*)&gy,1);
 	
 	}

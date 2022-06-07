@@ -86,56 +86,40 @@ public class SDFChannelTemplateSrc implements ChannelTemplate {
           }
           {
             if ((Generator.fifoType == 2)) {
-              _builder.append("void* buffer_");
+              _builder.append("circular_fifo fifo_");
+              _builder.append(sdfname);
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("volatile ");
+              _builder.append(type);
+              _builder.append(" buffer_");
               _builder.append(sdfname);
               _builder.append("[");
               _builder.append(((maximumTokens).intValue() + 1));
               _builder.append("];");
               _builder.newLineIfNotEmpty();
-              _builder.append("size_t buffer_");
+              _builder.append("int channel_");
+              _builder.append(sdfname);
+              _builder.append("_size=");
+              _builder.append(maximumTokens);
+              _builder.append(";");
+              _builder.newLineIfNotEmpty();
+              _builder.append("/*Because of circular fifo, the buffer_size=channel_size+1 */");
+              _builder.newLine();
+              _builder.append("int buffer_");
               _builder.append(sdfname);
               _builder.append("_size = ");
               _builder.append(((maximumTokens).intValue() + 1));
               _builder.append(";");
               _builder.newLineIfNotEmpty();
-              _builder.append("circular_fifo  fifo_");
+              _builder.append("//size_t tokenSizeInByte_");
               _builder.append(sdfname);
-              _builder.append(";");
+              _builder.append("=  ;");
               _builder.newLineIfNotEmpty();
-              _builder.append("spinlock spinlock_");
-              _builder.append(sdfname);
-              _builder.append("={.flag=0};");
-              _builder.newLineIfNotEmpty();
+              _builder.newLine();
             }
           }
-          {
-            if ((Generator.fifoType == 3)) {
-              _builder.append("void* buffer_");
-              _builder.append(sdfname);
-              _builder.append("[");
-              _builder.append(((maximumTokens).intValue() + 1));
-              _builder.append("];");
-              _builder.newLineIfNotEmpty();
-              _builder.append("size_t buffer_");
-              _builder.append(sdfname);
-              _builder.append("_size = ");
-              _builder.append(((maximumTokens).intValue() + 1));
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-              _builder.append("//size_t token_size_");
-              _builder.append(sdfname);
-              _builder.append(" = ");
-              _builder.newLineIfNotEmpty();
-              _builder.append("circular_fifo  fifo_");
-              _builder.append(sdfname);
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-              _builder.append("spinlock spinlock_");
-              _builder.append(sdfname);
-              _builder.append("={.flag=0};");
-              _builder.newLineIfNotEmpty();
-            }
-          }
+          _builder.newLine();
         } else {
           {
             if ((Generator.fifoType == 1)) {
@@ -165,21 +149,25 @@ public class SDFChannelTemplateSrc implements ChannelTemplate {
           }
           {
             if ((Generator.fifoType == 2)) {
-              _builder.append("void* buffer_");
-              _builder.append(sdfname);
-              _builder.append("[2];");
-              _builder.newLineIfNotEmpty();
-              _builder.append("size_t buffer_");
-              _builder.append(sdfname);
-              _builder.append("_size = 2;");
-              _builder.newLineIfNotEmpty();
-              _builder.append("circular_fifo  fifo_");
+              _builder.append("circular_fifo fifo_");
               _builder.append(sdfname);
               _builder.append(";");
               _builder.newLineIfNotEmpty();
-              _builder.append("spinlock spinlock_");
+              _builder.append("volatile ");
+              _builder.append(type);
+              _builder.append(" buffer_");
               _builder.append(sdfname);
-              _builder.append("={.flag=0};");
+              _builder.append("[2];");
+              _builder.newLineIfNotEmpty();
+              _builder.append("int channel_");
+              _builder.append(sdfname);
+              _builder.append("_size=1;");
+              _builder.newLineIfNotEmpty();
+              _builder.append("/*Because of circular fifo, the buffer_size=channel_size+1 */");
+              _builder.newLine();
+              _builder.append("int buffer_");
+              _builder.append(sdfname);
+              _builder.append("_size = 2;");
               _builder.newLineIfNotEmpty();
             }
           }

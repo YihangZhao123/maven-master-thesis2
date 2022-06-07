@@ -10,13 +10,13 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
+extern circular_fifo fifo_GrayScaleToGetPx;
 extern spinlock spinlock_GrayScaleToGetPx;	
 
 /* Output FIFO */
-extern circular_fifo_DoubleType fifo_gysig;
+extern circular_fifo fifo_gysig;
 extern spinlock spinlock_gysig;
-extern circular_fifo_DoubleType fifo_gxsig;
+extern circular_fifo fifo_gxsig;
 extern spinlock spinlock_gxsig;
 /*
 ========================================
@@ -39,17 +39,8 @@ void actor_getPx(){
 				Array6OfDoubleType imgBlockX; 
 		/* Read From Input Port  */
 		int ret=0;
-		for(int i=0;i<6;++i){
-			#if GRAYSCALETOGETPX_BLOCKING==0
-			ret=read_non_blocking_DoubleType(&fifo_GrayScaleToGetPx,&gray[i]);
-			if(ret==-1){
-				printf("fifo_GrayScaleToGetPx read error\n");
-			}
-			#else
-			read_blocking_DoubleType(&fifo_GrayScaleToGetPx,&gray[i],&spinlock_GrayScaleToGetPx);
-			#endif
-		}
-		
+		read_fifo(&fifo_GrayScaleToGetPx,(void*)gray,6);
+			
 	
 		
 		/* Inline Code           */
@@ -69,21 +60,9 @@ void actor_getPx(){
 		imgBlockY[5]=gray[5];
 		
 		/* Write To Output Ports */
-		for(int i=0;i<6;++i){
-			#if GYSIG_BLOCKING==0
-			write_non_blocking_DoubleType(&fifo_gysig,imgBlockY[i]);
-			#else
-			write_blocking_DoubleType(&fifo_gysig,imgBlockY[i],&spinlock_gysig);
-			#endif
-		}
-		
-		for(int i=0;i<6;++i){
-			#if GXSIG_BLOCKING==0
-			write_non_blocking_DoubleType(&fifo_gxsig,imgBlockX[i]);
-			#else
-			write_blocking_DoubleType(&fifo_gxsig,imgBlockX[i],&spinlock_gxsig);
-			#endif
-		}
-		
+		write_fifo(&fifo_gysig,imgBlockY,6);
+			
+		write_fifo(&fifo_gxsig,imgBlockX,6);
+			
 	
 	}

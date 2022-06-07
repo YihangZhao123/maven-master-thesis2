@@ -181,10 +181,15 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
               _builder.append(sdfname, "\t\t");
               _builder.append(",buffer_");
               _builder.append(sdfname, "\t\t");
-              _builder.append("_size);");
+              _builder.append("_size, sizeof(");
+              String _findSDFChannelDataType_1 = Query.findSDFChannelDataType(Generator.model, channel);
+              _builder.append(_findSDFChannelDataType_1, "\t\t");
+              _builder.append("));");
               _builder.newLineIfNotEmpty();
             }
           }
+          _builder.append("\t\t\t");
+          _builder.newLine();
         }
       }
       _builder.append("\t\t");
@@ -202,30 +207,31 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
                 Set<String> _keySet = b.keySet();
                 for(final String k : _keySet) {
                   {
-                    if ((Generator.fifoType == 2)) {
-                      _builder.append("write_non_blocking(&fifo_");
+                    if ((Generator.fifoType == 1)) {
+                      _builder.append("write_fifo_");
+                      String _findSDFChannelDataType_2 = Query.findSDFChannelDataType(Generator.model, channel_1);
+                      _builder.append(_findSDFChannelDataType_2);
+                      _builder.append("(&fifo_");
                       String _identifier_4 = sdfchannel.getIdentifier();
                       _builder.append(_identifier_4);
-                      _builder.append(",(void*)&");
+                      _builder.append(",&");
                       _builder.append(k);
-                      _builder.append(");");
+                      _builder.append(",1);");
                       _builder.newLineIfNotEmpty();
                     }
                   }
                   {
-                    if ((Generator.fifoType == 1)) {
-                      _builder.append("write_non_blocking_");
-                      String _findSDFChannelDataType_1 = Query.findSDFChannelDataType(Generator.model, channel_1);
-                      _builder.append(_findSDFChannelDataType_1);
-                      _builder.append("(&fifo_");
+                    if ((Generator.fifoType == 2)) {
+                      _builder.append("write_fifo(&fifo_");
                       String _identifier_5 = sdfchannel.getIdentifier();
                       _builder.append(_identifier_5);
-                      _builder.append(",");
+                      _builder.append(",(void*)&");
                       _builder.append(k);
-                      _builder.append(");");
+                      _builder.append(",1);");
                       _builder.newLineIfNotEmpty();
                     }
                   }
+                  _builder.newLine();
                 }
               }
             }

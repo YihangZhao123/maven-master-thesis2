@@ -10,11 +10,11 @@ Declare Extern Channal Variables
 ========================================
 */
 /* Input FIFO */
-extern circular_fifo_DoubleType fifo_gxsig;
+extern circular_fifo fifo_gxsig;
 extern spinlock spinlock_gxsig;	
 
 /* Output FIFO */
-extern circular_fifo_DoubleType fifo_absxsig;
+extern circular_fifo fifo_absxsig;
 extern spinlock spinlock_absxsig;
 /*
 ========================================
@@ -35,17 +35,8 @@ void actor_Gx(){
 				Array6OfDoubleType imgBlockX; 
 		/* Read From Input Port  */
 		int ret=0;
-		for(int i=0;i<6;++i){
-			#if GXSIG_BLOCKING==0
-			ret=read_non_blocking_DoubleType(&fifo_gxsig,&imgBlockX[i]);
-			if(ret==-1){
-				printf("fifo_gxsig read error\n");
-			}
-			#else
-			read_blocking_DoubleType(&fifo_gxsig,&imgBlockX[i],&spinlock_gxsig);
-			#endif
-		}
-		
+		read_fifo(&fifo_gxsig,(void*)imgBlockX,6);
+			
 	
 		
 		/* Inline Code           */
@@ -59,10 +50,7 @@ void actor_Gx(){
 		gx=gx+imgBlockX[5];
 		
 		/* Write To Output Ports */
-		#if ABSXSIG_BLOCKING==0
-		write_non_blocking_DoubleType(&fifo_absxsig,gx);
-		#else
-		write_blocking_DoubleType(&fifo_absxsig,gx,&spinlock_absxsig);
-		#endif
+		 
+		write_fifo(&fifo_absxsig,(void*)&gx,1);
 	
 	}

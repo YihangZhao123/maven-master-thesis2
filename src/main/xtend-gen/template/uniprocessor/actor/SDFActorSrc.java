@@ -405,156 +405,64 @@ public class SDFActorSrc implements ActorTemplate {
                     StringConcatenation _builder_1 = new StringConcatenation();
                     {
                       if ((Generator.fifoType == 1)) {
-                        _builder_1.append("#if ");
-                        String _upperCase = sdfchannelName.toUpperCase();
-                        _builder_1.append(_upperCase);
-                        _builder_1.append("_BLOCKING==0");
-                        _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("ret=read_non_blocking_");
+                        _builder_1.append("read_fifo_");
                         _builder_1.append(datatype);
                         _builder_1.append("(&fifo_");
                         _builder_1.append(sdfchannelName);
-                        _builder_1.append(",&");
+                        _builder_1.append(", &");
                         _builder_1.append(port);
+                        _builder_1.append(",");
+                        _builder_1.append(consumption);
                         _builder_1.append(");");
                         _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("if(ret==-1){");
-                        _builder_1.newLine();
-                        _builder_1.append("\t");
-                        _builder_1.append("//printf(\"fifo_");
-                        _builder_1.append(sdfchannelName, "\t");
-                        _builder_1.append(" read error\\n\");");
-                        _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("}");
-                        _builder_1.newLine();
-                        _builder_1.newLine();
-                        _builder_1.append("#else");
-                        _builder_1.newLine();
-                        _builder_1.append("read_blocking_");
-                        _builder_1.append(datatype);
-                        _builder_1.append("(&fifo_");
-                        _builder_1.append(sdfchannelName);
-                        _builder_1.append(",&");
-                        _builder_1.append(port);
-                        _builder_1.append(",&spinlock_");
-                        _builder_1.append(sdfchannelName);
-                        _builder_1.append(");");
-                        _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("#endif");
-                        _builder_1.newLine();
                       }
                     }
                     {
                       if ((Generator.fifoType == 2)) {
-                        _builder_1.append("{");
                         _builder_1.newLine();
-                        _builder_1.append("\t");
-                        _builder_1.append("void* tmp_addr;");
-                        _builder_1.newLine();
-                        _builder_1.append("\t");
-                        _builder_1.append("read_non_blocking(&fifo_");
-                        _builder_1.append(sdfchannelName, "\t");
-                        _builder_1.append(",&tmp_addr);");
+                        _builder_1.append("read_fifo(&fifo_");
+                        _builder_1.append(sdfchannelName);
+                        _builder_1.append(",(void*)&");
+                        _builder_1.append(port);
+                        _builder_1.append(",");
+                        _builder_1.append(consumption);
+                        _builder_1.append(");");
                         _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("\t");
-                        _builder_1.append(port, "\t");
-                        _builder_1.append("= *((");
-                        _builder_1.append(datatype, "\t");
-                        _builder_1.append(" *)tmp_addr);");
-                        _builder_1.newLineIfNotEmpty();
-                        _builder_1.append("}");
                         _builder_1.newLine();
                       }
                     }
-                    {
-                      if ((Generator.fifoType == 3)) {
-                        _builder_1.append("\t");
-                        _builder_1.newLine();
-                      }
-                    }
+                    _builder_1.newLine();
                     ret = (_ret_1 + _builder_1);
                   } else {
                     String _ret_2 = ret;
                     StringConcatenation _builder_2 = new StringConcatenation();
-                    _builder_2.append("for(int i=0;i<");
-                    _builder_2.append(consumption);
-                    _builder_2.append(";++i){");
-                    _builder_2.newLineIfNotEmpty();
                     {
                       if ((Generator.fifoType == 1)) {
-                        _builder_2.append("\t");
-                        _builder_2.append("#if ");
-                        String _upperCase_1 = sdfchannelName.toUpperCase();
-                        _builder_2.append(_upperCase_1, "\t");
-                        _builder_2.append("_BLOCKING==0");
-                        _builder_2.newLineIfNotEmpty();
-                        _builder_2.append("\t");
-                        _builder_2.append("ret=read_non_blocking_");
-                        _builder_2.append(datatype, "\t");
+                        _builder_2.append("read_fifo_");
+                        _builder_2.append(datatype);
                         _builder_2.append("(&fifo_");
-                        _builder_2.append(sdfchannelName, "\t");
-                        _builder_2.append(",&");
-                        _builder_2.append(port, "\t");
-                        _builder_2.append("[i]);");
-                        _builder_2.newLineIfNotEmpty();
-                        _builder_2.append("\t");
-                        _builder_2.append("if(ret==-1){");
-                        _builder_2.newLine();
-                        _builder_2.append("\t");
-                        _builder_2.append("\t");
-                        _builder_2.append("printf(\"fifo_");
-                        _builder_2.append(sdfchannelName, "\t\t");
-                        _builder_2.append(" read error\\n\");");
-                        _builder_2.newLineIfNotEmpty();
-                        _builder_2.append("\t");
-                        _builder_2.append("}");
-                        _builder_2.newLine();
-                        _builder_2.append("\t");
-                        _builder_2.append("#else");
-                        _builder_2.newLine();
-                        _builder_2.append("\t");
-                        _builder_2.append("read_blocking_");
-                        _builder_2.append(datatype, "\t");
-                        _builder_2.append("(&fifo_");
-                        _builder_2.append(sdfchannelName, "\t");
-                        _builder_2.append(",&");
-                        _builder_2.append(port, "\t");
-                        _builder_2.append("[i],&spinlock_");
-                        _builder_2.append(sdfchannelName, "\t");
+                        _builder_2.append(sdfchannelName);
+                        _builder_2.append(", ");
+                        _builder_2.append(port);
+                        _builder_2.append(",");
+                        _builder_2.append(consumption);
                         _builder_2.append(");");
                         _builder_2.newLineIfNotEmpty();
-                        _builder_2.append("\t");
-                        _builder_2.append("#endif");
-                        _builder_2.newLine();
                       }
                     }
                     {
                       if ((Generator.fifoType == 2)) {
-                        _builder_2.append("\t");
-                        _builder_2.append("void* tmp_addr;");
-                        _builder_2.newLine();
-                        _builder_2.append("\t");
-                        _builder_2.append("read_non_blocking(&fifo_");
-                        _builder_2.append(sdfchannelName, "\t");
-                        _builder_2.append(",&tmp_addr);");
-                        _builder_2.newLineIfNotEmpty();
-                        _builder_2.append("\t");
-                        _builder_2.append(port, "\t");
-                        _builder_2.append("[i]= *((");
-                        _builder_2.append(datatype, "\t");
-                        _builder_2.append(" *)tmp_addr);");
+                        _builder_2.append("read_fifo(&fifo_");
+                        _builder_2.append(sdfchannelName);
+                        _builder_2.append(",(void*)");
+                        _builder_2.append(port);
+                        _builder_2.append(",");
+                        _builder_2.append(consumption);
+                        _builder_2.append(");");
                         _builder_2.newLineIfNotEmpty();
                       }
                     }
-                    {
-                      if ((Generator.fifoType == 3)) {
-                        _builder_2.append("\t");
-                        _builder_2.append("\t");
-                        _builder_2.newLine();
-                      }
-                    }
-                    _builder_2.append("}");
-                    _builder_2.newLine();
+                    _builder_2.append("\t");
                     _builder_2.newLine();
                     ret = (_ret_2 + _builder_2);
                   }
@@ -612,110 +520,59 @@ public class SDFActorSrc implements ActorTemplate {
                 StringConcatenation _builder_1 = new StringConcatenation();
                 {
                   if ((Generator.fifoType == 1)) {
-                    _builder_1.append("#if ");
-                    String _upperCase = sdfchannelName.toUpperCase();
-                    _builder_1.append(_upperCase);
-                    _builder_1.append("_BLOCKING==0");
-                    _builder_1.newLineIfNotEmpty();
-                    _builder_1.append("write_non_blocking_");
+                    _builder_1.append("write_fifo_");
                     _builder_1.append(datatype);
                     _builder_1.append("(&fifo_");
                     _builder_1.append(sdfchannelName);
-                    _builder_1.append(",");
+                    _builder_1.append(",&");
                     _builder_1.append(outport);
-                    _builder_1.append(");");
+                    _builder_1.append(",1);");
                     _builder_1.newLineIfNotEmpty();
-                    _builder_1.append("#else");
-                    _builder_1.newLine();
-                    _builder_1.append("write_blocking_");
-                    _builder_1.append(datatype);
-                    _builder_1.append("(&fifo_");
-                    _builder_1.append(sdfchannelName);
-                    _builder_1.append(",");
-                    _builder_1.append(outport);
-                    _builder_1.append(",&spinlock_");
-                    _builder_1.append(sdfchannelName);
-                    _builder_1.append(");");
-                    _builder_1.newLineIfNotEmpty();
-                    _builder_1.append("#endif");
-                    _builder_1.newLine();
                   }
                 }
+                _builder_1.append(" ");
+                _builder_1.newLine();
                 {
                   if ((Generator.fifoType == 2)) {
-                    _builder_1.append("write_non_blocking(&fifo_");
+                    _builder_1.append("write_fifo(&fifo_");
                     _builder_1.append(sdfchannelName);
                     _builder_1.append(",(void*)&");
                     _builder_1.append(outport);
-                    _builder_1.append(");");
+                    _builder_1.append(",1);");
                     _builder_1.newLineIfNotEmpty();
-                  }
-                }
-                {
-                  if ((Generator.fifoType == 3)) {
                   }
                 }
                 ret = (_ret_1 + _builder_1);
               } else {
                 String _ret_2 = ret;
                 StringConcatenation _builder_2 = new StringConcatenation();
-                _builder_2.append("for(int i=0;i<");
-                _builder_2.append(production);
-                _builder_2.append(";++i){");
-                _builder_2.newLineIfNotEmpty();
                 {
                   if ((Generator.fifoType == 1)) {
-                    _builder_2.append("\t");
-                    _builder_2.append("#if ");
-                    String _upperCase_1 = sdfchannelName.toUpperCase();
-                    _builder_2.append(_upperCase_1, "\t");
-                    _builder_2.append("_BLOCKING==0");
-                    _builder_2.newLineIfNotEmpty();
-                    _builder_2.append("\t");
-                    _builder_2.append("write_non_blocking_");
-                    _builder_2.append(datatype, "\t");
+                    _builder_2.append("write_fifo_");
+                    _builder_2.append(datatype);
                     _builder_2.append("(&fifo_");
-                    _builder_2.append(sdfchannelName, "\t");
+                    _builder_2.append(sdfchannelName);
                     _builder_2.append(",");
-                    _builder_2.append(outport, "\t");
-                    _builder_2.append("[i]);");
-                    _builder_2.newLineIfNotEmpty();
-                    _builder_2.append("\t");
-                    _builder_2.append("#else");
-                    _builder_2.newLine();
-                    _builder_2.append("\t");
-                    _builder_2.append("write_blocking_");
-                    _builder_2.append(datatype, "\t");
-                    _builder_2.append("(&fifo_");
-                    _builder_2.append(sdfchannelName, "\t");
+                    _builder_2.append(outport);
                     _builder_2.append(",");
-                    _builder_2.append(outport, "\t");
-                    _builder_2.append("[i],&spinlock_");
-                    _builder_2.append(sdfchannelName, "\t");
+                    _builder_2.append(production);
                     _builder_2.append(");");
                     _builder_2.newLineIfNotEmpty();
-                    _builder_2.append("\t");
-                    _builder_2.append("#endif");
-                    _builder_2.newLine();
                   }
                 }
                 {
                   if ((Generator.fifoType == 2)) {
-                    _builder_2.append("\t");
-                    _builder_2.append("write_non_blocking(&fifo_");
-                    _builder_2.append(sdfchannelName, "\t");
-                    _builder_2.append(",(void*)&");
-                    _builder_2.append(outport, "\t");
-                    _builder_2.append("[i]);\t\t");
+                    _builder_2.append("write_fifo(&fifo_");
+                    _builder_2.append(sdfchannelName);
+                    _builder_2.append(",");
+                    _builder_2.append(outport);
+                    _builder_2.append(",");
+                    _builder_2.append(production);
+                    _builder_2.append(");");
                     _builder_2.newLineIfNotEmpty();
                   }
                 }
-                {
-                  if ((Generator.fifoType == 3)) {
-                  }
-                }
-                _builder_2.append("}");
-                _builder_2.newLine();
+                _builder_2.append("\t");
                 _builder_2.newLine();
                 ret = (_ret_2 + _builder_2);
               }

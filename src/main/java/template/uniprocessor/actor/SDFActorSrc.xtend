@@ -213,49 +213,32 @@ class SDFActorSrc implements ActorTemplate {
 						} else if (consumption == 1) {
 							ret += '''
 								«IF Generator.fifoType==1»
-									#if «sdfchannelName.toUpperCase()»_BLOCKING==0
-									ret=read_non_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»);
-									if(ret==-1){
-										//printf("fifo_«sdfchannelName» read error\n");
-									}
-									
-									#else
-									read_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»,&spinlock_«sdfchannelName»);
-									#endif
+									read_fifo_«datatype»(&fifo_«sdfchannelName», &«port»,«consumption»);
+«««									#if «sdfchannelName.toUpperCase()»_BLOCKING==0
+«««									ret=read_non_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»);
+«««									if(ret==-1){
+«««										//printf("fifo_«sdfchannelName» read error\n");
+«««									}
+«««									
+«««									#else
+«««									read_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»,&spinlock_«sdfchannelName»);
+«««									#endif
 								«ENDIF»
 								«IF Generator.fifoType==2»
-									{
-										void* tmp_addr;
-										read_non_blocking(&fifo_«sdfchannelName»,&tmp_addr);
-										«port»= *((«datatype» *)tmp_addr);
-									}
+
+									read_fifo(&fifo_«sdfchannelName»,(void*)&«port»,«consumption»);
+
 								«ENDIF»
-								«IF Generator.fifoType==3»
-									
-								«ENDIF»
+
 							'''
 						} else {
 							ret += '''
-								for(int i=0;i<«consumption»;++i){
-									«IF Generator.fifoType==1»
-										#if «sdfchannelName.toUpperCase()»_BLOCKING==0
-										ret=read_non_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»[i]);
-										if(ret==-1){
-											printf("fifo_«sdfchannelName» read error\n");
-										}
-										#else
-										read_blocking_«datatype»(&fifo_«sdfchannelName»,&«port»[i],&spinlock_«sdfchannelName»);
-										#endif
-									«ENDIF»
-									«IF Generator.fifoType==2»
-										void* tmp_addr;
-										read_non_blocking(&fifo_«sdfchannelName»,&tmp_addr);
-										«port»[i]= *((«datatype» *)tmp_addr);
-									«ENDIF»
-									«IF Generator.fifoType==3»
-										
-									«ENDIF»
-								}
+							«IF Generator.fifoType==1»
+								read_fifo_«datatype»(&fifo_«sdfchannelName», «port»,«consumption»);
+							«ENDIF»
+							«IF Generator.fifoType==2»
+								read_fifo(&fifo_«sdfchannelName»,(void*)«port»,«consumption»);
+							«ENDIF»
 								
 							'''
 						}
@@ -298,35 +281,22 @@ class SDFActorSrc implements ActorTemplate {
 						'''
 					} else if (production == 1) {
 						ret += '''
-							«IF Generator.fifoType==1»
-								#if «sdfchannelName.toUpperCase()»_BLOCKING==0
-								write_non_blocking_«datatype»(&fifo_«sdfchannelName»,«outport»);
-								#else
-								write_blocking_«datatype»(&fifo_«sdfchannelName»,«outport»,&spinlock_«sdfchannelName»);
-								#endif
-							«ENDIF»
-							«IF Generator.fifoType==2»
-								write_non_blocking(&fifo_«sdfchannelName»,(void*)&«outport»);
-							«ENDIF»	
-							«IF Generator.fifoType==3»
-							«ENDIF»					
+						«IF Generator.fifoType==1»
+						 write_fifo_«datatype»(&fifo_«sdfchannelName»,&«outport»,1);
+						 «ENDIF»
+						 
+						«IF Generator.fifoType==2»
+							write_fifo(&fifo_«sdfchannelName»,(void*)&«outport»,1);
+						«ENDIF»			
 						'''
 					} else {
 						ret += '''
-							for(int i=0;i<«production»;++i){
-								«IF Generator.fifoType==1»
-									#if «sdfchannelName.toUpperCase()»_BLOCKING==0
-									write_non_blocking_«datatype»(&fifo_«sdfchannelName»,«outport»[i]);
-									#else
-									write_blocking_«datatype»(&fifo_«sdfchannelName»,«outport»[i],&spinlock_«sdfchannelName»);
-									#endif
-								«ENDIF»
-								«IF Generator.fifoType==2»
-									write_non_blocking(&fifo_«sdfchannelName»,(void*)&«outport»[i]);		
-								«ENDIF»							
-								«IF Generator.fifoType==3»
-								«ENDIF»
-							}
+						«IF Generator.fifoType==1»
+						write_fifo_«datatype»(&fifo_«sdfchannelName»,«outport»,«production»);
+						«ENDIF»
+						«IF Generator.fifoType==2»
+						write_fifo(&fifo_«sdfchannelName»,«outport»,«production»);
+						«ENDIF»
 							
 						'''
 					}
