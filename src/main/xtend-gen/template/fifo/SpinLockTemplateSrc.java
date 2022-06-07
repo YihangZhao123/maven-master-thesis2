@@ -3,6 +3,7 @@ package template.fifo;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import template.templateInterface.InitTemplate;
 
+@Deprecated
 @SuppressWarnings("all")
 public class SpinLockTemplateSrc implements InitTemplate {
   @Override

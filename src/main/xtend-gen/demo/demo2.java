@@ -17,8 +17,6 @@ import template.baremetal_multi.SubsystemTemplateIncMulti;
 import template.baremetal_multi.SubsystemTemplateSrcMulti;
 import template.datatype.DataTypeInc;
 import template.datatype.DataTypeSrc;
-import template.fifo.SpinLockTemplateInc;
-import template.fifo.SpinLockTemplateSrc;
 import template.fifo.fifo1.FIFOInc1;
 import template.fifo.fifo1.FIFOSrc1;
 import template.fifo.fifo2.FIFOInc2;
@@ -73,10 +71,6 @@ public class demo2 {
         FIFOSrc2 _fIFOSrc2 = new FIFOSrc2();
         initModule.add(_fIFOSrc2);
       }
-      SpinLockTemplateInc _spinLockTemplateInc = new SpinLockTemplateInc();
-      initModule.add(_spinLockTemplateInc);
-      SpinLockTemplateSrc _spinLockTemplateSrc = new SpinLockTemplateSrc();
-      initModule.add(_spinLockTemplateSrc);
       gen.add(initModule);
       gen.create();
       InputOutput.<String>println("end!");

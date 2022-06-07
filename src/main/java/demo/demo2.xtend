@@ -94,9 +94,6 @@ class demo2 {
 	
 		
 		
-		initModule.add(new SpinLockTemplateInc)
-		initModule.add(new SpinLockTemplateSrc)
-
 		
 		
 		gen.add(initModule)
