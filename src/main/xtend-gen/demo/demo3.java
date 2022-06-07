@@ -27,7 +27,7 @@ public class demo3 {
   public static void main(final String[] args) {
     try {
       final String path = "example1-2cores.fiodl";
-      final String root = "generateCode/c/rtos2";
+      final String root = "generateCode/c/rtos_example1";
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
       Generator gen = new Generator(model, root);

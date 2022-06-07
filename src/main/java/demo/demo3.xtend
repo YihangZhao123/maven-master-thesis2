@@ -30,7 +30,7 @@ class demo3 {
 		
 		/* testing example1.fiodl*/
 		val path = "example1-2cores.fiodl"
-		val root = "generateCode/c/rtos2"
+		val root = "generateCode/c/rtos_example1"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)				
 		

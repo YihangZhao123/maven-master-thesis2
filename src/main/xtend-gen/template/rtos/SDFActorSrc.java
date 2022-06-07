@@ -4,15 +4,15 @@ import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
 import forsyde.io.java.core.VertexAcessor;
 import forsyde.io.java.core.VertexTrait;
-import forsyde.io.java.typed.viewers.impl.Executable;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
+import forsyde.io.java.typed.viewers.typing.TypedDataBlockViewer;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
+import forsyde.io.java.typed.viewers.typing.datatypes.DataType;
 import generator.Generator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -72,6 +72,7 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLine();
       _builder.append("\t");
       _builder.append("#include \"queue.h\"");
+      _builder.newLine();
       _builder.newLine();
       _builder.append("\t");
       _builder.append("/*");
@@ -193,6 +194,19 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.append("\t");
       _builder.append("*/");
       _builder.newLine();
+      {
+        for(final Vertex datablock : datablocks) {
+          _builder.append("\t");
+          _builder.append("extern ");
+          String _findType = this.findType(model, datablock);
+          _builder.append(_findType, "\t");
+          _builder.append(" ");
+          String _identifier_2 = datablock.getIdentifier();
+          _builder.append(_identifier_2, "\t");
+          _builder.append(";");
+          _builder.newLineIfNotEmpty();
+        }
+      }
       _builder.append("\t");
       _builder.newLine();
       _builder.append("\t");
@@ -454,10 +468,8 @@ public class SDFActorSrc implements ActorTemplate {
    * copied and modified from method read in SDFCombTemplateSrc class
    */
   public String read(final ForSyDeSystemGraph model, final Vertex actor) {
-    final Function<Executable, Vertex> _function = (Executable e) -> {
-      return e.getViewedVertex();
-    };
-    Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().<Vertex>map(_function).collect(Collectors.<Vertex>toSet());
+    Set<Vertex> impls = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions", 
+      VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexAcessor.VertexPortDirection.OUTGOING);
     Set<String> variableNameRecord = new HashSet<String>();
     String ret = "";
     for (final Vertex impl : impls) {
@@ -621,5 +633,15 @@ public class SDFActorSrc implements ActorTemplate {
       }
     }
     return _builder.toString();
+  }
+  
+  public String findType(final ForSyDeSystemGraph model, final Vertex datablock) {
+    Optional<DataType> a = new TypedDataBlockViewer(datablock).getDataTypePort(model);
+    boolean _isPresent = a.isPresent();
+    boolean _not = (!_isPresent);
+    if (_not) {
+      return null;
+    }
+    return a.get().getIdentifier();
   }
 }

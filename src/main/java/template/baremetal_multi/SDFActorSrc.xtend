@@ -15,7 +15,9 @@ import java.util.Set
 import java.util.stream.Collectors
 import template.templateInterface.ActorTemplate
 import utils.Query
-
+import forsyde.io.java.core.VertexAcessor
+import forsyde.io.java.core.VertexTrait
+import forsyde.io.java.core.VertexAcessor.VertexPortDirection
 
 class SDFActorSrc implements ActorTemplate {
 	Set<Vertex> implActorSet
@@ -28,8 +30,12 @@ class SDFActorSrc implements ActorTemplate {
 	override create(Vertex actor) {
 		val model = Generator.model
 		this.actor=actor
-		implActorSet = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([v|v.getViewedVertex()]).
-			collect(Collectors.toSet())
+		
+//		implActorSet = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([v|v.getViewedVertex()]).
+//			collect(Collectors.toSet())
+		implActorSet = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions",
+			VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexPortDirection.OUTGOING);			
+			
 		this.inputSDFChannelSet = Query.findInputSDFChannels(model, actor)
 		this.outputSDFChannelSet = Query.findOutputSDFChannels(model, actor)
 		var Set<Vertex> datablock
@@ -77,9 +83,6 @@ class SDFActorSrc implements ActorTemplate {
 			
 				
 				/* Inline Code           */
-			«««				«IF Generator.TESTING==1&&Generator.PC==1»
-«««					printf("%s\n","inline code");
-«««				«ENDIF»
 				«getInlineCode()»
 				
 				/* Write To Output Ports */
@@ -179,9 +182,12 @@ class SDFActorSrc implements ActorTemplate {
 	}
 
 	def String read(ForSyDeSystemGraph model, Vertex actor) {
-		var Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([ e |
-			e.getViewedVertex()
-		]).collect(Collectors.toSet())
+//		var Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([ e |
+//			e.getViewedVertex()
+//		]).collect(Collectors.toSet())
+		var Set<Vertex> impls = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions",
+			VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexPortDirection.OUTGOING);	
+			
 		var Set<String> variableNameRecord = new HashSet
 		var String ret = ""
 		for (Vertex impl : impls) {
