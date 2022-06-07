@@ -219,9 +219,13 @@ class SDFActorSrc implements ActorTemplate {
 	 * copied and modified from method read in SDFCombTemplateSrc class
 	 */
 	def String read(ForSyDeSystemGraph model, Vertex actor) {
-		var Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([ e |
-			e.getViewedVertex()
-		]).collect(Collectors.toSet())
+//		var Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().map([ e |
+//			e.getViewedVertex()
+//		]).collect(Collectors.toSet())
+		var Set<Vertex> impls = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions",
+			VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexPortDirection.OUTGOING);
+			
+			
 		var Set<String> variableNameRecord = new HashSet
 		var String ret = ""
 		for (Vertex impl : impls) {

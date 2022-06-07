@@ -28,7 +28,7 @@
 <dependency>
   <groupId>io.github.forsyde</groupId>
   <artifactId>forsyde-io-java-core</artifactId>
-  <version>0.5.8</version>
+  <version>0.5.9</version>
 </dependency>
 </dependencies>
 </project>

@@ -2,7 +2,8 @@ package template.uniprocessor.actor;
 
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
-import forsyde.io.java.typed.viewers.impl.Executable;
+import forsyde.io.java.core.VertexAcessor;
+import forsyde.io.java.core.VertexTrait;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.typing.TypedDataBlockViewer;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
@@ -14,8 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -45,10 +44,8 @@ public class SDFActorSrc implements ActorTemplate {
     {
       final ForSyDeSystemGraph model = Generator.model;
       this.actor = actor;
-      final Function<Executable, Vertex> _function = (Executable v) -> {
-        return v.getViewedVertex();
-      };
-      this.implActorSet = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().<Vertex>map(_function).collect(Collectors.<Vertex>toSet());
+      this.implActorSet = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions", 
+        VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexAcessor.VertexPortDirection.OUTGOING);
       this.inputSDFChannelSet = Query.findInputSDFChannels(model, actor);
       this.outputSDFChannelSet = Query.findOutputSDFChannels(model, actor);
       Set<Vertex> datablock = null;
@@ -97,74 +94,85 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.newLine();
       {
         for(final Vertex d : datablock) {
+          _builder.append("\t");
           _builder.append("extern ");
           String _findType = this.findType(model, d);
-          _builder.append(_findType);
+          _builder.append(_findType, "\t");
           _builder.append(" ");
           String _identifier = d.getIdentifier();
-          _builder.append(_identifier);
+          _builder.append(_identifier, "\t");
           _builder.append(";");
           _builder.newLineIfNotEmpty();
         }
       }
       _builder.append("\t");
       _builder.newLine();
+      _builder.append("\t");
       _builder.append("/*");
       _builder.newLine();
+      _builder.append("\t");
+      _builder.append("========================================");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("Actor Function");
+      _builder.newLine();
+      _builder.append("\t");
       _builder.append("========================================");
       _builder.newLine();
       _builder.append("\t");
-      _builder.append("Actor Function");
-      _builder.newLine();
-      _builder.append("========================================");
-      _builder.newLine();
       _builder.append("*/\t");
       _builder.newLine();
+      _builder.append("\t\t\t");
       _builder.newLine();
       _builder.append("void actor_");
       _builder.append(name);
       _builder.append("(){");
       _builder.newLineIfNotEmpty();
+      _builder.append("\t");
       _builder.newLine();
+      _builder.append("\t");
       _builder.append("/*  initialize memory*/");
       _builder.newLine();
-      _builder.append("\t");
-      _builder.append(ret1, "\t");
+      _builder.append("\t\t\t\t");
+      _builder.append(ret1, "\t\t\t\t");
       _builder.append("\t");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t");
-      _builder.append(ret2, "\t");
+      _builder.append("\t\t");
+      _builder.append(ret2, "\t\t");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t");
+      _builder.append("\t\t");
       _builder.append("/* Read From Input Port  */");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       _builder.append("int ret=0;");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       String _read = this.read(model, actor);
-      _builder.append(_read, "\t");
+      _builder.append(_read, "\t\t");
       _builder.newLineIfNotEmpty();
-      _builder.newLine();
       _builder.append("\t");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
+      _builder.newLine();
+      _builder.append("\t\t");
       _builder.append("/* Inline Code           */");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       String _inlineCode = this.getInlineCode();
-      _builder.append(_inlineCode, "\t");
+      _builder.append(_inlineCode, "\t\t");
       _builder.newLineIfNotEmpty();
-      _builder.append("\t");
+      _builder.append("\t\t");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       _builder.append("/* Write To Output Ports */");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       String _write = this.write(actor);
-      _builder.append(_write, "\t");
+      _builder.append(_write, "\t\t");
       _builder.newLineIfNotEmpty();
+      _builder.append("\t");
       _builder.newLine();
+      _builder.append("\t");
       _builder.append("}");
       _builder.newLine();
       _xblockexpression = _builder.toString();
@@ -358,10 +366,8 @@ public class SDFActorSrc implements ActorTemplate {
   }
   
   public String read(final ForSyDeSystemGraph model, final Vertex actor) {
-    final Function<Executable, Vertex> _function = (Executable e) -> {
-      return e.getViewedVertex();
-    };
-    Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().<Vertex>map(_function).collect(Collectors.<Vertex>toSet());
+    Set<Vertex> impls = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions", 
+      VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexAcessor.VertexPortDirection.OUTGOING);
     Set<String> variableNameRecord = new HashSet<String>();
     String ret = "";
     for (final Vertex impl : impls) {
@@ -453,6 +459,7 @@ public class SDFActorSrc implements ActorTemplate {
                   }
                   {
                     if ((Generator.fifoType == 3)) {
+                      _builder_1.append("\t");
                       _builder_1.newLine();
                     }
                   }
@@ -532,6 +539,7 @@ public class SDFActorSrc implements ActorTemplate {
                   }
                   {
                     if ((Generator.fifoType == 3)) {
+                      _builder_2.append("\t");
                       _builder_2.append("\t");
                       _builder_2.newLine();
                     }

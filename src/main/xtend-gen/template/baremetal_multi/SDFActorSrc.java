@@ -3,7 +3,8 @@ package template.baremetal_multi;
 import com.google.common.base.Objects;
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
-import forsyde.io.java.typed.viewers.impl.Executable;
+import forsyde.io.java.core.VertexAcessor;
+import forsyde.io.java.core.VertexTrait;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.typing.TypedDataBlockViewer;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
@@ -15,8 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -46,10 +45,8 @@ public class SDFActorSrc implements ActorTemplate {
     {
       final ForSyDeSystemGraph model = Generator.model;
       this.actor = actor;
-      final Function<Executable, Vertex> _function = (Executable v) -> {
-        return v.getViewedVertex();
-      };
-      this.implActorSet = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().<Vertex>map(_function).collect(Collectors.<Vertex>toSet());
+      this.implActorSet = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions", 
+        VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexAcessor.VertexPortDirection.OUTGOING);
       this.inputSDFChannelSet = Query.findInputSDFChannels(model, actor);
       this.outputSDFChannelSet = Query.findOutputSDFChannels(model, actor);
       Set<Vertex> datablock = null;
@@ -171,9 +168,9 @@ public class SDFActorSrc implements ActorTemplate {
       _builder.append("\t");
       _builder.append("/* Inline Code           */");
       _builder.newLine();
-      _builder.append("\t\t\t\t");
+      _builder.append("\t");
       String _inlineCode = this.getInlineCode();
-      _builder.append(_inlineCode, "\t\t\t\t");
+      _builder.append(_inlineCode, "\t");
       _builder.newLineIfNotEmpty();
       _builder.append("\t");
       _builder.newLine();
@@ -391,10 +388,8 @@ public class SDFActorSrc implements ActorTemplate {
   }
   
   public String read(final ForSyDeSystemGraph model, final Vertex actor) {
-    final Function<Executable, Vertex> _function = (Executable e) -> {
-      return e.getViewedVertex();
-    };
-    Set<Vertex> impls = SDFActor.safeCast(actor).get().getCombFunctionsPort(model).stream().<Vertex>map(_function).collect(Collectors.<Vertex>toSet());
+    Set<Vertex> impls = VertexAcessor.getMultipleNamedPort(model, actor, "combFunctions", 
+      VertexTrait.IMPL_ANSICBLACKBOXEXECUTABLE, VertexAcessor.VertexPortDirection.OUTGOING);
     Set<String> variableNameRecord = new HashSet<String>();
     String ret = "";
     for (final Vertex impl : impls) {
