@@ -44,7 +44,6 @@ class SDFChannelSrc implements ChannelTemplate {
 					int channel_«sdfname»_size=«maximumTokens»;
 					/*Because of circular fifo, the buffer_size=channel_size+1 */
 					int buffer_«sdfname»_size = «maximumTokens+1»;
-					//size_t tokenSizeInByte_«sdfname»=  ;
 					
 						«ENDIF»
 

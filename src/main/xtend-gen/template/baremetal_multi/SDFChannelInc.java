@@ -33,7 +33,7 @@ public class SDFChannelInc implements ChannelTemplate {
       {
         boolean _isOnOneCoreChannel = Query.isOnOneCoreChannel(Generator.model, vertex);
         if (_isOnOneCoreChannel) {
-          _builder.append("#define ");
+          _builder.append("//#define ");
           String _upperCase_2 = vertex.getIdentifier().toUpperCase();
           _builder.append(_upperCase_2);
           _builder.append("_BLOCKING 0");

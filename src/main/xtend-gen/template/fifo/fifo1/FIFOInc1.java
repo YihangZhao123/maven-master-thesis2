@@ -153,7 +153,7 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append(type);
     _builder.append("(circular_fifo_");
     _builder.append(type);
-    _builder.append("* src,");
+    _builder.append("* channel,");
     _builder.append(type);
     _builder.append("* dst, size_t number);");
     _builder.newLineIfNotEmpty();
@@ -161,7 +161,7 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append(type);
     _builder.append("(circular_fifo_");
     _builder.append(type);
-    _builder.append("* dst,");
+    _builder.append("* channel,");
     _builder.append(type);
     _builder.append("* src, size_t number);");
     _builder.newLineIfNotEmpty();

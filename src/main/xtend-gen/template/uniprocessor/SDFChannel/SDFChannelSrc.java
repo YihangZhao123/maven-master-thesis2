@@ -112,10 +112,6 @@ public class SDFChannelSrc implements ChannelTemplate {
               _builder.append(((maximumTokens).intValue() + 1));
               _builder.append(";");
               _builder.newLineIfNotEmpty();
-              _builder.append("//size_t tokenSizeInByte_");
-              _builder.append(sdfname);
-              _builder.append("=  ;");
-              _builder.newLineIfNotEmpty();
               _builder.newLine();
             }
           }

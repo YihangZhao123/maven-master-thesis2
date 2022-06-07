@@ -268,7 +268,7 @@ class SDFActorSrc implements ActorTemplate {
 						 «ENDIF»
 						 
 						«IF Generator.fifoType==2»
-							write_fifo(&fifo_«sdfchannelName»,(void*)&«outport»,1);
+						write_fifo(&fifo_«sdfchannelName»,(void*)&«outport»,1);
 						«ENDIF»			
 						'''
 					} else {
