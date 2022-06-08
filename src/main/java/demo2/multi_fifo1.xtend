@@ -1,5 +1,4 @@
-package demo
-
+package demo2
 import forsyde.io.java.drivers.ForSyDeModelHandler
 
 import generator.Generator
@@ -23,31 +22,17 @@ import template.fifo.fifo1.FIFOSrc1
 import static generator.Generator.*
 import template.fifo.fifo2.FIFOInc2
 import template.fifo.fifo2.FIFOSrc2
-
-/**
- * multi cores
- */
-class demo2 {
+class multi_fifo1 {
 	def static void main(String[] args) {
-//		val path = "forsyde-io/modified1/complete-mapped-sobel-model.forsyde.xmi";
-//		val path2 = "forsyde-io/modified1/sobel-application.fiodl"
-//		val root = "generateCode/c/multi"
-//		var loader = (new ForSyDeModelHandler)
-//		var model = loader.loadModel(path)
-//		model.mergeInPlace(loader.loadModel(path2))
+
 		
 		
 		/* testing example1.fiodl*/
-		val path = "example1-2cores.fiodl"
-		val root = "generateCode/c/multi_example1"
+		val path = "simple.fiodl"
+		val root = "generateCode/example2/multi_fifo1"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)		
-		
-//		/* testing  test2.fiodl */
-//		val path = "test2.fiodl"
-//		val root = "generateCode/c/multi_test2"
-//		var loader = (new ForSyDeModelHandler)
-//		var model = loader.loadModel(path)		
+
 		
 		
 		var Generator gen = new Generator(model, root)
@@ -101,6 +86,8 @@ class demo2 {
 
 		gen.create()
 
-		println("end!")
-	}
+		println("end!")	
+	
+	
+	}			
 }

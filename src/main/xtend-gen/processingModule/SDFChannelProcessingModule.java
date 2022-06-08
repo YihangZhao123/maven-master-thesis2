@@ -119,6 +119,8 @@ public class SDFChannelProcessingModule implements ModuleInterface {
             Vertex consumer = VertexAcessor.getNamedPort(model, v, "consumer", VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
             if ((consumer != null)) {
               Vertex tile = Query.findTile(Generator.model, consumer);
+              InputOutput.<Vertex>println(consumer);
+              InputOutput.<Vertex>println(tile);
               String _create_2 = t.create(v);
               String _identifier = tile.getIdentifier();
               String _plus_2 = ((Generator.root + "/") + _identifier);

@@ -8,6 +8,8 @@ import forsyde.io.java.typed.viewers.decision.sdf.PASSedSDFActor;
 import forsyde.io.java.typed.viewers.impl.ANSICBlackBoxExecutable;
 import forsyde.io.java.typed.viewers.impl.TokenizableDataBlock;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel;
+import forsyde.io.java.typed.viewers.platform.GenericProcessingModule;
+import forsyde.io.java.typed.viewers.platform.runtime.RoundRobinScheduler;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
 import forsyde.io.java.typed.viewers.typing.datatypes.Array;
@@ -412,6 +414,47 @@ public class SDFCreate {
         
         model.connect(p5, s5, EdgeTrait.VISUALIZATION_VISUALCONNECTION);
         model.connect(s5, p3, EdgeTrait.VISUALIZATION_VISUALCONNECTION);
+        
+        
+        ////////////////////////////////////////create tiles////
+        final GenericProcessingModule tile0 = GenericProcessingModule.enforce(model.newVertex("tile0"));       
+        tile0.getPorts().addAll(Set.of("communication", "contained", "execution"));
+        
+        final GenericProcessingModule tile1 = GenericProcessingModule.enforce(model.newVertex("tile1"));       
+        tile0.getPorts().addAll(Set.of("communication", "contained", "execution"));        
+ 
+        final RoundRobinScheduler order0 = RoundRobinScheduler.enforce(model.newVertex("order_0"));
+        order0.getPorts().addAll(Set.of("contained", "slot_0", "slot_1", "slot_2", "slot_3","slot_4"));
+        
+        final RoundRobinScheduler order1 = RoundRobinScheduler.enforce(model.newVertex("order_1"));
+        order1.getPorts().addAll(Set.of("contained", "slot_0", "slot_1", "slot_2", "slot_3"));      
+        
+        
+        
+        model.connect(tile0, order0,"execution",  EdgeTrait.DECISION_ABSTRACTALLOCATION); 
+        model.connect(tile1, order1,"execution",  EdgeTrait.DECISION_ABSTRACTALLOCATION);
+        
+        model.connect(tile0, order0,"contained",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(tile1, order1,"contained",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+ 
+        
+        
+    /////////////////////////order on multi core///////
+        
+        
+        // the edge trait is not correct. It should be AbstractScheduling, but I did not find
+        // it in EdgeTrait.
+        model.connect(order0,p1,"slot_0",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(order0,p2,"slot_1",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(order0,p1,"slot_2",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(order0,p2,"slot_3",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(order0,p3,"slot_4",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        
+        
+        model.connect(order1,p4,"slot_0",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+        model.connect(order1,p5,"slot_1",  EdgeTrait.VISUALIZATION_VISUALCONTAINMENT); 
+         
+        
         try {
 			(new ForSyDeModelHandler()).writeModel(model,"simple.fiodl");
 		} catch (Exception e) {

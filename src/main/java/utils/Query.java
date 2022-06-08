@@ -82,10 +82,13 @@ public class Query {
 					.filter(v->GenericProcessingModule.conforms(v))
 					.collect(Collectors.toSet());
 			BFSShortestPath<Vertex,EdgeInfo> bfs = new BFSShortestPath<>(model);
-			
+			System.out.println("");
+			System.out.println(tiles);
 			Vertex targetTile=null;
 			for(Vertex tile:tiles) {
 				var a=	bfs.getPath(tile,vertex);
+				System.out.println("path");
+				System.out.println(a);
 				if(a!=null&&a.getLength()==2) {
 					targetTile = tile;
 					return targetTile;
@@ -124,9 +127,9 @@ public class Query {
 		String actorname="";
 		String port;
 		Vertex actor;
-		System.out.println("for sdf channel, find type "+sdfchannel.getIdentifier());
-		System.out.println(inputedge);
-		System.out.println(outputedge);
+		//System.out.println("for sdf channel, find type "+sdfchannel.getIdentifier());
+		//System.out.println(inputedge);
+		//System.out.println(outputedge);
 		try {
 			if (inputedge != null) {
 				// actor's input sdf channel
@@ -141,10 +144,10 @@ public class Query {
 
 				String implName = info.getTarget();
 				String implPort = info.getTargetPort().get();
-				System.out.println("-->"+implPort);
+				//System.out.println("-->"+implPort);
 				var implDataType = findImplPortDataType(model, findVertexByName(model, implName), implPort);
 				Vertex datatypeVertex = findVertexByName(model, implDataType);
-				System.out.println(datatypeVertex);
+				//System.out.println(datatypeVertex);
 				if (!Array.conforms(datatypeVertex)) {
 					return implDataType;
 				} else {
