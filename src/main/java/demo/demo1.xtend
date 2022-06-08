@@ -45,9 +45,10 @@ class demo1 {
 //		var model = loader.loadModel(path)
 //		model.mergeInPlace(loader.loadModel(path2))
 		/* testing example1.fiodl*/
-		val path = "example1-2cores.fiodl"
-		//val path = "simple.fiodl"
-		val root = "generateCode/c/single/single"
+		//val path = "example1-2cores.fiodl"
+		val path = "simple.fiodl"
+		//val root = "generateCode/c/single/single"
+		val root="generateCode/c/single_simple/single"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)				
 		
@@ -58,7 +59,7 @@ class demo1 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=1
+		Generator.fifoType=2
 		Generator.platform=1 //1 is uniprocessor, 2 is multi, 3 is rtos
 		 
 		var sdfchannelModule = new SDFChannelProcessingModule
@@ -97,7 +98,7 @@ class demo1 {
 		
 		//initModule.add(new SpinLockTemplateInc)
 		//initModule.add(new SpinLockTemplateSrc)
-		//initModule.add(new Config)
+
 		
 
 		

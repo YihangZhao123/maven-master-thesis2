@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "./single/tile/subsystem.h"
 #include "./single/datatype/datatype_definition.h"
-#define X 5
-#define Y 5
+#define X 10
+#define Y 10
 UInt16 dimX_global=X;
 UInt16 dimY_global=Y;
 double a[Y][X];

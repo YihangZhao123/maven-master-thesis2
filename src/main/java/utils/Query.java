@@ -124,8 +124,9 @@ public class Query {
 		String actorname="";
 		String port;
 		Vertex actor;
-//		System.out.println(inputedge);
-//		System.out.println(outputedge);
+		System.out.println("for sdf channel, find type "+sdfchannel.getIdentifier());
+		System.out.println(inputedge);
+		System.out.println(outputedge);
 		try {
 			if (inputedge != null) {
 				// actor's input sdf channel
@@ -140,10 +141,10 @@ public class Query {
 
 				String implName = info.getTarget();
 				String implPort = info.getTargetPort().get();
-
+				System.out.println("-->"+implPort);
 				var implDataType = findImplPortDataType(model, findVertexByName(model, implName), implPort);
 				Vertex datatypeVertex = findVertexByName(model, implDataType);
-
+				System.out.println(datatypeVertex);
 				if (!Array.conforms(datatypeVertex)) {
 					return implDataType;
 				} else {
@@ -174,6 +175,7 @@ public class Query {
 				return "<ERROR! "+actorname+" Not Connected To Any ConbFunctions ! >";
 			}			
 		}catch(Exception e){
+			e.printStackTrace();
 			return "<ERROR! "+actorname+" Not Connected To Any ConbFunctions ! >";
 		}
 		

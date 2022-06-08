@@ -29,12 +29,12 @@ import template.uniprocessor.subsystem.SubsystemTemplateSrc;
 public class demo1 {
   public static void main(final String[] args) {
     try {
-      final String path = "example1-2cores.fiodl";
-      final String root = "generateCode/c/single/single";
+      final String path = "simple.fiodl";
+      final String root = "generateCode/c/single_simple/single";
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
       Generator gen = new Generator(model, root);
-      Generator.fifoType = 1;
+      Generator.fifoType = 2;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
       SDFChannelSrc _sDFChannelSrc = new SDFChannelSrc();

@@ -66,7 +66,7 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append("#include \"../datatype/datatype_definition.h\"");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("#include \"spinlock.h\"\t");
+    _builder.append("//#include \"spinlock.h\"\t");
     _builder.newLine();
     _builder.newLine();
     {

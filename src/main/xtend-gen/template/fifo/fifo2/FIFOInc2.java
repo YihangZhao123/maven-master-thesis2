@@ -25,7 +25,7 @@ public class FIFOInc2 implements InitTemplate {
     _builder.append("#include \"../datatype/datatype_definition.h\"");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("#include \"../circular_fifo_lib/spinlock.h\"\t");
+    _builder.append("//#include \"../circular_fifo_lib/spinlock.h\"\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("#include <string.h>");
