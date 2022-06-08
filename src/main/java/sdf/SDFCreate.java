@@ -456,7 +456,7 @@ public class SDFCreate {
          
         
         try {
-			(new ForSyDeModelHandler()).writeModel(model,"simple.fiodl");
+			(new ForSyDeModelHandler()).writeModel(model,"example2.fiodl");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

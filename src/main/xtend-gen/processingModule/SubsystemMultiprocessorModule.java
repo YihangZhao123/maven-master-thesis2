@@ -1,9 +1,13 @@
 package processingModule;
 
+import forsyde.io.java.core.Vertex;
+import forsyde.io.java.typed.viewers.platform.GenericProcessingModule;
 import generator.Generator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import template.templateInterface.SubsystemTemplate;
 import utils.Save;
 
@@ -18,16 +22,15 @@ public class SubsystemMultiprocessorModule implements ModuleInterface {
   
   @Override
   public void create() {
-    final Consumer<Schedule> _function = (Schedule schedule) -> {
-      this.process(schedule);
+    final Predicate<Vertex> _function = (Vertex v) -> {
+      return (GenericProcessingModule.conforms(v)).booleanValue();
     };
-    Generator.multiProcessorSchedules.stream().forEach(_function);
+    Generator.model.vertexSet().stream().filter(_function).collect(Collectors.<Vertex>toSet());
   }
   
-  public void process(final Schedule s) {
-    final Schedule schedule = s;
+  public void process(final Vertex tile) {
     final Consumer<SubsystemTemplate> _function = (SubsystemTemplate t) -> {
-      String _create = t.create(schedule);
+      String _create = t.create(tile);
       String _savePath = t.savePath();
       String _plus = (Generator.root + _savePath);
       Save.save(_create, _plus);

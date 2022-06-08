@@ -2,6 +2,7 @@ package template.uniprocessor.subsystem;
 
 import forsyde.io.java.core.ForSyDeSystemGraph;
 import forsyde.io.java.core.Vertex;
+import forsyde.io.java.core.VertexProperty;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel;
 import forsyde.io.java.typed.viewers.values.IntegerValue;
@@ -10,31 +11,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import processingModule.Schedule;
 import template.templateInterface.SubsystemTemplate;
 import utils.Query;
 
 @SuppressWarnings("all")
 public class SubsystemTemplateSrc implements SubsystemTemplate {
+  private Set<Vertex> sdfactorSet;
+  
+  private TreeMap<Object, Object> uniprocessorSchedule;
+  
   @Override
   public String savePath() {
     return "/tile/subsystem.c";
   }
   
   @Override
-  public String create(final Schedule s) {
+  public String create(final Vertex tile) {
     String _xblockexpression = null;
     {
       ForSyDeSystemGraph model = Generator.model;
       final Predicate<Vertex> _function = (Vertex v) -> {
         return (SDFActor.conforms(v)).booleanValue();
       };
-      Set<Vertex> sdfcomb = model.vertexSet().stream().filter(_function).collect(Collectors.<Vertex>toSet());
+      this.sdfactorSet = model.vertexSet().stream().filter(_function).collect(Collectors.<Vertex>toSet());
       final Predicate<Vertex> _function_1 = (Vertex v) -> {
         return (IntegerValue.conforms(v)).booleanValue();
       };
@@ -48,7 +53,7 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
       _builder.append("#include <stdio.h>");
       _builder.newLine();
       {
-        for(final Vertex v : sdfcomb) {
+        for(final Vertex v : this.sdfactorSet) {
           _builder.append("#include \"./sdfactor/sdfactor_");
           String _identifier = v.getIdentifier();
           _builder.append(_identifier);
@@ -82,16 +87,14 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
           } else {
             _builder.appendImmediate("", "\t\t");
           }
-          {
-            if (((Generator.TESTING == 1) && (Generator.PC == 1))) {
-              _builder.append("\t\t");
-              _builder.append("actor_");
-              String _identifier_1 = set.getValue().getIdentifier();
-              _builder.append(_identifier_1, "\t\t");
-              _builder.append("();");
-              _builder.newLineIfNotEmpty();
-            }
-          }
+          _builder.newLine();
+          _builder.append("\t\t");
+          _builder.append("actor_");
+          String _identifier_1 = set.getValue().getIdentifier();
+          _builder.append(_identifier_1, "\t\t");
+          _builder.append("();");
+          _builder.newLineIfNotEmpty();
+          _builder.newLine();
         }
         if (_hasElements) {
           _builder.append("", "\t\t");
@@ -324,5 +327,28 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
       }
     }
     return _builder.toString();
+  }
+  
+  public void createUniprocessorSchedule() {
+    TreeMap<Object, Object> _treeMap = new TreeMap<Object, Object>();
+    this.uniprocessorSchedule = _treeMap;
+    for (final Vertex actor : this.sdfactorSet) {
+      {
+        ArrayList<Integer> tmp = this.getFiringSlot(actor);
+        for (int i = 0; (i < tmp.size()); i = (i + 1)) {
+          this.uniprocessorSchedule.put(tmp.get(i), actor);
+        }
+      }
+    }
+  }
+  
+  private ArrayList<Integer> getFiringSlot(final Vertex actor) {
+    VertexProperty firingSlots = actor.getProperties().get("firingSlots");
+    if ((firingSlots != null)) {
+      Object _unwrap = firingSlots.unwrap();
+      ArrayList<Integer> slot = ((ArrayList<Integer>) _unwrap);
+      return slot;
+    }
+    return null;
   }
 }

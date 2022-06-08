@@ -1,6 +1,6 @@
 package demo2
-import forsyde.io.java.drivers.ForSyDeModelHandler
 
+import forsyde.io.java.drivers.ForSyDeModelHandler
 import generator.Generator
 import processingModule.InitProcessingModule
 import processingModule.SDFChannelProcessingModule
@@ -14,21 +14,20 @@ import template.baremetal_multi.SubsystemTemplateIncMulti
 import template.baremetal_multi.SubsystemTemplateSrcMulti
 import template.datatype.DataTypeInc
 import template.datatype.DataTypeSrc
-import template.fifo.SpinLockTemplateInc
-import template.fifo.SpinLockTemplateSrc
 import template.fifo.fifo1.FIFOInc1
 import template.fifo.fifo1.FIFOSrc1
-
-import static generator.Generator.*
 import template.fifo.fifo2.FIFOInc2
 import template.fifo.fifo2.FIFOSrc2
+
+import static generator.Generator.*
+
 class multi_fifo1 {
 	def static void main(String[] args) {
 
 		
 		
-		/* testing example1.fiodl*/
-		val path = "simple.fiodl"
+		/* testing example2.fiodl*/
+		val path = "example2.fiodl"
 		val root = "generateCode/example2/multi_fifo1"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)		
@@ -37,15 +36,13 @@ class multi_fifo1 {
 		
 		var Generator gen = new Generator(model, root)
 		Generator.fifoType=1
-		Generator.platform=2
+		Generator.platform=2 //2 is multi
+		
+		
 		var sdfchannelModule = new SDFChannelProcessingModule
 		sdfchannelModule.add(new SDFChannelTemplateSrc)
 		sdfchannelModule.add(new SDFChannelInc)
-	
-		
-		
-		
-		
+
 		gen.add(sdfchannelModule)
 
 		var actorModule = new SDFCombProcessingModule

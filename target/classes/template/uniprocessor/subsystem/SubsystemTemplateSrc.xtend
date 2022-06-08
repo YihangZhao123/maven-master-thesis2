@@ -11,23 +11,34 @@ import utils.Query
 import forsyde.io.java.typed.viewers.values.IntegerValue
 import processingModule.Schedule
 import java.util.ArrayList
+import forsyde.io.java.core.Vertex
+import java.util.TreeMap
+import java.util.Set
 
 class SubsystemTemplateSrc implements SubsystemTemplate {
+	
+	var Set<Vertex> sdfactorSet
+	
+	TreeMap<Object, Object> uniprocessorSchedule
+	
 	override savePath() {
 		return "/tile/subsystem.c"
 	}
 
-	override String create(Schedule s) {
+	override String create(Vertex tile) {
 		var model = Generator.model
-		var sdfcomb = model.vertexSet().stream().filter([v|SDFActor.conforms(v)]).collect(Collectors.toSet())
-
+		this.sdfactorSet = model.vertexSet().stream().filter([v|SDFActor.conforms(v)]).collect(Collectors.toSet())
 		var integerValues = model.vertexSet().stream().filter([v|IntegerValue.conforms(v)]).map([ v |
 			IntegerValue.safeCast(v).get()
 		]).collect(Collectors.toSet())
+		
+	
+		
+		
 		'''
 			#include "subsystem.h"
 			#include <stdio.h>
-			«FOR v : sdfcomb»
+			«FOR v : sdfactorSet»
 				#include "./sdfactor/sdfactor_«v.getIdentifier()».h"
 			«ENDFOR»
 			#include "../datatype/datatype_definition.h"
@@ -39,9 +50,9 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 			*/	
 			int subsystem(){
 					«FOR set : Generator.uniprocessorSchedule.entrySet() SEPARATOR "" AFTER ""»
-						«IF Generator.TESTING==1&&Generator.PC==1»
+
 							actor_«set.getValue().getIdentifier()»();
-						«ENDIF»
+
 					«ENDFOR»	
 			}
 			
@@ -144,5 +155,30 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 			«ENDFOR»
 		'''
 	}
+	
+	
+	def void createUniprocessorSchedule(){
+		this.uniprocessorSchedule = new TreeMap
+		//var Set<Integer> tmp = new HashSet;
+		
+		for(Vertex actor: this.sdfactorSet){
+			
+			var tmp=getFiringSlot(actor)
+			for(var int i =0; i < tmp.size; i =i+1){
+				this.uniprocessorSchedule.put(tmp.get(i),actor)
+			}
+			//Generator.uniprocessorSchedule.put(getFiringSlot(actor),actor)
+		}
 
+	}	
+	private def ArrayList<Integer>  getFiringSlot(Vertex actor){
+		var firingSlots=actor.getProperties().get("firingSlots")
+		if(firingSlots!==null){
+			
+			var slot = firingSlots.unwrap() as ArrayList<Integer>
+			//return slot.get(0)
+			return slot;
+		}
+		return null;
+	}
 }

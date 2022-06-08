@@ -19,7 +19,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import processingModule.Schedule;
 import template.templateInterface.SubsystemTemplate;
 import utils.MyPair;
 import utils.Name;
@@ -27,8 +26,6 @@ import utils.Query;
 
 @SuppressWarnings("all")
 public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
-  private Schedule s;
-  
   private Vertex tile;
   
   private Vertex order;
@@ -36,13 +33,12 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
   private List<Vertex> slots = new ArrayList<Vertex>();
   
   @Override
-  public String create(final Schedule schedule) {
+  public String create(final Vertex tile) {
     String _xblockexpression = null;
     {
-      this.s = schedule;
-      this.tile = schedule.tile;
+      this.tile = tile;
       ForSyDeSystemGraph model = Generator.model;
-      this.order = this.findOrder(model, this.tile);
+      this.order = this.findOrder(model, tile);
       Set<String> _ports = this.order.getPorts();
       TreeSet<String> ports = new TreeSet<String>(_ports);
       ports.remove("contained");
@@ -57,7 +53,7 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
       }
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("#include \"subsystem_");
-      String _identifier = this.s.tile.getIdentifier();
+      String _identifier = tile.getIdentifier();
       _builder.append(_identifier);
       _builder.append(".h\"");
       _builder.newLineIfNotEmpty();
@@ -70,13 +66,13 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
       _builder.newLine();
       _builder.newLine();
       _builder.append("void subsystem_");
-      String _identifier_1 = this.tile.getIdentifier();
+      String _identifier_1 = tile.getIdentifier();
       _builder.append(_identifier_1);
       _builder.append("(){");
       _builder.newLineIfNotEmpty();
       {
         boolean _hasElements = false;
-        for(final Vertex actor : schedule.slots) {
+        for(final Vertex actor : this.slots) {
           if (!_hasElements) {
             _hasElements = true;
           } else {
@@ -115,7 +111,7 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
       _builder.newLine();
       _builder.newLine();
       _builder.append("int init_");
-      String _identifier_4 = this.tile.getIdentifier();
+      String _identifier_4 = tile.getIdentifier();
       _builder.append(_identifier_4);
       _builder.append("(){");
       _builder.newLineIfNotEmpty();
@@ -125,38 +121,37 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
       _builder.append("\t");
       _builder.append("xil_printf(\"tile initialization starts\\n\");");
       _builder.newLine();
-      _builder.append("\t\t\t");
+      _builder.append("\t");
+      _builder.newLine();
       _builder.append("/* extern */");
       _builder.newLine();
       _builder.append("\t");
-      String _extern = this.extern(model, this.tile);
+      String _extern = this.extern(model, tile);
       _builder.append(_extern, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("/* Create the channels*/");
       _builder.newLine();
       _builder.append("\t");
-      String _createChannel = this.createChannel(model, this.tile);
+      String _createChannel = this.createChannel(model, tile);
       _builder.append(_createChannel, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("/* SDF Delays */");
       _builder.newLine();
       _builder.append("\t");
-      String _sdfdelay = this.sdfdelay(model, this.tile);
+      String _sdfdelay = this.sdfdelay(model, tile);
       _builder.append(_sdfdelay, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("/*wait util all other fifos are created*/");
       _builder.newLine();
       _builder.append("\t");
-      String _wait = this.wait(model, this.tile);
+      String _wait = this.wait(model, tile);
       _builder.append(_wait, "\t");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
-      _builder.append("\t\t\t");
-      _builder.newLine();
-      _builder.append("\t\t\t\t");
+      _builder.append("\t");
       _builder.append("xil_printf(\"tile initialization ends\\n\");\t\t\t\t");
       _builder.newLine();
       _builder.append("\t");
@@ -689,10 +684,10 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
   
   @Override
   public String savePath() {
-    String _identifier = this.s.tile.getIdentifier();
+    String _identifier = this.tile.getIdentifier();
     String _plus = ("/" + _identifier);
     String _plus_1 = (_plus + "/subsystem_");
-    String _identifier_1 = this.s.tile.getIdentifier();
+    String _identifier_1 = this.tile.getIdentifier();
     String _plus_2 = (_plus_1 + _identifier_1);
     return (_plus_2 + ".c");
   }

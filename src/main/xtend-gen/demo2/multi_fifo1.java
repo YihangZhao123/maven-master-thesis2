@@ -26,7 +26,7 @@ import template.fifo.fifo2.FIFOSrc2;
 public class multi_fifo1 {
   public static void main(final String[] args) {
     try {
-      final String path = "simple.fiodl";
+      final String path = "example2.fiodl";
       final String root = "generateCode/example2/multi_fifo1";
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
