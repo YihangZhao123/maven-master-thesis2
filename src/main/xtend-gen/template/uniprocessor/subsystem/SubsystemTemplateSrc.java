@@ -24,7 +24,7 @@ import utils.Query;
 public class SubsystemTemplateSrc implements SubsystemTemplate {
   private Set<Vertex> sdfactorSet;
   
-  private TreeMap<Object, Object> uniprocessorSchedule;
+  private TreeMap<Integer, Vertex> uniprocessorSchedule;
   
   @Override
   public String savePath() {
@@ -47,6 +47,7 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
         return IntegerValue.safeCast(v).get();
       };
       Set<IntegerValue> integerValues = model.vertexSet().stream().filter(_function_1).<IntegerValue>map(_function_2).collect(Collectors.<IntegerValue>toSet());
+      this.createUniprocessorSchedule();
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("#include \"subsystem.h\"");
       _builder.newLine();
@@ -79,7 +80,7 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
       _builder.append("int subsystem(){");
       _builder.newLine();
       {
-        Set<Map.Entry<Integer, Vertex>> _entrySet = Generator.uniprocessorSchedule.entrySet();
+        Set<Map.Entry<Integer, Vertex>> _entrySet = this.uniprocessorSchedule.entrySet();
         boolean _hasElements = false;
         for(final Map.Entry<Integer, Vertex> set : _entrySet) {
           if (!_hasElements) {
@@ -330,7 +331,7 @@ public class SubsystemTemplateSrc implements SubsystemTemplate {
   }
   
   public void createUniprocessorSchedule() {
-    TreeMap<Object, Object> _treeMap = new TreeMap<Object, Object>();
+    TreeMap<Integer, Vertex> _treeMap = new TreeMap<Integer, Vertex>();
     this.uniprocessorSchedule = _treeMap;
     for (final Vertex actor : this.sdfactorSet) {
       {

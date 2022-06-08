@@ -17,9 +17,9 @@ import java.util.Set
 
 class SubsystemTemplateSrc implements SubsystemTemplate {
 	
-	var Set<Vertex> sdfactorSet
+	Set<Vertex> sdfactorSet
 	
-	TreeMap<Object, Object> uniprocessorSchedule
+	TreeMap<Integer, Vertex>  uniprocessorSchedule
 	
 	override savePath() {
 		return "/tile/subsystem.c"
@@ -33,7 +33,7 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 		]).collect(Collectors.toSet())
 		
 	
-		
+		createUniprocessorSchedule()		
 		
 		'''
 			#include "subsystem.h"
@@ -49,7 +49,7 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 			==============================================
 			*/	
 			int subsystem(){
-					«FOR set : Generator.uniprocessorSchedule.entrySet() SEPARATOR "" AFTER ""»
+					«FOR set : uniprocessorSchedule.entrySet() SEPARATOR "" AFTER ""»
 
 							actor_«set.getValue().getIdentifier()»();
 
@@ -167,7 +167,7 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 			for(var int i =0; i < tmp.size; i =i+1){
 				this.uniprocessorSchedule.put(tmp.get(i),actor)
 			}
-			//Generator.uniprocessorSchedule.put(getFiringSlot(actor),actor)
+
 		}
 
 	}	
