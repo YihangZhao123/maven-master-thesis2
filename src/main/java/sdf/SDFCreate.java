@@ -156,24 +156,25 @@ public class SDFCreate {
         p5pass.setFiringSlots(List.of(3,7));
 
         final BoundedSDFChannel sInBounded = BoundedSDFChannel.enforce(sIn);
-        sInBounded.setMaximumTokens(5);
+        sInBounded.setMaximumTokens(10);
 
         final BoundedSDFChannel s1Bounded = BoundedSDFChannel.enforce(s1);
-        s1Bounded.setMaximumTokens(5);
+        s1Bounded.setMaximumTokens(1);
         
         final BoundedSDFChannel s2Bounded = BoundedSDFChannel.enforce(s2);
-        s2Bounded.setMaximumTokens(5);      
+        s2Bounded.setMaximumTokens(1);      
         
         final BoundedSDFChannel s3Bounded = BoundedSDFChannel.enforce(s3);
-        s3Bounded.setMaximumTokens(5);      
+        s3Bounded.setMaximumTokens(2);      
  
         final BoundedSDFChannel s4Bounded = BoundedSDFChannel.enforce(s4);
-        s4Bounded.setMaximumTokens(5);  
+        s4Bounded.setMaximumTokens(1);  
         
         final BoundedSDFChannel s5Bounded = BoundedSDFChannel.enforce(s5);
-        s5Bounded.setMaximumTokens(5);   
+        s5Bounded.setMaximumTokens(2);   
         
-        
+        final BoundedSDFChannel s6Bounded = BoundedSDFChannel.enforce(s6);
+        s6Bounded.setMaximumTokens(2);          
 //////////////////////////////////////////////////////////////////////////////////////////////////////
         // now lets put some types and code
         final Integer uint32Type = Integer.enforce(model.newVertex("UInt32"));

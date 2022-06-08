@@ -82,45 +82,46 @@ systemgraph {
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
-    "maximumTokens": 5_i
+    "maximumTokens": 1_i
   }
   vertex s2
   [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
-    "maximumTokens": 5_i
+    "maximumTokens": 1_i
   }
   vertex s3
   [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
-    "maximumTokens": 5_i
+    "maximumTokens": 2_i
   }
   vertex s4
   [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
-    "maximumTokens": 5_i
+    "maximumTokens": 1_i
   }
   vertex s5
   [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 0_i,
-    "maximumTokens": 5_i
+    "maximumTokens": 2_i
   }
   vertex s6
-  [moc::sdf::SDFChannel, visualization::Visualizable]
+  [decision::sdf::BoundedSDFChannel, moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
     "numOfInitialTokens": 2_i,
     "__initialTokenValues_ordering__": {
       "ZeroValue2": 1_i,
       "ZeroValue1": 0_i
-    }
+    },
+    "maximumTokens": 2_i
   }
   vertex s_in
   [decision::sdf::BoundedSDFChannel, impl::TokenizableDataBlock, moc::sdf::SDFChannel, visualization::Visualizable]
@@ -128,7 +129,7 @@ systemgraph {
   {
     "numOfInitialTokens": 0_i,
     "maxSizeInBits": 32_l,
-    "maximumTokens": 5_i,
+    "maximumTokens": 10_i,
     "tokenSizeInBits": 32_l
   }
   vertex UInt32

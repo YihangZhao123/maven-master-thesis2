@@ -30,11 +30,11 @@ public class demo1 {
   public static void main(final String[] args) {
     try {
       final String path = "simple.fiodl";
-      final String root = "generateCode/c/single_simple/single";
+      final String root = "generateCode/c/single_simple_fifo1/single";
       ForSyDeModelHandler loader = new ForSyDeModelHandler();
       ForSyDeSystemGraph model = loader.loadModel(path);
       Generator gen = new Generator(model, root);
-      Generator.fifoType = 2;
+      Generator.fifoType = 1;
       Generator.platform = 1;
       SDFChannelProcessingModule sdfchannelModule = new SDFChannelProcessingModule();
       SDFChannelSrc _sDFChannelSrc = new SDFChannelSrc();

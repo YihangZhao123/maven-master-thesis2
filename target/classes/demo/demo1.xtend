@@ -48,7 +48,7 @@ class demo1 {
 		//val path = "example1-2cores.fiodl"
 		val path = "simple.fiodl"
 		//val root = "generateCode/c/single/single"
-		val root="generateCode/c/single_simple/single"
+		val root="generateCode/c/single_simple_fifo1/single"
 		var loader = (new ForSyDeModelHandler)
 		var model = loader.loadModel(path)				
 		
@@ -59,7 +59,7 @@ class demo1 {
 		
 		
 		var Generator gen = new Generator(model, root)
-		Generator.fifoType=2
+		Generator.fifoType=1
 		Generator.platform=1 //1 is uniprocessor, 2 is multi, 3 is rtos
 		 
 		var sdfchannelModule = new SDFChannelProcessingModule
