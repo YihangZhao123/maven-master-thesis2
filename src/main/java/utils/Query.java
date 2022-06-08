@@ -39,13 +39,35 @@ import generator.Generator;
 import java.lang.Math;
 
 public class Query {
+	public static MyPair findSrcAndSnkTileOfChannel(ForSyDeSystemGraph model,Vertex channel) {
+		var inputActor=VertexAcessor.getNamedPort(model,channel,"producer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
+		var outputActor = VertexAcessor.getNamedPort(model,channel,"consumer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
+		// if the fifo is external fifo, then, by default , it is on-one-core fifo
+		
 
+		
+		
+		if(inputActor==null||outputActor==null) {
+				if(inputActor!=null) {
+					return new MyPair( findTile(model,inputActor)  ,null);
+				}
+				if(outputActor!=null) {
+					return new MyPair( null,findTile(model,outputActor));
+				}
+		}
+		
+		
+		return new MyPair(findTile(model,inputActor),findTile(model,outputActor));
+	}
+	
+	
+	
 	public static boolean isOnOneCoreChannel(ForSyDeSystemGraph model,Vertex channel) {
 		var inputActor=VertexAcessor.getNamedPort(model,channel,"producer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
 		var outputActor = VertexAcessor.getNamedPort(model,channel,"consumer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
-		// if the fifo is external fifo, then, ny default , it is on-one-core fifo
+		// if the fifo is external fifo, then, by default , it is on-one-core fifo
 		if(inputActor==null||outputActor==null) {
-			return true;
+				return true;
 		}
 		
 		

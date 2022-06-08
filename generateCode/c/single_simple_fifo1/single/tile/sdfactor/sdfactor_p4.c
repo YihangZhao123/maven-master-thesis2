@@ -40,11 +40,11 @@ void actor_p4(){
 	/* Inline Code           */
 	/* in combFunction p4Body */
 	s4=s2;
-	int out[3];
+	intout[3];
 	out[0]=s2;
 	out[1]=s2+1;
 	out[2]=s2+2;
-	printf("out: %d, %d, %d\n",out[0],out[1],out[2]);
+		
 	/* Write To Output Ports */
 	write_fifo_UInt32(&fifo_s4,&s4,1);
 	 

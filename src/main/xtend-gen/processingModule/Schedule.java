@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class Schedule {
@@ -104,25 +103,5 @@ public class Schedule {
       Generator.model, 
       this.tile, 
       "execution", a).orElse(null);
-  }
-  
-  public void print() {
-    String _identifier = this.tile.getIdentifier();
-    String _plus = ("tile: " + _identifier);
-    InputOutput.<String>println(_plus);
-    if ((this.order == null)) {
-      InputOutput.<String>println("order null");
-    } else {
-      String _identifier_1 = this.order.getIdentifier();
-      String _plus_1 = ("order : " + _identifier_1);
-      InputOutput.<String>println(_plus_1);
-    }
-    for (final Vertex v : this.slots) {
-      if ((v == null)) {
-        InputOutput.<String>println("null");
-      } else {
-        InputOutput.<String>println(v.getIdentifier());
-      }
-    }
   }
 }
