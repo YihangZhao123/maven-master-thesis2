@@ -39,7 +39,7 @@ void actor_p5(){
 		
 	/* Inline Code           */
 	/* in combFunction p5Body */
-	;
+	s5=s4+1;
 		
 	/* Write To Output Ports */
 	 

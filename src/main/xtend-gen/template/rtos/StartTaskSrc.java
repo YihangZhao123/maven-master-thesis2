@@ -6,12 +6,14 @@ import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.moc.sdf.SDFChannel;
 import forsyde.io.java.typed.viewers.values.IntegerValue;
 import generator.Generator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import template.templateInterface.InitTemplate;
 import utils.Query;
 
@@ -239,18 +241,15 @@ public class StartTaskSrc implements InitTemplate {
           _builder.newLineIfNotEmpty();
           {
             if (((sdfchannel_2.getNumOfInitialTokens() != null) && ((sdfchannel_2.getNumOfInitialTokens()).intValue() > 0))) {
-              Object _unwrap = sdfchannel_2.getProperties().get("__initialTokenValues_ordering__").unwrap();
-              HashMap<String, Integer> b = ((HashMap<String, Integer>) _unwrap);
-              _builder.append("\t\t\t\t\t");
+              ArrayList<String> delays = this.inithelp(sdfchannel_2);
               _builder.newLineIfNotEmpty();
               {
-                Set<String> _keySet = b.keySet();
-                for(final String k : _keySet) {
+                for(final String delay : delays) {
                   _builder.append("xQueueSend(msg_queue_");
                   String _identifier_2 = sdfchannel_2.getIdentifier();
                   _builder.append(_identifier_2);
                   _builder.append(",&");
-                  _builder.append(k);
+                  _builder.append(delay);
                   _builder.append(",portMAX_DELAY);");
                   _builder.newLineIfNotEmpty();
                 }
@@ -470,5 +469,25 @@ public class StartTaskSrc implements InitTemplate {
       _xblockexpression = _builder.toString();
     }
     return _xblockexpression;
+  }
+  
+  public ArrayList<String> inithelp(final SDFChannel sdfchannel) {
+    Integer numOfInitialToken = sdfchannel.getNumOfInitialTokens();
+    Object _unwrap = sdfchannel.getProperties().get("__initialTokenValues_ordering__").unwrap();
+    HashMap<String, Integer> delays = ((HashMap<String, Integer>) _unwrap);
+    ArrayList<String> delayValueList = new ArrayList<String>();
+    for (int i = 0; (i < (numOfInitialToken).intValue()); i = (i + 1)) {
+      delayValueList.add("");
+    }
+    Set<String> _keySet = delays.keySet();
+    for (final String k : _keySet) {
+      {
+        Integer _get = delays.get(k);
+        String _plus = ("->" + _get);
+        InputOutput.<String>println(_plus);
+        delayValueList.set((delays.get(k)).intValue(), k);
+      }
+    }
+    return delayValueList;
   }
 }

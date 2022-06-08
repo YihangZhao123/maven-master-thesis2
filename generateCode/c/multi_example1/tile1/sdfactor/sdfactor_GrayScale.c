@@ -12,18 +12,12 @@
 	*/
 	/* Input FIFO */
 	extern circular_fifo_UInt16 fifo_GrayScaleX;
-	extern spinlock spinlock_GrayScaleX;
-	
 	extern circular_fifo_UInt16 fifo_GrayScaleY;
-	extern spinlock spinlock_GrayScaleY;
-	
 	/* Output FIFO */
 	extern volatile cheap const fifo_admin_GrayScaleToAbs;
 	extern volatile UInt16 * const fifo_data_GrayScaleToAbs;	
 					
 	extern circular_fifo_DoubleType fifo_GrayScaleToGetPx;
-	extern spinlock spinlock_GrayScaleToGetPx;
-	
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -51,24 +45,8 @@ UInt16 dimX = dimX_global;
 	
 	/* Read From Input Port  */
 				int ret=0;
-	#if GRAYSCALEX_BLOCKING==0
-	ret=read_non_blocking_UInt16(&fifo_GrayScaleX,&offsetX);
-	if(ret==-1){
-		//printf("fifo_GrayScaleX read error\n");
-	}
-	
-	#else
-	read_blocking_UInt16(&fifo_GrayScaleX,&offsetX,&spinlock_GrayScaleX);
-	#endif
-	#if GRAYSCALEY_BLOCKING==0
-	ret=read_non_blocking_UInt16(&fifo_GrayScaleY,&offsetY);
-	if(ret==-1){
-		//printf("fifo_GrayScaleY read error\n");
-	}
-	
-	#else
-	read_blocking_UInt16(&fifo_GrayScaleY,&offsetY,&spinlock_GrayScaleY);
-	#endif
+	read_fifo_UInt16(&fifo_GrayScaleX, &offsetX,1);
+	read_fifo_UInt16(&fifo_GrayScaleY, &offsetY,1);
 
 	
 	/* Inline Code           */
@@ -90,23 +68,10 @@ UInt16 dimX = dimX_global;
 	dimsOut[1]=dimY;
 	
 	/* Write To Output Ports */
-				for(int i=0;i<6;++i){
-					#if GRAYSCALETOGETPX_BLOCKING==0
-					write_non_blocking_DoubleType(&fifo_GrayScaleToGetPx,gray[i]);
-					#else
-					write_blocking_DoubleType(&fifo_GrayScaleToGetPx,gray[i],&spinlock_GrayScaleToGetPx);
-					#endif
-				}
-				#if GRAYSCALEX_BLOCKING==0
-				write_non_blocking_UInt16(&fifo_GrayScaleX,offsetX);
-				#else
-				write_blocking_UInt16(&fifo_GrayScaleX,offsetX,&spinlock_GrayScaleX);
-				#endif
-				#if GRAYSCALEY_BLOCKING==0
-				write_non_blocking_UInt16(&fifo_GrayScaleY,offsetY);
-				#else
-				write_blocking_UInt16(&fifo_GrayScaleY,offsetY,&spinlock_GrayScaleY);
-				#endif
+				
+				write_fifo_DoubleType(&fifo_GrayScaleToGetPx,gray,6);
+				write_fifo_UInt16(&fifo_GrayScaleX,&offsetX,1);
+				write_fifo_UInt16(&fifo_GrayScaleY,&offsetY,1);
 				{
 					volatile UInt16 *tmp_ptrs[2];
 					while ((cheap_claim_spaces (fifo_admin_GrayScaleToAbs, (volatile void **) &tmp_ptrs[0], 2)) < 2)

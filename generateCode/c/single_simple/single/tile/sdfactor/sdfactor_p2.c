@@ -41,7 +41,8 @@ void actor_p2(){
 		
 	/* Inline Code           */
 	/* in combFunction p2Body */
-	intc=s1;
+	s2=s1;
+	s3=s1+1;
 		
 	/* Write To Output Ports */
 	 

@@ -62,9 +62,9 @@ int init_tile1(){
 	
 	/*Initialize the channel */
 
-	write_non_blocking_UInt16(&fifo_GrayScaleX,ZeroValue);
+	write_fifo_UInt16(&fifo_GrayScaleX,&ZeroValue,1);
 
-	write_non_blocking_UInt16(&fifo_GrayScaleY,ZeroValue);
+	write_fifo_UInt16(&fifo_GrayScaleY,&ZeroValue,1);
 	
 	/* wait util other channels are created*/
 	xil_printf("tile initialization ends\n");				

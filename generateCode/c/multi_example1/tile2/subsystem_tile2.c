@@ -35,18 +35,18 @@ int init_tile2(){
 	extern DoubleType buffer_absxsig[];
 	extern int buffer_absxsig_size;
 	extern circular_fifo_DoubleType fifo_absxsig;
-	extern cheap fifo_admin_GrayScaleToAbs;
-	extern volatile UInt16 * const fifo_data_GrayScaleToAbs;
-	extern unsigned int buffer_GrayScaleToAbs_size;
-	extern unsigned int token_GrayScaleToAbs_size;
-	extern cheap fifo_admin_gysig;
-	extern volatile DoubleType * const fifo_data_gysig;
-	extern unsigned int buffer_gysig_size;
-	extern unsigned int token_gysig_size;
-	extern cheap fifo_admin_gxsig;
-	extern volatile DoubleType * const fifo_data_gxsig;
-	extern unsigned int buffer_gxsig_size;
-	extern unsigned int token_gxsig_size;
+extern cheap fifo_admin_GrayScaleToAbs;
+extern volatile UInt16 * const fifo_data_GrayScaleToAbs;
+extern unsigned int buffer_GrayScaleToAbs_size;
+extern unsigned int token_GrayScaleToAbs_size;
+extern cheap fifo_admin_gysig;
+extern volatile DoubleType * const fifo_data_gysig;
+extern unsigned int buffer_gysig_size;
+extern unsigned int token_gysig_size;
+extern cheap fifo_admin_gxsig;
+extern volatile DoubleType * const fifo_data_gxsig;
+extern unsigned int buffer_gxsig_size;
+extern unsigned int token_gxsig_size;
 /* Create the channels*/
 	init_channel_UInt16(&fifo_AbsY,buffer_AbsY,buffer_AbsY_size);
 	init_channel_UInt16(&fifo_AbsX,buffer_AbsX,buffer_AbsX_size);
@@ -55,9 +55,9 @@ int init_tile2(){
 	
 	/*Initialize the channel */
 
-	write_non_blocking_UInt16(&fifo_AbsY,ZeroValue);
+	write_fifo_UInt16(&fifo_AbsY,&ZeroValue,1);
 
-	write_non_blocking_UInt16(&fifo_AbsX,ZeroValue);
+	write_fifo_UInt16(&fifo_AbsX,&ZeroValue,1);
 	
 	/* wait util other channels are created*/
 	while (cheap_get_buffer_capacity (fifo_admin_GrayScaleToAbs) == 0); 

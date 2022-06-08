@@ -10,6 +10,7 @@ import forsyde.io.java.typed.viewers.moc.sdf.SDFActor
 import utils.Query
 import forsyde.io.java.typed.viewers.values.IntegerValue
 import processingModule.Schedule
+import java.util.ArrayList
 
 class SubsystemTemplateSrc implements SubsystemTemplate {
 	override savePath() {
@@ -61,34 +62,65 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 				
 				/* initialize the channels*/
 					«FOR channel : Generator.sdfchannelSet»
-				«var sdfname=channel.getIdentifier()»
-						«IF Generator.fifoType==1»	
-					init_channel_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size);
+					«var sdfname=channel.getIdentifier()»
+							«IF Generator.fifoType==1»	
+						init_channel_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size);
 						«ENDIF»
 						«IF Generator.fifoType==2»
-					init(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size, sizeof(«Query.findSDFChannelDataType(Generator.model,channel)»));
-						«ENDIF»
-					«ENDFOR»		
-					
-					«FOR channel : Generator.sdfchannelSet»
-					«var sdfchannel=SDFChannel.safeCast(channel).get()»
-					«IF sdfchannel.getNumOfInitialTokens()!==null&&sdfchannel.getNumOfInitialTokens()>0»
-					«var b = (sdfchannel.getProperties().get("__initialTokenValues_ordering__").unwrap() as HashMap<String,Integer>) »
-						«FOR k:b.keySet()»
-							«IF Generator.fifoType==1»
-					write_fifo_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfchannel.getIdentifier()»,&«k»,1);
+							init(&fifo_«sdfname»,buffer_«sdfname»,buffer_«sdfname»_size, sizeof(«Query.findSDFChannelDataType(Generator.model,channel)»));
 							«ENDIF»
-							«IF Generator.fifoType==2»
-					write_fifo(&fifo_«sdfchannel.getIdentifier()»,(void*)&«k»,1);
-							«ENDIF»	
+						«ENDFOR»		
+						
+						«FOR channel : Generator.sdfchannelSet»
+							«var sdfchannel=SDFChannel.safeCast(channel).get()»
+							«IF sdfchannel.getNumOfInitialTokens()!==null&&sdfchannel.getNumOfInitialTokens()>0»
+							«var delayValueList=inithelp(sdfchannel) »
+							«FOR delay:delayValueList»
+								«IF Generator.fifoType==1»
+									write_fifo_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfchannel.getIdentifier()»,&«delay»,1);
+								«ENDIF»
+								«IF Generator.fifoType==2»
+									write_fifo(&fifo_«sdfchannel.getIdentifier()»,(void*)&«delay»,1);
+								«ENDIF»								
+							«ENDFOR»
+							«ENDIF»
+«««							«IF sdfchannel.getNumOfInitialTokens()!==null&&sdfchannel.getNumOfInitialTokens()>0»
+«««								«var b = (sdfchannel.getProperties().get("__initialTokenValues_ordering__").unwrap() as HashMap<String,Integer>) »
+«««									«FOR k:b.keySet()»
+«««										«IF Generator.fifoType==1»
+«««										write_fifo_«Query.findSDFChannelDataType(Generator.model,channel)»(&fifo_«sdfchannel.getIdentifier()»,&«k»,1);
+«««										«ENDIF»
+«««										«IF Generator.fifoType==2»
+«««											write_fifo(&fifo_«sdfchannel.getIdentifier()»,(void*)&«k»,1);
+«««										«ENDIF»	
+«««									«ENDFOR»
+«««							«ENDIF»
+							
+							
 						«ENDFOR»
-					«ENDIF»
-				«ENDFOR»
-				return 0;
-				}		
-			
-			
+			return 0;
+			}		
+							
+							
 		'''
+	}
+
+	def inithelp(SDFChannel sdfchannel) {
+		var numOfInitialToken = sdfchannel.getNumOfInitialTokens()
+		var delays = (sdfchannel.getProperties().get("__initialTokenValues_ordering__").
+			unwrap() as HashMap<String, Integer>)
+
+		var delayValueList = new ArrayList<String>()
+		for(var int i=0;i<numOfInitialToken;i=i+1){
+			delayValueList.add("")
+		}
+
+		
+		for (String k : delays.keySet()) {
+			println("->"+delays.get(k))
+			delayValueList.set(delays.get(k), k)
+		}
+		return delayValueList
 	}
 
 	def String externChannel() {
@@ -108,7 +140,7 @@ class SubsystemTemplateSrc implements SubsystemTemplate {
 					extern size_t buffer_«sdfname»_size;
 					extern circular_fifo fifo_«sdfname»;
 				«ENDIF»
-
+			
 			«ENDFOR»
 		'''
 	}

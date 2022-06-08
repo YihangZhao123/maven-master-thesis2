@@ -38,7 +38,7 @@ void actor_p1(){
 	int ret=0;
 	read_fifo(&fifo_s_in,(void*)s_in,2);
 	read_fifo(&fifo_s6,(void*)&s6,1);
-	
+	printf("p1 reads from s_in %d, %d\n",s_in[0],s_in[1]);
 		
 	/* Inline Code           */
 	/* in combFunction p1Body */

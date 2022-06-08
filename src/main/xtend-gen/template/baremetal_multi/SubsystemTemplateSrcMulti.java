@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import processingModule.Schedule;
 import template.templateInterface.SubsystemTemplate;
 import utils.Name;
@@ -523,13 +524,21 @@ public class SubsystemTemplateSrcMulti implements SubsystemTemplate {
     return (_plus_2 + ".c");
   }
   
-  public ArrayList<String> help(final HashMap<String, Integer> ordering) {
-    int _size = ordering.size();
-    ArrayList<String> a = new ArrayList<String>(_size);
-    Set<String> _keySet = ordering.keySet();
-    for (final String k : _keySet) {
-      a.add((ordering.get(k)).intValue(), k);
+  public ArrayList<String> help(final HashMap<String, Integer> delays) {
+    int numOfInitialToken = delays.size();
+    ArrayList<String> delayValueList = new ArrayList<String>();
+    for (int i = 0; (i < numOfInitialToken); i = (i + 1)) {
+      delayValueList.add("");
     }
-    return a;
+    Set<String> _keySet = delays.keySet();
+    for (final String k : _keySet) {
+      {
+        Integer _get = delays.get(k);
+        String _plus = ("->" + _get);
+        InputOutput.<String>println(_plus);
+        delayValueList.set((delays.get(k)).intValue(), k);
+      }
+    }
+    return delayValueList;
   }
 }

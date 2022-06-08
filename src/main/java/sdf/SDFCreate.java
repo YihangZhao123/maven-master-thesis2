@@ -12,6 +12,7 @@ import forsyde.io.java.typed.viewers.moc.sdf.SDFActor;
 import forsyde.io.java.typed.viewers.typing.TypedOperation;
 import forsyde.io.java.typed.viewers.typing.datatypes.Array;
 import forsyde.io.java.typed.viewers.typing.datatypes.Integer;
+import forsyde.io.java.typed.viewers.values.IntegerValue;
 import forsyde.io.java.typed.viewers.visualization.Visualizable;
 import forsyde.io.java.validation.SDFValidator;
 import org.jgrapht.Graph;
@@ -186,6 +187,17 @@ public class SDFCreate {
         
         model.connect(Array2OfUint32Type, uint32Type,"innerType",  EdgeTrait.TYPING_DATATYPES_DATADEFINITION); 
         model.connect(Array3OfUint32Type, uint32Type,"innerType",  EdgeTrait.TYPING_DATATYPES_DATADEFINITION); 
+        
+  ////////////////////////////////sdf delays////////////////////////////////////////////      
+        
+        final IntegerValue integerValue1= IntegerValue.enforce(model.newVertex("ZeroValue1"));
+        integerValue1.setIntValue(0);
+        final IntegerValue integerValue2= IntegerValue.enforce(model.newVertex("ZeroValue2"));
+        integerValue2.setIntValue(0);
+        ///set sdf delay
+        s6.setNumOfInitialTokens(2);
+        s6.setInitialTokenValuesPort(model, List.of(integerValue1,integerValue2));
+        
 ///////////////////////////////////////////////////////////////
         // the body for p1
         final ANSICBlackBoxExecutable p1Body = ANSICBlackBoxExecutable.enforce(model.newVertex("p1Body"));
@@ -226,7 +238,7 @@ public class SDFCreate {
         p2Body.getPorts().add("s1");
         p2Body.getPorts().add("s2");
         p2Body.getPorts().add("s3");
-        p2Body.setInlinedCode("int c = s1;");
+        p2Body.setInlinedCode("s2=s1;s3=s1+1;");
         // its types
         final TypedOperation p2TypedOp = TypedOperation.enforce(p2Body);
         p2TypedOp.setInputPorts(List.of("s1"));
@@ -255,7 +267,7 @@ public class SDFCreate {
         p3Body.getPorts().add("s3");
         p3Body.getPorts().add("s6");
         p3Body.getPorts().add("s5");
-        p3Body.setInlinedCode(";");
+        p3Body.setInlinedCode("s6[0]=s3[0]+s3[1];s6[1]=s5[0]+s5[1];");
         // its types
         final TypedOperation p3TypedOp = TypedOperation.enforce(p3Body);
         p3TypedOp.setInputPorts(List.of("s3","s5"));
@@ -289,7 +301,7 @@ public class SDFCreate {
         p4Body.getPorts().add("s2");
         p4Body.getPorts().add("s4");
 
-        p4Body.setInlinedCode(";");
+        p4Body.setInlinedCode("s4=s2;int out[3];out[0]=s2;out[1]=s2+1;out[2]=s2+2;");
         // its types
         final TypedOperation p4TypedOp = TypedOperation.enforce(p4Body);
         p4TypedOp.setInputPorts(List.of("s2"));
@@ -322,7 +334,7 @@ public class SDFCreate {
         p5Body.getPorts().add("s5");
         p5Body.getPorts().add("s4");
 
-        p5Body.setInlinedCode(";");
+        p5Body.setInlinedCode("s5=s4+1;");
         // its types
         final TypedOperation p5TypedOp = TypedOperation.enforce(p5Body);
         p5TypedOp.setInputPorts(List.of("s4"));

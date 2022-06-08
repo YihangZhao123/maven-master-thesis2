@@ -42,7 +42,8 @@ void actor_p3(){
 		
 	/* Inline Code           */
 	/* in combFunction p3Body */
-	;
+	s6[0]=s3[0]+s3[1];
+	s6[1]=s5[0]+s5[1];
 		
 	/* Write To Output Ports */
 	write_fifo(&fifo_s6,s6,2);

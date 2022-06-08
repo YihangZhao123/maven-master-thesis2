@@ -164,13 +164,25 @@ class SubsystemTemplateSrcMulti implements SubsystemTemplate {
 		return "/"+s.tile.getIdentifier()+"/subsystem_"+s.tile.getIdentifier()+".c"
 	}
 
-	def help(HashMap<String, Integer> ordering) {
-
-		var a = new ArrayList<String>(ordering.size())
-		for (String k : ordering.keySet()) {
-
-			a.add(ordering.get(k), k)
+	def help(HashMap<String, Integer> delays) {
+		
+//		var a = new ArrayList<String>(ordering.size())
+//		for (String k : ordering.keySet()) {
+//			//////////////set?
+//			a.add(ordering.get(k), k)
+//		}
+		var numOfInitialToken=delays.size()
+		var delayValueList = new ArrayList<String>()
+		for(var int i=0;i<numOfInitialToken;i=i+1){
+			delayValueList.add("")
 		}
-		return a
+
+		
+		for (String k : delays.keySet()) {
+			println("->"+delays.get(k))
+			delayValueList.set(delays.get(k), k)
+		}
+		return delayValueList
+		//return a
 	}
 }

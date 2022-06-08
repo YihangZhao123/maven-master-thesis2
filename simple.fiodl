@@ -116,7 +116,11 @@ systemgraph {
   [moc::sdf::SDFChannel, visualization::Visualizable]
   (consumer, initialTokenValues, producer)
   {
-    "numOfInitialTokens": 0_i
+    "numOfInitialTokens": 2_i,
+    "__initialTokenValues_ordering__": {
+      "ZeroValue2": 1_i,
+      "ZeroValue1": 0_i
+    }
   }
   vertex s_in
   [decision::sdf::BoundedSDFChannel, impl::TokenizableDataBlock, moc::sdf::SDFChannel, visualization::Visualizable]
@@ -145,6 +149,18 @@ systemgraph {
   {
     "maximumElems": 3_i
   }
+  vertex ZeroValue1
+  [values::IntegerValue]
+  ()
+  {
+    "intValue": 0_i
+  }
+  vertex ZeroValue2
+  [values::IntegerValue]
+  ()
+  {
+    "intValue": 0_i
+  }
   vertex p1Body
   [impl::ANSICBlackBoxExecutable, typing::TypedOperation]
   (inputPortTypes, outputPortTypes, s1, s6, s_in)
@@ -172,7 +188,7 @@ systemgraph {
     "__inputPortTypes_ordering__": {
       "UInt32": 0_i
     },
-    "inlinedCode": "int c = s1;",
+    "inlinedCode": "s2=s1;s3=s1+1;",
     "outputPorts": [
       "s2",
       "s3"
@@ -191,7 +207,7 @@ systemgraph {
     "__inputPortTypes_ordering__": {
       "UInt32": 1_i
     },
-    "inlinedCode": ";",
+    "inlinedCode": "s6[0]=s3[0]+s3[1];s6[1]=s5[0]+s5[1];",
     "outputPorts": [
       "s6"
     ],
@@ -210,7 +226,7 @@ systemgraph {
     "__inputPortTypes_ordering__": {
       "UInt32": 0_i
     },
-    "inlinedCode": ";",
+    "inlinedCode": "s4=s2;int out[3];out[0]=s2;out[1]=s2+1;out[2]=s2+2;",
     "outputPorts": [
       "s4"
     ],
@@ -228,7 +244,7 @@ systemgraph {
     "__inputPortTypes_ordering__": {
       "UInt32": 0_i
     },
-    "inlinedCode": ";",
+    "inlinedCode": "s5=s4+1;",
     "outputPorts": [
       "s5"
     ],
@@ -254,6 +270,8 @@ systemgraph {
   edge [moc::sdf::SDFDataEdge] from s5 port consumer to p3 port s5_port
   edge [typing::datatypes::DataDefinition] from Array2OfUInt32Type port innerType to UInt32 
   edge [typing::datatypes::DataDefinition] from Array3OfUInt32Type port innerType to UInt32 
+  edge [] from s6 port initialTokenValues to ZeroValue1 
+  edge [] from s6 port initialTokenValues to ZeroValue2 
   edge [typing::datatypes::DataDefinition] from p1Body port inputPortTypes to Array2OfUInt32Type 
   edge [typing::datatypes::DataDefinition] from p1Body port inputPortTypes to UInt32 
   edge [typing::datatypes::DataDefinition] from p1Body port outputPortTypes to UInt32 

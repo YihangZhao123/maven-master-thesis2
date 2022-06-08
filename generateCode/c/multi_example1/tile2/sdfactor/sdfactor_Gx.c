@@ -16,8 +16,6 @@
 					
 	/* Output FIFO */
 	extern circular_fifo_DoubleType fifo_absxsig;
-	extern spinlock spinlock_absxsig;
-	
 	/*
 	========================================
 	Declare Extern Global Variables
@@ -61,10 +59,6 @@ Array6OfDoubleType imgBlockX;
 	gx=gx+imgBlockX[5];
 	
 	/* Write To Output Ports */
-				#if ABSXSIG_BLOCKING==0
-				write_non_blocking_DoubleType(&fifo_absxsig,gx);
-				#else
-				write_blocking_DoubleType(&fifo_absxsig,gx,&spinlock_absxsig);
-				#endif
+				write_fifo_DoubleType(&fifo_absxsig,&gx,1);
 
 	}
