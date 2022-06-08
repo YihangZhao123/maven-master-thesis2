@@ -262,22 +262,22 @@ systemgraph {
   {}
   vertex tile1
   [platform::GenericProcessingModule]
-  ()
+  (communication, contained, execution)
   {}
   vertex order_0
   [platform::runtime::RoundRobinScheduler]
   (contained, slot_0, slot_1, slot_2, slot_3, slot_4)
   {
-    "maximumTimeSlices": 0_i,
     "maximumTimeSliceInCycles": 0_i,
+    "maximumTimeSlices": 0_i,
     "minimumTimeSliceInCycles": 0_i
   }
   vertex order_1
   [platform::runtime::RoundRobinScheduler]
   (contained, slot_0, slot_1, slot_2, slot_3)
   {
-    "maximumTimeSlices": 0_i,
     "maximumTimeSliceInCycles": 0_i,
+    "maximumTimeSlices": 0_i,
     "minimumTimeSliceInCycles": 0_i
   }
   edge [moc::sdf::SDFDataEdge] from s_in port consumer to p1 port s_in_port
@@ -353,7 +353,9 @@ systemgraph {
   edge [visualization::VisualConnection] from p5 to s5 
   edge [visualization::VisualConnection] from s5 to p3 
   edge [decision::AbstractAllocation] from tile0 port execution to order_0 
+  edge [decision::AbstractAllocation] from tile1 port execution to order_1 
   edge [visualization::VisualContainment] from tile0 port contained to order_0 
+  edge [visualization::VisualContainment] from tile1 port contained to order_1 
   edge [visualization::VisualContainment] from order_0 port slot_0 to p1 
   edge [visualization::VisualContainment] from order_0 port slot_1 to p2 
   edge [visualization::VisualContainment] from order_0 port slot_2 to p1 

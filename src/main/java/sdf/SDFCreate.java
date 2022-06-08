@@ -421,7 +421,7 @@ public class SDFCreate {
         tile0.getPorts().addAll(Set.of("communication", "contained", "execution"));
         
         final GenericProcessingModule tile1 = GenericProcessingModule.enforce(model.newVertex("tile1"));       
-        tile0.getPorts().addAll(Set.of("communication", "contained", "execution"));        
+        tile1.getPorts().addAll(Set.of("communication", "contained", "execution"));        
  
         final RoundRobinScheduler order0 = RoundRobinScheduler.enforce(model.newVertex("order_0"));
         order0.getPorts().addAll(Set.of("contained", "slot_0", "slot_1", "slot_2", "slot_3","slot_4"));

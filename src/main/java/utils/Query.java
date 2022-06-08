@@ -43,6 +43,7 @@ public class Query {
 	public static boolean isOnOneCoreChannel(ForSyDeSystemGraph model,Vertex channel) {
 		var inputActor=VertexAcessor.getNamedPort(model,channel,"producer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
 		var outputActor = VertexAcessor.getNamedPort(model,channel,"consumer" , VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
+		// if the fifo is external fifo, then, ny default , it is on-one-core fifo
 		if(inputActor==null||outputActor==null) {
 			return true;
 		}
@@ -82,13 +83,12 @@ public class Query {
 					.filter(v->GenericProcessingModule.conforms(v))
 					.collect(Collectors.toSet());
 			BFSShortestPath<Vertex,EdgeInfo> bfs = new BFSShortestPath<>(model);
-			System.out.println("");
-			System.out.println(tiles);
+
 			Vertex targetTile=null;
 			for(Vertex tile:tiles) {
 				var a=	bfs.getPath(tile,vertex);
-				System.out.println("path");
-				System.out.println(a);
+			//System.out.println("path");
+				//System.out.println(a);
 				if(a!=null&&a.getLength()==2) {
 					targetTile = tile;
 					return targetTile;
