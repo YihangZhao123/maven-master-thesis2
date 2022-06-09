@@ -13,20 +13,15 @@
 ==============================================
 */	
 int subsystem(){
-
+	while(1){
 		actor_GrayScale();
-
-
 		actor_getPx();
-
-
 		actor_Gx();
-
-
 		actor_Gy();
-
-
 		actor_Abs();
+
+		test();
+	}
 
 }
 
@@ -106,23 +101,14 @@ init_fifo_UInt16(&fifo_GrayScaleX,buffer_GrayScaleX,buffer_GrayScaleX_size);
 init_fifo_UInt16(&fifo_GrayScaleY,buffer_GrayScaleY,buffer_GrayScaleY_size);
 			
 			
-			
+	
 			write_fifo_UInt16(&fifo_AbsY,&ZeroValue,1);
 			
 			
 			
 			
 			write_fifo_UInt16(&fifo_AbsX,&ZeroValue,1);
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
 			write_fifo_UInt16(&fifo_GrayScaleX,&ZeroValue,1);
 			
 			

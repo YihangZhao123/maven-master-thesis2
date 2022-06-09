@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import template.templateInterface.ChannelTemplate;
 import utils.Query;
 import utils.Save;
@@ -46,8 +45,8 @@ public class SDFChannelProcessingModule implements ModuleInterface {
     this.templates.add(t);
   }
   
-  public Object save(final ForSyDeSystemGraph model, final Vertex v, final ChannelTemplate t) {
-    Object _xblockexpression = null;
+  public boolean save(final ForSyDeSystemGraph model, final Vertex v, final ChannelTemplate t) {
+    boolean _xblockexpression = false;
     {
       if ((Generator.platform == 1)) {
         String _create = t.create(v);
@@ -61,17 +60,17 @@ public class SDFChannelProcessingModule implements ModuleInterface {
         String _plus_1 = (Generator.root + _savePath_1);
         Save.save(_create_1, _plus_1);
       }
-      Object _xifexpression = null;
+      boolean _xifexpression = false;
       if ((Generator.platform == 2)) {
-        Object _xifexpression_1 = null;
+        boolean _xifexpression_1 = false;
         boolean _isOnOneCoreChannel = Query.isOnOneCoreChannel(model, v);
         if (_isOnOneCoreChannel) {
-          Object _xblockexpression_1 = null;
+          boolean _xblockexpression_1 = false;
           {
             Vertex consumer = VertexAcessor.getNamedPort(model, v, "consumer", VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
-            Object _xifexpression_2 = null;
+            boolean _xifexpression_2 = false;
             if ((consumer != null)) {
-              String _xblockexpression_2 = null;
+              boolean _xblockexpression_2 = false;
               {
                 Vertex tile = Query.findTile(model, consumer);
                 String _create_2 = t.create(v);
@@ -79,12 +78,7 @@ public class SDFChannelProcessingModule implements ModuleInterface {
                 String _plus_2 = ((Generator.root + "/") + _identifier);
                 String _savePath_2 = t.savePath();
                 String _plus_3 = (_plus_2 + _savePath_2);
-                Save.save(_create_2, _plus_3);
-                String _identifier_1 = tile.getIdentifier();
-                String _plus_4 = ((Generator.root + "/") + _identifier_1);
-                String _savePath_3 = t.savePath();
-                String _plus_5 = (_plus_4 + _savePath_3);
-                _xblockexpression_2 = InputOutput.<String>println(_plus_5);
+                _xblockexpression_2 = Save.save(_create_2, _plus_3);
               }
               _xifexpression_2 = _xblockexpression_2;
             } else {
@@ -108,19 +102,17 @@ public class SDFChannelProcessingModule implements ModuleInterface {
                 }
                 _xblockexpression_3 = _xifexpression_3;
               }
-              _xifexpression_2 = Boolean.valueOf(_xblockexpression_3);
+              _xifexpression_2 = _xblockexpression_3;
             }
-            _xblockexpression_1 = ((Object)_xifexpression_2);
+            _xblockexpression_1 = _xifexpression_2;
           }
-          _xifexpression_1 = ((Object)_xblockexpression_1);
+          _xifexpression_1 = _xblockexpression_1;
         } else {
           boolean _xblockexpression_2 = false;
           {
             Vertex consumer = VertexAcessor.getNamedPort(model, v, "consumer", VertexTrait.MOC_SDF_SDFACTOR).orElse(null);
             if ((consumer != null)) {
               Vertex tile = Query.findTile(Generator.model, consumer);
-              InputOutput.<Vertex>println(consumer);
-              InputOutput.<Vertex>println(tile);
               String _create_2 = t.create(v);
               String _identifier = tile.getIdentifier();
               String _plus_2 = ((Generator.root + "/") + _identifier);
@@ -145,11 +137,11 @@ public class SDFChannelProcessingModule implements ModuleInterface {
             }
             _xblockexpression_2 = _xifexpression_2;
           }
-          _xifexpression_1 = Boolean.valueOf(_xblockexpression_2);
+          _xifexpression_1 = _xblockexpression_2;
         }
-        _xifexpression = ((Object)_xifexpression_1);
+        _xifexpression = _xifexpression_1;
       }
-      _xblockexpression = ((Object)_xifexpression);
+      _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
   }
