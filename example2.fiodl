@@ -129,7 +129,7 @@ systemgraph {
   {
     "numOfInitialTokens": 0_i,
     "maxSizeInBits": 32_l,
-    "maximumTokens": 10_i,
+    "maximumTokens": 20_i,
     "tokenSizeInBits": 32_l
   }
   vertex UInt32
@@ -268,16 +268,16 @@ systemgraph {
   [platform::runtime::RoundRobinScheduler]
   (contained, slot_0, slot_1, slot_2, slot_3, slot_4)
   {
-    "maximumTimeSlices": 0_i,
     "maximumTimeSliceInCycles": 0_i,
+    "maximumTimeSlices": 0_i,
     "minimumTimeSliceInCycles": 0_i
   }
   vertex order_1
   [platform::runtime::RoundRobinScheduler]
   (contained, slot_0, slot_1, slot_2, slot_3)
   {
-    "maximumTimeSlices": 0_i,
     "maximumTimeSliceInCycles": 0_i,
+    "maximumTimeSlices": 0_i,
     "minimumTimeSliceInCycles": 0_i
   }
   edge [moc::sdf::SDFDataEdge] from s_in port consumer to p1 port s_in_port
