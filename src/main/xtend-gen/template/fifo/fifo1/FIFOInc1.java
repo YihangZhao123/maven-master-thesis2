@@ -140,7 +140,7 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append(";");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("void init_channel_");
+    _builder.append("void init_fifo_");
     _builder.append(type);
     _builder.append("(circular_fifo_");
     _builder.append(type);

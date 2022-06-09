@@ -94,16 +94,16 @@ int init_subsystem(){
 				
 	
 	/* initialize the channels*/
-			init(&fifo_GrayScaleToAbs,buffer_GrayScaleToAbs,buffer_GrayScaleToAbs_size, sizeof(UInt16));
-			init(&fifo_AbsY,buffer_AbsY,buffer_AbsY_size, sizeof(UInt16));
-			init(&fifo_gysig,buffer_gysig,buffer_gysig_size, sizeof(DoubleType));
-			init(&fifo_AbsX,buffer_AbsX,buffer_AbsX_size, sizeof(UInt16));
-			init(&fifo_GrayScaleToGetPx,buffer_GrayScaleToGetPx,buffer_GrayScaleToGetPx_size, sizeof(DoubleType));
-			init(&fifo_gxsig,buffer_gxsig,buffer_gxsig_size, sizeof(DoubleType));
-			init(&fifo_absysig,buffer_absysig,buffer_absysig_size, sizeof(DoubleType));
-			init(&fifo_absxsig,buffer_absxsig,buffer_absxsig_size, sizeof(DoubleType));
-			init(&fifo_GrayScaleX,buffer_GrayScaleX,buffer_GrayScaleX_size, sizeof(UInt16));
-			init(&fifo_GrayScaleY,buffer_GrayScaleY,buffer_GrayScaleY_size, sizeof(UInt16));
+			init_fifo(&fifo_GrayScaleToAbs,buffer_GrayScaleToAbs,buffer_GrayScaleToAbs_size, sizeof(UInt16));
+			init_fifo(&fifo_AbsY,buffer_AbsY,buffer_AbsY_size, sizeof(UInt16));
+			init_fifo(&fifo_gysig,buffer_gysig,buffer_gysig_size, sizeof(DoubleType));
+			init_fifo(&fifo_AbsX,buffer_AbsX,buffer_AbsX_size, sizeof(UInt16));
+			init_fifo(&fifo_GrayScaleToGetPx,buffer_GrayScaleToGetPx,buffer_GrayScaleToGetPx_size, sizeof(DoubleType));
+			init_fifo(&fifo_gxsig,buffer_gxsig,buffer_gxsig_size, sizeof(DoubleType));
+			init_fifo(&fifo_absysig,buffer_absysig,buffer_absysig_size, sizeof(DoubleType));
+			init_fifo(&fifo_absxsig,buffer_absxsig,buffer_absxsig_size, sizeof(DoubleType));
+			init_fifo(&fifo_GrayScaleX,buffer_GrayScaleX,buffer_GrayScaleX_size, sizeof(UInt16));
+			init_fifo(&fifo_GrayScaleY,buffer_GrayScaleY,buffer_GrayScaleY_size, sizeof(UInt16));
 			
 			
 			

@@ -37,7 +37,7 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.append("#include <stdio.h>");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("void init(circular_fifo* fifo_ptr, void* buf, size_t capacity, size_t token_size){");
+    _builder.append("void init_fifo(circular_fifo* fifo_ptr, void* buf, size_t capacity, size_t token_size){");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("fifo_ptr->buffer=buf;");

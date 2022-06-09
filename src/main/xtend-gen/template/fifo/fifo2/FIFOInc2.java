@@ -74,7 +74,7 @@ public class FIFOInc2 implements InitTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("void init(circular_fifo* fifo_ptr, void* buf, size_t token_number, size_t token_size);");
+    _builder.append("void init_fifo(circular_fifo* fifo_ptr, void* buf, size_t token_number, size_t token_size);");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("void read_fifo(circular_fifo* channel, void* dst, size_t number);");
