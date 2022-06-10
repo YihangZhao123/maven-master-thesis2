@@ -36,9 +36,9 @@ class FIFOInc2 implements InitTemplate{
 				void init_fifo(circular_fifo* fifo_ptr, void* buf, int token_number, int token_size);
 				void read_fifo(circular_fifo* channel, void* dst, int number);
 				void write_fifo(circular_fifo* channel,void* src, int number);	
-				void PRINT(circular_fifo * fifo);			
+«««				void PRINT(circular_fifo * fifo);			
 			«««				void read_non_blocking(circular_fifo* fifo_ptr,void* dst);
-«»			
+		
 				#endif
 		'''
 	}

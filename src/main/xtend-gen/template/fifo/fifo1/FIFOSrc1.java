@@ -248,17 +248,6 @@ public class FIFOSrc1 implements InitTemplate {
         _builder.newLine();
         _builder.append("}");
         _builder.newLine();
-        _builder.append("void PRINT_");
-        _builder.append(type);
-        _builder.append("(circular_fifo_");
-        _builder.append(type);
-        _builder.append(" * fifo){");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append("printf(\"buffer addr 0x%p, front: %d , rear %d, count %d\\n\",fifo->buffer,fifo->front,fifo->rear,fifo->count);");
-        _builder.newLine();
-        _builder.append("}\t\t\t\t");
-        _builder.newLine();
       }
     }
     _builder.newLine();

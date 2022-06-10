@@ -47,8 +47,5 @@ void write_fifo(circular_fifo* channel,void* src, int number){
 		++(channel->count);
 	}				
 }
-void PRINT(circular_fifo * fifo){
-	printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
-}				
 
 			

@@ -53,9 +53,6 @@
 		    }
 			
 		}
-		void PRINT_DoubleType(circular_fifo_DoubleType * fifo){
-			printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
-		}				
 		
 		
 		/*
@@ -93,8 +90,5 @@
 		    }
 			
 		}
-		void PRINT_UInt16(circular_fifo_UInt16 * fifo){
-			printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
-		}				
 		
 		

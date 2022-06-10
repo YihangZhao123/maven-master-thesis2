@@ -165,12 +165,6 @@ public class FIFOInc1 implements InitTemplate {
     _builder.append(type);
     _builder.append("* src, size_t number);");
     _builder.newLineIfNotEmpty();
-    _builder.append("void PRINT_");
-    _builder.append(type);
-    _builder.append("(circular_fifo_");
-    _builder.append(type);
-    _builder.append(" * fifo);");
-    _builder.newLineIfNotEmpty();
     _builder.newLine();
     return _builder.toString();
   }

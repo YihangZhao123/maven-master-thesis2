@@ -82,10 +82,7 @@ public class FIFOInc2 implements InitTemplate {
     _builder.append("\t");
     _builder.append("void write_fifo(circular_fifo* channel,void* src, int number);\t");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.append("void PRINT(circular_fifo * fifo);\t\t\t");
-    _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("#endif");

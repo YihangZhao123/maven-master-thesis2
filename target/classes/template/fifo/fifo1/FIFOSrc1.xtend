@@ -99,9 +99,9 @@ class FIFOSrc1 implements InitTemplate {
 				    }
 					
 				}
-				void PRINT_«type»(circular_fifo_«type» * fifo){
-					printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
-				}				
+«««				void PRINT_«type»(circular_fifo_«type» * fifo){
+«««					printf("buffer addr 0x%p, front: %d , rear %d, count %d\n",fifo->buffer,fifo->front,fifo->rear,fifo->count);
+«««				}				
 «««						int read_non_blocking_«type»(circular_fifo_«type» *channel, «type» *data){
 «««							if(channel->front==channel->rear){
 «««							    	//empty 
