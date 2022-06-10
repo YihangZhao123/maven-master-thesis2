@@ -19,6 +19,7 @@ int subsystem(){
 		actor_Gx();
 		actor_Gy();
 		actor_Abs();
+		test();
 	}
 
 }

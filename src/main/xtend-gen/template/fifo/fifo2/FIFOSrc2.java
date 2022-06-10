@@ -103,7 +103,7 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.append("// is full?");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("//while(channel->front== (  (channel->rear+1)%channel->capacity ) );");
+    _builder.append("while(channel->front== (  (channel->rear+1)%channel->capacity ) );");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();

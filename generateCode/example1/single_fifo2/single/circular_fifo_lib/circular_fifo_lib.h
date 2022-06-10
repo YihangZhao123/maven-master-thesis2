@@ -13,7 +13,7 @@
 		void* buffer;
 		int front;
 		int rear;
-		int capacity; // the max number of token
+		int capacity; // capacity= the max number of token + 1
 		int token_size; // size of one token
 		int count;
 		

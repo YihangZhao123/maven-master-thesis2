@@ -50,7 +50,7 @@ class FIFOSrc2  implements InitTemplate {
 			}
 			void write_fifo(circular_fifo* channel,void* src, int number){
 				// is full?
-				//while(channel->front== (  (channel->rear+1)%channel->capacity ) );
+				while(channel->front== (  (channel->rear+1)%channel->capacity ) );
 				
 				char* memcpy_dst,*memcpy_src;
 				for(int i=0; i<number;++i){
