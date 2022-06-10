@@ -220,6 +220,14 @@ public class FIFOSrc1 implements InitTemplate {
         _builder.append("* src, size_t number){");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
+        _builder.append("// is full ?");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("//while( channel->front== ( (channel->rear+1)%channel->size) );");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.newLine();
+        _builder.append("\t");
         _builder.newLine();
         _builder.append("\t");
         _builder.append("for(int i=0; i<number; ++i){");

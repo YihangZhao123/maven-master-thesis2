@@ -88,6 +88,9 @@ class FIFOSrc1 implements InitTemplate {
 				}
 				
 				void write_fifo_«type»(circular_fifo_«type»* channel,«type»* src, size_t number){
+					// is full ?
+					//while( channel->front== ( (channel->rear+1)%channel->size) );
+					
 					
 					for(int i=0; i<number; ++i){
 				        channel->buffer[channel->rear] = src[i];

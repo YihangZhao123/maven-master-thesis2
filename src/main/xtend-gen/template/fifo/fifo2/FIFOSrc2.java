@@ -37,7 +37,7 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.append("#include <stdio.h>");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("void init_fifo(circular_fifo* fifo_ptr, void* buf, size_t capacity, size_t token_size){");
+    _builder.append("void init_fifo(circular_fifo* fifo_ptr, void* buf, int capacity, int token_size){");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("fifo_ptr->buffer=buf;");
@@ -62,7 +62,7 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.append("}");
     _builder.newLine();
     _builder.newLine();
-    _builder.append("void read_fifo(circular_fifo* channel, void* dst, size_t number){");
+    _builder.append("void read_fifo(circular_fifo* channel, void* dst, int number){");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("while(channel->count< number);");
@@ -97,7 +97,15 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
-    _builder.append("void write_fifo(circular_fifo* channel,void* src, size_t number){");
+    _builder.append("void write_fifo(circular_fifo* channel,void* src, int number){");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("// is full?");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("//while(channel->front== (  (channel->rear+1)%channel->capacity ) );");
+    _builder.newLine();
+    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("char* memcpy_dst,*memcpy_src;");
