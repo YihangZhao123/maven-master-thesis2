@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
+@Deprecated
 @SuppressWarnings("all")
 public class Schedule {
   public Vertex tile;

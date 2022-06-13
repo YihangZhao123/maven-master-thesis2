@@ -137,6 +137,7 @@ public class FIFOSrc2 implements InitTemplate {
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();
+    _builder.append("\t\t\t");
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.newLine();

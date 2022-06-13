@@ -25,7 +25,8 @@ public class SubsystemMultiprocessorModule implements ModuleInterface {
     final Predicate<Vertex> _function = (Vertex v) -> {
       return (GenericProcessingModule.conforms(v)).booleanValue();
     };
-    Set<Vertex> tiles = Generator.model.vertexSet().stream().filter(_function).collect(Collectors.<Vertex>toSet());
+    Set<Vertex> tiles = Generator.model.vertexSet().stream().filter(_function).collect(
+      Collectors.<Vertex>toSet());
     final Consumer<Vertex> _function_1 = (Vertex tile) -> {
       this.process(tile);
     };
